@@ -8,11 +8,15 @@ BeginPackage["SpinningOrbit`"];
 
 
 (* ::Text:: *)
-(*If you make use of this package, please acknowledge "Piovano, Pantelidou, Mac Uilliam and Witzany" arXiv:2410.05769 (https://arxiv.org/abs/2410.05769v1 )*)
+(*If you make use of this package, please acknowledge "Piovano, Pantelidou, Mac Uilliam and Witzany" Phys. Rev. D 111, 044009 (https://journals.aps.org/prd/abstract/10.1103/PhysRevD.111.044009 )*)
 
 
 (* ::Text:: *)
 (*IMPORTANT NOTE: the following package include all the functions to compute the spin-corrections to the orbits (trajectories and velocities), constants of motion and frequencies for the fixed turning points (or "DH") and the fixed constants of motion (or "FC") parametrizations. It includes the contributions to both the parallel and orthogonal components of the secondary spin, and the maps between the corrections to the orbits in the FC and DH parametrizations.*)
+
+
+(* ::Text:: *)
+(*UPDATE version 0.5.0: added the fixed eccentricity gauge (or "FE") for nearly-equatorial orbits. The initial condition radius at \[Lambda]=0 is at the geodesic apoastron (unlike for implementation of the DH and FC spin-gauges).*)
 
 
 (* ::Text:: *)
@@ -31,7 +35,7 @@ KerrSpinOrbitCorrectionDHMapFC::usage = "KerrSpinOrbitCorrectionDHMapFC[a, p, e,
 KerrSpinOrbitCorrectionOrt::usage = "KerrSpinOrbitCorrectionOrt[a, p, e, x, nmax, kmax] calculates linear corrections to the orbits for the orthogonal component of the spin ";
 
 
-KerrSpinOrbitCorrectionPCParEq::usage = "KerrSpinOrbitCorrectionPCParEq[a, p, e, x, nmax] calculates linear corrections to the orbits in the physical and continuous on average parametrization for the parallel component of the spin";
+KerrSpinOrbitCorrectionFEParEq::usage = "KerrSpinOrbitCorrectionFEParEq[a, p, e, x, nmax] calculates linear corrections to the orbits in the fixed eccentricity parametrization for nearly equatorial orbits";
 
 
 Begin["`Private`"];
@@ -49,7 +53,7 @@ Begin["`Private`"];
 (*IMPORTANT3: probably easier to create subpackage. *)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Geodesic quantities*)
 
 
@@ -2079,7 +2083,7 @@ z1savgFC[a_,p_,e_,xg_]:=Module[{r1g,r2g,z1g,EEg,Lzg,KKg,r3g,r4g,z2g,krg,\[Capita
 
 
 (* ::Subsection::Closed:: *)
-(*Shifts constants of motion, physical and continuous gauge *)
+(*Shifts constants of motion, fixed eccentricity *)
 
 
 \[Delta]r3funeq[a_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]EE},
@@ -2109,10 +2113,10 @@ z1savgFC[a_,p_,e_,xg_]:=Module[{r1g,r2g,z1g,EEg,Lzg,KKg,r3g,r4g,z2g,krg,\[Capita
 ]
 
 
-\[Delta]r1funPCeq[a_,p_,e_,x_]:=\[Delta]pfuneq[a,p,e,x]/(1-e)
+\[Delta]r1funFEeq[a_,p_,e_,x_]:=\[Delta]pfuneq[a,p,e,x]/(1-e)
 
 
-\[Delta]r2funPCeq[a_,p_,e_,x_]:=\[Delta]pfuneq[a,p,e,x]/(1+e)
+\[Delta]r2funFEeq[a_,p_,e_,x_]:=\[Delta]pfuneq[a,p,e,x]/(1+e)
 
 
 (* ::Section::Closed:: *)
@@ -3749,7 +3753,7 @@ freqdev\[Phi][a_,p_,e_,xg_]:=Module[{sgn,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg
 (*Physical and continuous gauge*)
 
 
-\[Delta]YroverYrgsparPCeq[wr_,a_,p_,e_,x_]:=Module[{EEg,Lzg,KKg,\[Delta]EE,\[Delta]Lz,\[Delta]KK,r1g,r2g,r3g,rg,zg,Yrg,\[CapitalDelta],Rrg,r1spar,r2spar,dVrgdEg,dVrgdLzg,dVrgdKg,fraux2,fraux0,fraux,fauxdC},
+\[Delta]YroverYrgsparFEeq[wr_,a_,p_,e_,x_]:=Module[{EEg,Lzg,KKg,\[Delta]EE,\[Delta]Lz,\[Delta]KK,r1g,r2g,r3g,rg,zg,Yrg,\[CapitalDelta],Rrg,r1spar,r2spar,dVrgdEg,dVrgdLzg,dVrgdKg,fraux2,fraux0,fraux,fauxdC},
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
 	KKg=(Lzg-a EEg)^2;
@@ -3783,13 +3787,13 @@ freqdev\[Phi][a_,p_,e_,xg_]:=Module[{sgn,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg
 ]
 
 
-\[Delta]YroverYrgsparPCcoeffeq[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,ExpniTable},
+\[Delta]YroverYrgsparFEcoeffeq[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,ExpniTable},
 	stepsr=4*nmax;
 	ExpniTable=Table[N[Exp[-2Pi*I*n*(i-1/2)/stepsr],Precision[{a,p,e,x}]],{n,-nmax,nmax},{i,1,stepsr}];
 
 	wrlist=Table[wr,{wr,2Pi/(stepsr)/2,2Pi,2Pi/(stepsr)}];
 
-	Chop[(ExpniTable . \[Delta]YroverYrgsparPCeq[wrlist,a,p,e,x]) /(stepsr),10^-16]
+	Chop[(ExpniTable . \[Delta]YroverYrgsparFEeq[wrlist,a,p,e,x]) /(stepsr),10^-16]
 ]
 
 
@@ -4350,10 +4354,10 @@ dvspard\[Lambda]Fourier[wr_,wz_,coeff_]:=Module[{dimr,dimz},
 
 
 (* ::Subsubsection::Closed:: *)
-(*Physical and continuous gauge*)
+(*fixed eccentricity*)
 
 
-\[Delta]rsparPCfuneq[wr_,a_,p_,e_,x_,coeff_]:=Module[{EEg,Lzg,r1spar,r2spar,rspar},
+\[Delta]rsparFEfuneq[wr_,a_,p_,e_,x_,coeff_]:=Module[{EEg,Lzg,r1spar,r2spar,rspar},
 	EEg=EEgfuneq[a,p,e,x];
 	Lzg=Lzgfuneq[a,p,e,x];
 
@@ -4490,10 +4494,10 @@ dzsparDHd\[Lambda]fun[wr_,wz_,a_,p_,e_,xg_,const_,\[Delta]const_,coeff_]:=Module
 
 
 (* ::Subsubsection::Closed:: *)
-(*Physical and continuous gauge*)
+(*fixed eccentricity*)
 
 
-drsparPCd\[Lambda]funeq[wr_,a_,p_,e_,x_,coeff_]:=Module[{EEg,Lzg,KKg,\[Delta]EE,\[Delta]Lz,\[Delta]KK,r1g,r2g,r3g,\[Chi]r,r1spar,r2spar,rg,rspar,\[CapitalDelta]rg,Rrg,Yrg,dVrgdrg,dVrgdEg,dVrgdLzg,dVrgdKg},
+drsparFEd\[Lambda]funeq[wr_,a_,p_,e_,x_,coeff_]:=Module[{EEg,Lzg,KKg,\[Delta]EE,\[Delta]Lz,\[Delta]KK,r1g,r2g,r3g,\[Chi]r,r1spar,r2spar,rg,rspar,\[CapitalDelta]rg,Rrg,Yrg,dVrgdrg,dVrgdEg,dVrgdLzg,dVrgdKg},
 	EEg=EEgfuneq[a,p,e,x];
 	Lzg=Lzgfuneq[a,p,e,x];
 	KKg=(Lzg-a EEg)^2;
@@ -4599,10 +4603,10 @@ dtsparDHd\[Lambda]coefffun[nmax_,kmax_,a_,p_,e_,xg_,const_,\[Delta]const_,coeffr
 
 
 (* ::Subsubsection::Closed:: *)
-(*Physical and continuous gauge*)
+(*fixed eccentricity*)
 
 
-dtsparPCd\[Lambda]funeq[wr_,a_,p_,e_,x_,coeffrad_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz,rg,\[CapitalDelta]rg,Rrg,dVtrgdrg,dVtrgdEg,dVtrgdLzg,dVtzgdEg},
+dtsparFEd\[Lambda]funeq[wr_,a_,p_,e_,x_,coeffrad_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz,rg,\[CapitalDelta]rg,Rrg,dVtrgdrg,dVtrgdEg,dVtrgdLzg,dVtzgdEg},
 	EEg=EEgfuneq[a,p,e,x];
 	Lzg=Lzgfuneq[a,p,e,x];
 	\[Delta]EE=\[Delta]EEfunDHeq[a,p,e,x]+dEEdpfuneq[a,p,e,x]\[Delta]pfuneq[a,p,e,x];
@@ -4617,17 +4621,17 @@ dtsparPCd\[Lambda]funeq[wr_,a_,p_,e_,x_,coeffrad_]:=Module[{EEg,Lzg,\[Delta]EE,\
 	dVtrgdLzg=-((2a*rg)/\[CapitalDelta]rg);
 	dVtzgdEg=-a^2 ;
 
-	dVtrgdrg*\[Delta]rsparPCfuneq[wr,a,p,e,x,coeffrad]+(\[Delta]EE*dVtrgdEg+\[Delta]Lz*dVtrgdLzg)+(\[Delta]EE*dVtzgdEg)-rg^2/2*\[CapitalGamma]t12ICr1gfuneq[wr,a,p,e,x]
+	dVtrgdrg*\[Delta]rsparFEfuneq[wr,a,p,e,x,coeffrad]+(\[Delta]EE*dVtrgdEg+\[Delta]Lz*dVtrgdLzg)+(\[Delta]EE*dVtzgdEg)-rg^2/2*\[CapitalGamma]t12ICr1gfuneq[wr,a,p,e,x]
 ]
 
 
-dtsparPCd\[Lambda]coefffuneq[nmax_,a_,p_,e_,x_,coeffrad_]:=Module[{stepsr,wrlist,ExpniTable},
+dtsparFEd\[Lambda]coefffuneq[nmax_,a_,p_,e_,x_,coeffrad_]:=Module[{stepsr,wrlist,ExpniTable},
 	stepsr=4*nmax;
 	ExpniTable=Table[N[Exp[2Pi*I*n*(i-1/2)/stepsr],Precision[{a,p,e,x}]],{n,-nmax,nmax},{i,1,stepsr}];
 
 	wrlist=Table[wr,{wr,2Pi/(stepsr)/2,2Pi,2Pi/(stepsr)}];
 
-	Chop[(ExpniTable . dtsparPCd\[Lambda]funeq[wrlist,a,p,e,x,coeffrad])/(stepsr),10^-16]
+	Chop[(ExpniTable . dtsparFEd\[Lambda]funeq[wrlist,a,p,e,x,coeffrad])/(stepsr),10^-16]
 ]
 
 
@@ -4705,10 +4709,10 @@ d\[Phi]sparDHd\[Lambda]coefffun[nmax_,kmax_,a_,p_,e_,xg_,const_,\[Delta]const_,c
 
 
 (* ::Subsubsection::Closed:: *)
-(*Physical and continuous gauge*)
+(*fixed eccentricity*)
 
 
-d\[Phi]sparPCd\[Lambda]funeq[wr_,a_,p_,e_,x_,coeffrad_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz,rg,\[CapitalDelta]rg,dV\[Phi]rgdrg,dV\[Phi]rgdEg,dV\[Phi]rgdLzg},
+d\[Phi]sparFEd\[Lambda]funeq[wr_,a_,p_,e_,x_,coeffrad_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz,rg,\[CapitalDelta]rg,dV\[Phi]rgdrg,dV\[Phi]rgdEg,dV\[Phi]rgdLzg},
 	EEg=EEgfuneq[a,p,e,x];
 	Lzg=Lzgfuneq[a,p,e,x];
 	\[Delta]EE=\[Delta]EEfunDHeq[a,p,e,x]+dEEdpfuneq[a,p,e,x]\[Delta]pfuneq[a,p,e,x];
@@ -4722,17 +4726,17 @@ d\[Phi]sparPCd\[Lambda]funeq[wr_,a_,p_,e_,x_,coeffrad_]:=Module[{EEg,Lzg,\[Delta
 	dV\[Phi]rgdEg=(2a*rg)/\[CapitalDelta]rg;
 	dV\[Phi]rgdLzg=-(a^2/\[CapitalDelta]rg);
 
-	dV\[Phi]rgdrg*\[Delta]rsparPCfuneq[wr,a,p,e,x,coeffrad]+(\[Delta]EE*dV\[Phi]rgdEg+\[Delta]Lz*dV\[Phi]rgdLzg)+\[Delta]Lz-rg^2/2*\[CapitalGamma]\[Phi]12ICr1gfuneq[wr,a,p,e,x]
+	dV\[Phi]rgdrg*\[Delta]rsparFEfuneq[wr,a,p,e,x,coeffrad]+(\[Delta]EE*dV\[Phi]rgdEg+\[Delta]Lz*dV\[Phi]rgdLzg)+\[Delta]Lz-rg^2/2*\[CapitalGamma]\[Phi]12ICr1gfuneq[wr,a,p,e,x]
 ]
 
 
-d\[Phi]sparPCd\[Lambda]coefffuneq[nmax_,a_,p_,e_,x_,coeffrad_]:=Module[{stepsr,wrlist,ExpniTable},
+d\[Phi]sparFEd\[Lambda]coefffuneq[nmax_,a_,p_,e_,x_,coeffrad_]:=Module[{stepsr,wrlist,ExpniTable},
 	stepsr=4*nmax;
 	ExpniTable=Table[N[Exp[2Pi*I*n*(i-1/2)/stepsr],Precision[{a,p,e,x}]],{n,-nmax,nmax},{i,1,stepsr}];
 
 	wrlist=Table[wr,{wr,2Pi/(stepsr)/2,2Pi,2Pi/(stepsr)}];
 
-	Chop[(ExpniTable . d\[Phi]sparPCd\[Lambda]funeq[wrlist,a,p,e,x,coeffrad])/(stepsr),10^-16]
+	Chop[(ExpniTable . d\[Phi]sparFEd\[Lambda]funeq[wrlist,a,p,e,x,coeffrad])/(stepsr),10^-16]
 ]
 
 
@@ -6033,10 +6037,10 @@ KerrSpinOrbitCorrectionOrt[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&), kmax_?
 
 
 (* ::Subsection::Closed:: *)
-(*Physical and continuous gauge*)
+(*Fixed eccentricity*)
 
 
-KerrSpinOrbitCorrectionPCParEq[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=Module[{EEg,Lzg,KKg,constmot,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]\[Phi]g,\[Delta]EE,\[Delta]Lz,\[Delta]KK,\[Delta]constmot,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s,stepsr,\[CapitalDelta]tspar,\[CapitalDelta]\[Phi]spar,\[Delta]rpar,
+KerrSpinOrbitCorrectionFEParEq[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=Module[{EEg,Lzg,KKg,constmot,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]\[Phi]g,\[Delta]EE,\[Delta]Lz,\[Delta]KK,\[Delta]constmot,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s,stepsr,\[CapitalDelta]tspar,\[CapitalDelta]\[Phi]spar,\[Delta]rpar,
 	ExpniTable,\[Xi]rparcoeffeq,dtrgd\[Lambda]coeffeq,d\[Phi]rgd\[Lambda]coeffeq,wrlist,dtspard\[Lambda]coeffeq,d\[Phi]spard\[Lambda]coeffeq,\[CapitalDelta]trg,\[CapitalDelta]\[Phi]rg,dtspard\[Lambda],drspard\[Lambda],d\[Phi]spard\[Lambda]},
 	(* geodesic constants of motion *)
 	EEg=EEgfuneq[a,p,e,x];
@@ -6066,15 +6070,15 @@ KerrSpinOrbitCorrectionPCParEq[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=M
 	d\[Phi]rgd\[Lambda]coeffeq=V\[Phi]rgcoeffICr1geq[nmax,a,p,e,x];
 	
 	Print["Calculating \!\(\*SubscriptBox[\(\[Xi]\), \(r\)]\) Fourier coefficients"];
-	\[Xi]rparcoeffeq=\[Delta]YroverYrgsparPCcoeffeq[nmax,a,p,e,x];
+	\[Xi]rparcoeffeq=\[Delta]YroverYrgsparFEcoeffeq[nmax,a,p,e,x];
 	
 	(* spin correction radial and polar frequencies *)
 	\[CapitalUpsilon]rs=\[CapitalUpsilon]rg*\[Xi]rparcoeffeq[[nmax+1]];
 	Print["Calculating Fourier coefficients of \!\(\*SubscriptBox[\(dt\), \(s\)]\)/d\[Lambda]"];
-	dtspard\[Lambda]coeffeq=dtsparPCd\[Lambda]coefffuneq[nmax,a,p,e,x,\[Xi]rparcoeffeq];
+	dtspard\[Lambda]coeffeq=dtsparFEd\[Lambda]coefffuneq[nmax,a,p,e,x,\[Xi]rparcoeffeq];
 	\[CapitalUpsilon]ts=dtspard\[Lambda]coeffeq[[nmax+1]];
 	Print["Calculating Fourier coefficients of \!\(\*SubscriptBox[\(d\[Phi]\), \(s\)]\)/d\[Lambda]"];
-	d\[Phi]spard\[Lambda]coeffeq=d\[Phi]sparPCd\[Lambda]coefffuneq[nmax,a,p,e,x,\[Xi]rparcoeffeq];
+	d\[Phi]spard\[Lambda]coeffeq=d\[Phi]sparFEd\[Lambda]coefffuneq[nmax,a,p,e,x,\[Xi]rparcoeffeq];
 	\[CapitalUpsilon]\[Phi]s=d\[Phi]spard\[Lambda]coeffeq[[nmax+1]];
 	
 	\[CapitalDelta]trg[wr_]:=\[CapitalDelta]trgfun[wr,dtrgd\[Lambda]coeffeq,\[CapitalUpsilon]rg];
@@ -6082,11 +6086,11 @@ KerrSpinOrbitCorrectionPCParEq[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=M
 	
 	\[CapitalDelta]tspar[wr_]:=\[CapitalDelta]spareq[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,dtspard\[Lambda]coeffeq,dtrgd\[Lambda]coeffeq];
 	\[CapitalDelta]\[Phi]spar[wr_]:=\[CapitalDelta]spareq[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,d\[Phi]spard\[Lambda]coeffeq,d\[Phi]rgd\[Lambda]coeffeq];
-	\[Delta]rpar[wr_]:=\[Delta]rsparPCfuneq[wr,a,p,e,x,\[Xi]rparcoeffeq];
+	\[Delta]rpar[wr_]:=\[Delta]rsparFEfuneq[wr,a,p,e,x,\[Xi]rparcoeffeq];
 	
-	dtspard\[Lambda][wr_]:=dtsparPCd\[Lambda]funeq[wr,a,p,e,x,\[Xi]rparcoeffeq];
-	d\[Phi]spard\[Lambda][wr_]:=d\[Phi]sparPCd\[Lambda]funeq[wr,a,p,e,x,\[Xi]rparcoeffeq];
-	drspard\[Lambda][wr_]:=drsparPCd\[Lambda]funeq[wr,a,p,e,x,\[Xi]rparcoeffeq];
+	dtspard\[Lambda][wr_]:=dtsparFEd\[Lambda]funeq[wr,a,p,e,x,\[Xi]rparcoeffeq];
+	d\[Phi]spard\[Lambda][wr_]:=d\[Phi]sparFEd\[Lambda]funeq[wr,a,p,e,x,\[Xi]rparcoeffeq];
+	drspard\[Lambda][wr_]:=drsparFEd\[Lambda]funeq[wr,a,p,e,x,\[Xi]rparcoeffeq];
 			
 	<|
 	 "OrbitalElements"->{a,p,e,x},
