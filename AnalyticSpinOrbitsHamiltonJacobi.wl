@@ -74,7 +74,7 @@ FourierVel[wr_,coeff_]:=Module[{dim},
 ];
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Geodesic quantities*)
 
 
@@ -652,7 +652,7 @@ V\[Phi]rgcoeffICr1g[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,V\[Phi]rglist,Expn
 ]
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Geodesics homoclinic trajectory*)
 
 
@@ -670,7 +670,7 @@ rgfunHom[\[Lambda]_,a_,p_,e_,xg_]:=Module[{r1g,r2g,EEg,aux},
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Coordinate time trajectory*)
 
 
@@ -687,14 +687,14 @@ tgfunHom[r_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1g,r2g,\[ScriptCapitalI],\[Scri
 		\[ScriptCapitalI]r=2 ArcCos[Sqrt[r/r1g]]+r2g*\[ScriptCapitalI];
 		\[ScriptCapitalI]r2=Sqrt[r(-r+r1g)]+r1g ArcCos[Sqrt[r/r1g]]+r2g*\[ScriptCapitalI]r;
 		\[ScriptCapitalI]p=\[ScriptCapitalI]/(r2g-rp)+1/(2Sqrt[r1g-rp](r2g-rp)Sqrt[rp])Log[(Sqrt[r(r1g-rp)]-Sqrt[(-r+r1g)rp])^2/(Sqrt[r(r1g-rp)]+Sqrt[(-r+r1g)rp])^2];
-		\[ScriptCapitalI]mreg=\[ScriptCapitalI]/(r2g-rm)+Sqrt[rm]/(2Sqrt[r1g-rm](r2g-rm))Log[(Sqrt[r (r1g-rm)]-Sqrt[(-r+r1g) rm])^2/(Sqrt[r(r1g-rm)]+Sqrt[(-r+r1g) rm])^2];
+		\[ScriptCapitalI]mreg=rm*\[ScriptCapitalI]/(r2g-rm)+Sqrt[rm]/(2Sqrt[r1g-rm](r2g-rm))Log[(Sqrt[r (r1g-rm)]-Sqrt[(-r+r1g) rm])^2/(Sqrt[r(r1g-rm)]+Sqrt[(-r+r1g) rm])^2];
 
 		1/Sqrt[1-EEg^2] (4EEg*\[ScriptCapitalI]+2EEg*\[ScriptCapitalI]r+EEg*\[ScriptCapitalI]r2-4EEg rp/(rp-rm) (rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)-2(-4EEg+a*Lzg) 1/(rp-rm) (rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg))
 	]
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Azimuthal trajectory*)
 
 
@@ -709,7 +709,7 @@ tgfunHom[r_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1g,r2g,\[ScriptCapitalI],\[Scri
 		r2g=p/(1+e);
 		\[ScriptCapitalI]=-1/(2Sqrt[r2g(r1g-r2g)])Log[(Sqrt[r(r1g-r2g)]-Sqrt[(-r+r1g)r2g])^2/(Sqrt[r(r1g-r2g)]+Sqrt[(-r+r1g)r2g])^2];
 		\[ScriptCapitalI]p=\[ScriptCapitalI]/(r2g-rp)+1/(2Sqrt[r1g-rp](r2g-rp)Sqrt[rp])Log[(Sqrt[r(r1g-rp)]-Sqrt[(-r+r1g)rp])^2/(Sqrt[r(r1g-rp)]+Sqrt[(-r+r1g)rp])^2];
-		\[ScriptCapitalI]mreg=\[ScriptCapitalI]/(r2g-rm)+Sqrt[rm]/(2Sqrt[r1g-rm](r2g-rm))Log[(Sqrt[r(r1g-rm)]-Sqrt[(-r+r1g)rm])^2/(Sqrt[r(r1g-rm)]+Sqrt[(-r+r1g)rm])^2];
+		\[ScriptCapitalI]mreg=rm*\[ScriptCapitalI]/(r2g-rm)+Sqrt[rm]/(2Sqrt[r1g-rm](r2g-rm))Log[(Sqrt[r(r1g-rm)]-Sqrt[(-r+r1g)rm])^2/(Sqrt[r(r1g-rm)]+Sqrt[(-r+r1g)rm])^2];
 
 		1/Sqrt[1-EEg^2] (Lzg*\[ScriptCapitalI]-Lzg rp/(rp-rm) (rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)+2a*EEg 1/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg))
 	]
