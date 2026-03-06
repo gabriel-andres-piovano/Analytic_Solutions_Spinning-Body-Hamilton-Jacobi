@@ -3,7 +3,7 @@ Code for the computation of the analytic solutions to the nearly-equatorial moti
 Companion repo of "Piovano" arXiv:2510.09597 (https://arxiv.org/abs/2510.09597 ) and "Piovano" arXiv:2603.04682 (https://arxiv.org/abs/2603.04682 ) 
 
 Mathematica files
-- ```AnalyticSpinOrbitsHamiltonJacobi.wl```: the package includes the analytic spin-corrections to periodic and homoclinic orbits for the nearly equatorial motion.
+- ```AnalyticSpinOrbitsHamiltonJacobi.wl```: the package includes the analytic spin-corrections to nearly equatorial periodic orbits, homoclinic orbits, and bound plunges.
 - ```SpinOrbitsHamiltonJacobi.wl```: package for the calculation of the numerical spin-corrections to generic periodic orbits. It is used for sanity checks. Also available in https://github.com/gabriel-andres-piovano/Spinning-Body-Hamilton-Jacobi.
 - ```Spin_corrections_to_orbits_near_equatorial_motion.nb```: presents the functions available in the package ```AnalyticSpinOrbitsHamiltonJacobi.wl``` for periodic and homoclinic motion.
 - ```Spin_corrections_to_orbits_near_equatorial_motion_Bound_Plunge.nb```: presents the functions available in the package ```AnalyticSpinOrbitsHamiltonJacobi.wl``` for bound plunges.
