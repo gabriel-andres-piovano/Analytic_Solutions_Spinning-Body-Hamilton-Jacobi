@@ -9,6 +9,7 @@ Mathematica files - "Periodic_homoclinic orbits" folder
 - ```SpinOrbitsHamiltonJacobi.wl```: package for the calculation of the numerical spin-corrections to generic periodic orbits. It is used for sanity checks. Also available in https://github.com/gabriel-andres-piovano/Spinning-Body-Hamilton-Jacobi.
 - ```Spin_corrections_to_orbits_near_equatorial_motion.nb```: presents the functions available in the package ```AnalyticSpinOrbitsHamiltonJacobi.wl``` for periodic and homoclinic motion.
 - ```SpinningTrajectory.wl```: Mathematica package from the GitHub repo https://github.com/vskoupy/KerrSpinningFluxes of Viktor Skoupy. This package contains some of the code used in PRD 108, 044041 (https://journals.aps.org/prd/abstract/10.1103/PhysRevD.108.044041 ) (see arXiv:https://arxiv.org/abs/2303.16798 ). It is used for numerical checks for periodic orbits with the analytic results of arXiv:2510.09597
+- ```Derivativesgeodesic_frequencies_wrt_orbital_elements.nb``` notebook with the derivatives of the geodesic frequencies on the equatorial plane wrt to the constants of motion, radial turning points, or (p,e)
   
 Mathematica files - "Boud_plunge" folder
 - ```Spin_corrections_to_orbits_near_equatorial_motion_Bound_Plunge.nb```: presents the functions available in the package ```AnalyticSpinOrbitsHamiltonJacobi.wl``` for bound plunges.
