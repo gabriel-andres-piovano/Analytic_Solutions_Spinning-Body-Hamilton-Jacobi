@@ -4,7 +4,7 @@
 (*Begin package*)
 
 
-BeginPackage["AnalyticSpinningOrbitNearEq`"];
+BeginPackage["AnalyticSpinOrbitsHamiltonJacobi`"];
 
 
 (* ::Text:: *)
@@ -104,7 +104,7 @@ FourierVel[wr_,coeff_]:=Module[{dim},
 ]
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Geodesic quantities*)
 
 
@@ -423,7 +423,7 @@ dLzdpfunCC[a_,p_,e_,x_]:=Module[{Lzg,r1g,\[Rho]rg,\[CapitalDelta]r1g},
 ]
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Geodesics periodic trajectory*)
 
 
@@ -457,7 +457,7 @@ rgICr1gfun[wr_,a_,p_,e_,x_]:=Module[{EEg,r1g,r2g,r3g,krg,ellK,jSN},
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Coordinate time trajectory*)
 
 
@@ -514,7 +514,7 @@ tgICr2gfun[wr_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1g,r2g,r3g,krg,krghold,\[Gam
 	\[ScriptCapitalI]p=2/(Sqrt[r2g(r1g-r3g)](r3g-rp))(ellF-(r2g-r3g)/(r2g-rp)EllipticPi[(r3g-rp)(r1g-r2g)/((r1g-r3g)(r2g-rp)),\[Phi],krg]);
 	\[ScriptCapitalI]m=2/(Sqrt[r2g(r1g-r3g)](r3g-rm))(ellF-(r2g-r3g)/(r2g-rm)EllipticPi[(r3g-rm)(r1g-r2g)/((r1g-r3g)(r2g-rm)),\[Phi],krg]);
 
-
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	1/Sqrt[1-EEg^2](4EEg*\[ScriptCapitalI]+2EEg*\[ScriptCapitalI]rover+EEg*\[ScriptCapitalI]r2over-4a^2*EEg 1/(rp-rm)(\[ScriptCapitalI]p-\[ScriptCapitalI]m)-2(-4EEg+a*Lzg)1/(rp-rm)(rp*\[ScriptCapitalI]p-rm*\[ScriptCapitalI]m))-wr*tgfunref[a,p,e,x]
 ]
 
@@ -541,12 +541,13 @@ tgICr1gfun[wr_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1g,r2g,r3g,krg,krghold,\[Gam
 	\[ScriptCapitalI]r2over=-Sqrt[r2g(r1g-r3g)](-ellE+r1g*ellF/(r1g-r3g)-r1g(r1g+r2g+r3g)ellPi/(r2g(r1g-r3g))+((r1g-r2g)Cos[\[Phi]]*Sin[\[Phi]]Sqrt[1-krg*Sin[\[Phi]]^2])/(-r2g+(-r1g+r2g)Sin[\[Phi]]^2));
 	\[ScriptCapitalI]p=2/Sqrt[(r1g-r3g)r2g] 1/rp (r1g/(r1g-rp) EllipticPi[(rp(r1g-r2g))/((r1g-rp)r2g),\[Phi],krg]- ellF);
 	\[ScriptCapitalI]mreg=2/Sqrt[(r1g-r3g)r2g] (r1g/(r1g-rm) EllipticPi[(rm(r1g-r2g))/((r1g-rm)r2g),\[Phi],krg]- ellF);
-
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	1/Sqrt[1-EEg^2](4EEg*\[ScriptCapitalI]+2EEg*\[ScriptCapitalI]rover+EEg*\[ScriptCapitalI]r2over-4rp*EEg 1/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)-2(-4EEg+a*Lzg)1/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg))-wr*tgfunref[a,p,e,x]
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Azimuthal trajectory*)
 
 
@@ -592,6 +593,7 @@ tgICr1gfun[wr_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1g,r2g,r3g,krg,krghold,\[Gam
 	\[ScriptCapitalI]p=2/(Sqrt[r2g(r1g-r3g)](r3g-rp))(ellF-(r2g-r3g)/(r2g-rp)EllipticPi[(r3g-rp)(r1g-r2g)/((r1g-r3g)(r2g-rp)),\[Phi],krg]);
 	\[ScriptCapitalI]m=2/(Sqrt[r2g(r1g-r3g)](r3g-rm))(ellF-(r2g-r3g)/(r2g-rm)EllipticPi[(r3g-rm)(r1g-r2g)/((r1g-r3g)(r2g-rm)),\[Phi],krg]);
 
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	1/Sqrt[1-EEg^2](Lzg*\[ScriptCapitalI]-a^2*Lzg 1/(rp-rm)(\[ScriptCapitalI]p-\[ScriptCapitalI]m)+2a*EEg 1/(rp-rm)(rp*\[ScriptCapitalI]p-rm*\[ScriptCapitalI]m))-wr*\[Phi]gfunref[a,p,e,x]
 ]
 
@@ -615,6 +617,7 @@ tgICr1gfun[wr_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1g,r2g,r3g,krg,krghold,\[Gam
 	\[ScriptCapitalI]p=2/Sqrt[(r1g-r3g)r2g] 1/rp (r1g/(r1g-rp) EllipticPi[(rp(r1g-r2g))/((r1g-rp)r2g),\[Phi],krg]- ellF);
 	\[ScriptCapitalI]mreg=2/Sqrt[(r1g-r3g)r2g] (r1g/(r1g-rm) EllipticPi[(rm(r1g-r2g))/((r1g-rm)r2g),\[Phi],krg]- ellF);
 
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	1/Sqrt[1-EEg^2](Lzg*\[ScriptCapitalI]-rp*Lzg 1/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)+2a*EEg 1/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg))-wr*\[Phi]gfunref[a,p,e,x]
 ]
 
@@ -2039,15 +2042,15 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 ]
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Spin corrections to the orbit - parallel component of the spin, fixed turning points*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Bound trajectory*)
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Radial trajectory*)
 
 
@@ -2074,12 +2077,13 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 
 	ellF=EllipticF[\[Phi],krg];
 	ellE=EllipticE[\[Phi],krg];
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 
 	-((jSN*jCN(r1g-r2g)(r1g-r3g)(r2g-r3g)Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])/((1-jSN^2) r1g+jSN^2 r2g-r3g)^2)(\[Delta]\[CapitalUpsilon]r/\[CapitalUpsilon]rg (2ellF)/Yint+(EEg \[Delta]EE)/(1-EEg^2)(2ellF)/Yint+\[Delta]r3/2 1/r3g  2/Yint((r2g ellE)/(r2g-r3g)-ellF)+2((jSN*jCN(r1g-r2g))/(r1g*r2g Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])-((r1g-r3g)ellE-r1g*ellF)/(r1g*r3g*Yint))\[Delta]r41-a/2 (-(2/(3r1g*r2g*r3g))((jSN*jCN(r1g-r2g)(r1g-r3g)(r2g-r3g)Sqrt[(r1g*r2g-jSN^2*r1g*r3g-r2g*r3g*jCN^2)])/(r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g)^2+((r1g+r2g+r3g)ellF)/Sqrt[r2g(r1g-r3g)]-2(r2g*r3g+r1g(r2g+r3g))((jSN*jCN(r1g-r2g))/(r1g*r2g Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])+(-((r1g-r3g)ellE)+r1g*ellF)/(r1g*r3g Sqrt[r2g(r1g-r3g)] )))))
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Radial trajectory - rescaled version*)
 
 
@@ -2105,12 +2109,13 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 
 	ellF=EllipticF[\[Phi],krg];
 	ellE=EllipticE[\[Phi],krg];
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 
 	-(\[Delta]\[CapitalUpsilon]r/\[CapitalUpsilon]rg(2ellF)/Yint+(EEg \[Delta]EE)/(1-EEg^2)(2ellF)/Yint+\[Delta]r3/2 1/r3g  2/Yint((r2g ellE)/(r2g-r3g)-ellF)+2((jSN*jCN(r1g-r2g))/(r1g*r2g Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])-((r1g-r3g)ellE-r1g*ellF)/(r1g*r3g*Yint))\[Delta]r41-a/2 (-(2/(3r1g*r2g*r3g))((jSN*jCN(r1g-r2g)(r1g-r3g)(r2g-r3g)Sqrt[(r1g*r2g-jSN^2*r1g*r3g-r2g*r3g*jCN^2)])/(r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g)^2+((r1g+r2g+r3g)ellF)/Sqrt[r2g(r1g-r3g)]-2(r2g*r3g+r1g(r2g+r3g))((jSN*jCN(r1g-r2g))/(r1g*r2g Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])+(-((r1g-r3g)ellE)+r1g*ellF)/(r1g*r3g Sqrt[r2g(r1g-r3g)] )))))
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Coordinate time trajectory - purely oscillatory part*)
 
 
@@ -2135,7 +2140,6 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 
 	(*The following "trick" ensures that, for wr=\[Pi], \[Phi] is exaclty \[Pi]/2 and not an approximate result.*)
 	\[Phi]=JacobiAmplitude[1/\[Pi] EllipticK[krghold] wr,krghold]/.krghold->krg;
-
 	rg=rgICr2gfun[wr,a,p,e,x];
 
 	dtgd\[Lambda]fun=(rg(-2a*Lzg+EEg(2a^2+a^2*rg+rg^3)))/(a^2-2rg+rg^2);
@@ -2149,6 +2153,7 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 	\[ScriptCapitalI]rover=(2(r3g*ellF+(r2g-r3g)ellPi))/(Sqrt[1-EEg^2] Sqrt[r2g(r1g-r3g)]);
 	\[ScriptCapitalI]r2over=1/ Sqrt[(1-EEg^2)]((2r2g^2)/Sqrt[(r1g-r3g)r2g]((r3g/r2g)^2*ellF+2r3g/r2g(1-r3g/r2g)ellPi+(1-r3g/r2g)^2*1/(2(\[Gamma]r-1)(krg-\[Gamma]r))(\[Gamma]r*ellE+(krg-\[Gamma]r)ellF+(2\[Gamma]r krg+2\[Gamma]r-\[Gamma]r^2-3krg)ellPi-(\[Gamma]r^2Sin[\[Phi]]Cos[\[Phi]]Sqrt[1-krg*Sin[\[Phi]]^2])/(1-\[Gamma]r*Sin[\[Phi]]^2))));
 
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	(4\[Delta]EE)/(1-EEg^2)\[ScriptCapitalI]+\[Delta]EE/(1-EEg^2)\[ScriptCapitalI]r2over+(r3g*\[Delta]r3)/(2(r3g-rm)(r3g-rp))(-2a*Lzg+EEg*r3g^3+a^2*EEg(2+r3g))*\[ScriptCapitalI]r3g+EEg/2((2+r3g)\[Delta]r3-\[Delta]\[Rho]i4^2+4\[Delta]\[Rho]r4)\[ScriptCapitalI]+((2\[Delta]EE)/(1-EEg^2)+(EEg*\[Delta]r3)/2+EEg*\[Delta]\[Rho]r4)\[ScriptCapitalI]rover-1/\[CapitalUpsilon]rg(\[Delta]\[CapitalUpsilon]tfunFT[a,p,e,x]-\[CapitalUpsilon]tg/\[CapitalUpsilon]rg \[Delta]\[CapitalUpsilon]rfunFT[a,p,e,x])wr+dtgd\[Lambda]fun/Sqrt[1-EEg^2]\[Delta]rfunFTPerParRes[wr,a,p,e,x]
 ]
 
@@ -2181,7 +2186,7 @@ d\[Delta]td\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Azimuthal correction to the trajectory - purely oscillatory part*)
 
 
@@ -2207,7 +2212,6 @@ d\[Delta]td\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 
 	(*The following "trick" ensures that, for wr=\[Pi], \[Phi] is exaclty \[Pi]/2 and not an approximate result.*)
 	\[Phi]=JacobiAmplitude[1/\[Pi] EllipticK[krghold] wr,krghold]/.krghold->krg;
-
 	rg=rgICr2gfun[wr,a,p,e,x];
 
 	d\[Phi]gd\[Lambda]fun=((2a*EEg+Lzg(rg-2))rg)/(a^2-2 rg+rg^2);
@@ -2217,7 +2221,8 @@ d\[Delta]td\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 
 	\[ScriptCapitalI]=(2ellF)/(Sqrt[1-EEg^2] Sqrt[r2g(r1g-r3g)]);
 	\[ScriptCapitalI]r3g=2 /(Sqrt[1-EEg^2] Sqrt[r2g(r1g-r3g)]*r3g) ((r2g*ellE)/(r2g-r3g)-ellF);
-
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	-EEg(1-(Lzg \[Delta]EE)/(1-EEg^2))\[ScriptCapitalI]+\[Delta]Lz*\[ScriptCapitalI]+((2a*EEg+Lzg(r3g-2))r3g*\[Delta]r3)/(2(r3g-rm)(r3g-rp)) \[ScriptCapitalI]r3g-1/\[CapitalUpsilon]rg(\[Delta]\[CapitalUpsilon]\[Phi]funFT[a,p,e,x]-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]rg*\[Delta]\[CapitalUpsilon]rfunFT[a,p,e,x])wr+d\[Phi]gd\[Lambda]fun/Sqrt[1-EEg^2]*\[Delta]rfunFTPerParRes[wr,a,p,e,x]
 ]
 
@@ -2327,15 +2332,15 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Spin corrections to the orbit - parallel component of the spin, fixed constants of motion*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Bound trajectory*)
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Radial trajectory*)
 
 
@@ -2365,11 +2370,13 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 	ellE=EllipticE[\[Phi],krg];
 	
 	rg=rgICr2gfun[wr,a,p,e,x];
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	-((jSN*jCN(r1g-r2g)(r1g-r3g)(r2g-r3g)Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])/((1-jSN^2)r1g+jSN^2 r2g-r3g)^2)(\[Delta]\[CapitalUpsilon]r/\[CapitalUpsilon]rg(2ellF)/Yint+(r2g*ellE-r1g*ellF)/(r1g(r1g-r2g)Yint)\[Delta]r1+(-(r1g-r3g)ellE/((r1g-r2g)(r2g-r3g))+ellF/(r1g-r2g))/Yint*\[Delta]r2+\[Delta]r3/2*1/r3g  2/Yint((r2g ellE)/(r2g-r3g)-ellF)+2((jSN*jCN(r1g-r2g))/(r1g*r2g Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])-((r1g-r3g)ellE-r1g*ellF)/(r1g*r3g*Yint))\[Delta]r41-a/2 (-(2/(3r1g*r2g*r3g))((jSN*jCN(r1g-r2g)(r1g-r3g)(r2g-r3g)Sqrt[(r1g*r2g-jSN^2*r1g*r3g-r2g*r3g*jCN^2)])/(r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g)^2+((r1g+r2g+r3g)ellF)/Sqrt[r2g(r1g-r3g)]-2(r2g*r3g+r1g(r2g+r3g))((jSN*jCN(r1g-r2g))/(r1g*r2g Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])+(-((r1g-r3g)ellE)+r1g*ellF)/(r1g*r3g Sqrt[r2g(r1g-r3g)])))))+(rg(r2g(-r2g+rg)\[Delta]r1+r1g(r1g-rg)\[Delta]r2))/(r1g(r1g-r2g)r2g)
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Radial trajectory - rescaled version*)
 
 
@@ -2398,12 +2405,13 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 	ellE=EllipticE[\[Phi],krg];
 	
 	rg=rgICr2gfun[wr,a,p,e,x];
-
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	-(\[Delta]\[CapitalUpsilon]r/\[CapitalUpsilon]rg(2ellF)/Yint+(r2g*ellE-r1g*ellF)/(r1g(r1g-r2g)Yint)\[Delta]r1+(-(r1g-r3g)ellE/((r1g-r2g)(r2g-r3g))+ellF/(r1g-r2g))/Yint*\[Delta]r2+\[Delta]r3/2 1/r3g  2/Yint((r2g*ellE)/(r2g-r3g)-ellF)+2((jSN*jCN(r1g-r2g))/(r1g*r2g*Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])-((r1g-r3g)ellE-r1g*ellF)/(r1g*r3g*Yint))\[Delta]r41-a/2(-(2/(3r1g*r2g*r3g))((jSN*jCN(r1g-r2g)(r1g-r3g)(r2g-r3g)Sqrt[(r1g*r2g-jSN^2*r1g*r3g-r2g*r3g*jCN^2)])/(r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g)^2+((r1g+r2g+r3g)ellF)/Sqrt[r2g(r1g-r3g)]-2(r2g*r3g+r1g(r2g+r3g))((jSN*jCN(r1g-r2g))/(r1g*r2g Sqrt[r1g(r2g-jSN^2*r3g)-jCN^2*r2g*r3g])+(-((r1g-r3g)ellE)+r1g*ellF)/(r1g*r3g Sqrt[r2g(r1g-r3g)]))))+Sign[\[Pi]-Mod[wr,2 \[Pi]]](\[Delta]r1/(r1g(r1g-r2g)) (-((Sqrt[rg] Sqrt[rg-r2g])/(Sqrt[-rg+r1g] Sqrt[rg-r3g])))- \[Delta]r2/((r1g-r2g)r2g) ((Sqrt[rg] Sqrt[-rg+r1g] )/(Sqrt[rg-r2g] Sqrt[rg-r3g]))))
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Coordinate time trajectory - purely oscillatory part*)
 
 
@@ -2429,7 +2437,6 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 
 	(*The following "trick" ensures that, for wr=\[Pi], \[Phi] is exaclty \[Pi]/2 and not an approximate result.*)
 	\[Phi]=JacobiAmplitude[1/\[Pi] EllipticK[krghold] wr,krghold]/.krghold->krg;
-
 	rg=rgICr2gfun[wr,a,p,e,x];
 
 	dtgd\[Lambda]fun=(rg(-2a*Lzg+EEg(2a^2+a^2*rg+rg^3)))/(a^2-2rg+rg^2);
@@ -2443,6 +2450,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 	\[ScriptCapitalI]r2g=2 /(Sqrt[1-EEg^2] Sqrt[r2g(r1g-r3g)]) (-(((r1g-r3g)ellE)/((r1g-r2g)(r2g-r3g)))+ellF/(r1g-r2g));
 	\[ScriptCapitalI]r3g=2 /(Sqrt[1-EEg^2] Sqrt[r2g(r1g-r3g)]r3g) ((r2g*ellE)/(r2g-r3g)-ellF);
 
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	1/2 EEg((2+r1g)\[Delta]r1+(2+r2g)\[Delta]r2+(2+r3g)\[Delta]r3-\[Delta]\[Rho]i4^2+4\[Delta]\[Rho]r4)\[ScriptCapitalI]+(r1g(-2a*Lzg+EEg(2a^2+a^2*r1g+r1g^3)))/(2(r1g-rm)(r1g-rp)) \[ScriptCapitalI]r1g*\[Delta]r1+(r2g(-2a*Lzg+EEg(2a^2+a^2*r2g+r2g^3)))/(2(r2g-rm)(r2g-rp)) \[ScriptCapitalI]r2g*\[Delta]r2+(r3g(-2a*Lzg+EEg(2a^2+a^2*r3g+r3g^3)) )/(2(r3g-rm)(r3g-rp)) \[ScriptCapitalI]r3g*\[Delta]r3-1/\[CapitalUpsilon]rg (\[Delta]\[CapitalUpsilon]tfunFC[a,p,e,x]-\[CapitalUpsilon]tg/\[CapitalUpsilon]rg \[Delta]\[CapitalUpsilon]rfunFC[a,p,e,x])wr+Sign[\[Pi]-Mod[wr,2 \[Pi]]] (r1g(-2a*Lzg+EEg(2a^2+a^2*r1g+r1g^3)))/(Sqrt[1-EEg^2](r1g-rm)(r1g-rp)) (-((Sqrt[rg] Sqrt[rg-r2g])/(Sqrt[-rg+r1g] Sqrt[rg-r3g])) 1/(r1g(r1g-r2g)))\[Delta]r1+Sign[\[Pi]-Mod[wr,2 \[Pi]]] (r2g(-2a*Lzg+EEg(2a^2+a^2*r2g+r2g^3)))/(Sqrt[1-EEg^2](r2g-rm)(r2g-rp)) (-((Sqrt[rg] Sqrt[-rg+r1g] )/(Sqrt[rg-r2g] Sqrt[rg-r3g])) 1/((r1g-r2g)r2g))\[Delta]r2+dtgd\[Lambda]fun/Sqrt[1-EEg^2] \[Delta]rfunFCPerParRes[wr,a,p,e,x]
 ]
 
@@ -2475,7 +2483,7 @@ d\[Delta]td\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Azimuthal correction to the trajectory - purely oscillatory part*)
 
 
@@ -2499,7 +2507,6 @@ d\[Delta]td\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 
 	(*The following "trick" ensures that, for wr=\[Pi], \[Phi] is exaclty \[Pi]/2 and not an approximate result.*)
 	\[Phi]=JacobiAmplitude[1/\[Pi] EllipticK[krghold] wr,krghold]/.krghold->krg;
-
 	rg=rgICr2gfun[wr,a,p,e,x];
 
 	d\[Phi]gd\[Lambda]fun=((2a*EEg+Lzg(rg-2))rg)/(a^2-2rg+rg^2);
@@ -2511,7 +2518,8 @@ d\[Delta]td\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 	\[ScriptCapitalI]r1g=2 /(Sqrt[1-EEg^2] Sqrt[r2g (r1g-r3g)] r1g) ((r2g*ellE-r1g*ellF)/(r1g-r2g) );
 	\[ScriptCapitalI]r2g=2 /(Sqrt[1-EEg^2] Sqrt[r2g(r1g-r3g)]) (-(((r1g-r3g)ellE)/((r1g-r2g)(r2g-r3g)))+ellF/(r1g-r2g));
 	\[ScriptCapitalI]r3g=2 /(Sqrt[1-EEg^2] Sqrt[r2g(r1g-r3g)]r3g) ((r2g*ellE)/(r2g-r3g)-ellF);
-
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	-EEg*\[ScriptCapitalI]+((2a*EEg+Lzg(-2+r1g))r1g*\[Delta]r1)/(2(r1g-rm)(r1g-rp)) \[ScriptCapitalI]r1g+((2a*EEg+Lzg(-2+r2g))r2g*\[Delta]r2)/(2(r2g-rm)(r2g-rp)) \[ScriptCapitalI]r2g+((2a*EEg+Lzg(-2+r3g))r3g*\[Delta]r3)/(2(r3g-rm)(r3g-rp)) \[ScriptCapitalI]r3g-1/\[CapitalUpsilon]rg (\[Delta]\[CapitalUpsilon]\[Phi]funFC[a,p,e,x]-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]rg \[Delta]\[CapitalUpsilon]rfunFC[a,p,e,x])wr+Sign[\[Pi]-Mod[wr,2 \[Pi]]] ((2a*EEg+Lzg(-2+r1g))r1g*\[Delta]r1)/(Sqrt[1-EEg^2](r1g-rm)(r1g-rp)) (-((Sqrt[rg] Sqrt[rg-r2g])/(Sqrt[-rg+r1g] Sqrt[rg-r3g])) 1/(r1g(r1g-r2g))) +Sign[\[Pi]-Mod[wr,2 \[Pi]]] ((2a*EEg+Lzg(-2+r2g))r2g*\[Delta]r2)/(Sqrt[1-EEg^2](r2g-rm)(r2g-rp)) (-((Sqrt[rg] Sqrt[-rg+r1g] )/(Sqrt[rg-r2g] Sqrt[rg-r3g])) 1/((r1g-r2g)r2g))+d\[Phi]gd\[Lambda]fun/Sqrt[1-EEg^2] \[Delta]rfunFCPerParRes[wr,a,p,e,x]
 ]
 
@@ -2620,15 +2628,15 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Spin corrections to the orbit - parallel component of the spin, fixed eccentricity*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Bound trajectory*)
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Radial trajectory*)
 
 
@@ -2659,12 +2667,13 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 	ellE=EllipticE[\[Phi],krg];
 	
 	rg=rgICr1gfun[wr,a,p,e,x];
-
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	((jSN*jCN*r1g(r1g-r2g)r2g*Sqrt[r1g(r2g-jSN^2*r3g)-(1-jSN^2)r2g*r3g])/(jSN^2(r1g-r2g)+r2g)^2)(\[Delta]\[CapitalUpsilon]r/\[CapitalUpsilon]rg*(2ellF)/Sqrt[(r1g-r3g)r2g]+(EEg*\[Delta]EE)/(1-EEg^2)(2ellF)/Sqrt[(r1g-r3g)r2g]+((r2g*ellE-r1g*ellF)\[Delta]r1)/(Sqrt[(r1g-r3g)r2g]r1g(r1g-r2g))+1/Sqrt[(r1g-r3g)r2g](-(((r1g-r3g)ellE)/((r1g-r2g)(r2g-r3g)))+ellF/(r1g-r2g))\[Delta]r2+1/Sqrt[(r1g-r3g)r2g] 1/r3g(((r2g*ellE)/(r2g-r3g)-ellF)+(r3g*r2g(-r1g+r2g)Cos[\[Phi]]*Sin[\[Phi]])/((r2g(r1g-r3g))(r2g-r3g)Sqrt[1-krg*Sin[\[Phi]]^2]))\[Delta]r3+2((-(r1g-r3g)ellE+r1g*ellF)/(r1g Sqrt[r2g(r1g-r3g)]r3g))\[Delta]r41-a/2 (-((4ellE Sqrt[r2g(r1g-r3g)](r2g*r3g+r1g(r2g+r3g)))/(3r1g^2r2g^2r3g^2))+(2ellF((r2g-r3g)r3g+r1g(2r2g+r3g)))/(3r1g*r2g Sqrt[r2g (r1g-r3g)]r3g^2)-(2(-r1g+r2g)(r1g-r3g)^2Cos[\[Phi]]*Sin[\[Phi]]Sqrt[1-krg*Sin[\[Phi]]^2])/(3r1g^2(r2g(r1g-r3g))^(3/2)r3g)))+(((rg-r2g)(rg-r3g))/((r1g-r2g)(r1g-r3g))\[Delta]r1+((r1g-rg)(rg-r3g))/((r1g-r2g)(r2g-r3g))\[Delta]r2)
 ]
 
 
-\[Delta]rfunOfrFEPerPar[r_,a_,p_,e_,x_]:=Module[{r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Delta]r41,EEg,\[Delta]EE,\[CapitalUpsilon]rg,\[Delta]\[CapitalUpsilon]r,\[Phi],krghold,krg,ellF,ellE},
+\[Delta]rfunOfrFEPerPar[r_,a_,p_,e_,x_]:=Module[{r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Delta]r41,EEg,\[Delta]EE,\[CapitalUpsilon]rg,\[Delta]\[CapitalUpsilon]r,\[Phi],krg,ellF,ellE},
 	EEg=EEgfun[a,p,e,x];
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
 	\[CapitalUpsilon]rg=\[CapitalUpsilon]rgfun[a,p,e,x];
@@ -2687,7 +2696,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Radial trajectory - rescaled version*)
 
 
@@ -2717,11 +2726,13 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 	ellE=EllipticE[\[Phi],krg];
 	
 	rg=rgICr1gfun[wr,a,p,e,x];
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	\[Delta]\[CapitalUpsilon]r/\[CapitalUpsilon]rg(2ellF)/Sqrt[(r1g-r3g)r2g]+(EEg*\[Delta]EE)/(1-EEg^2)(2ellF)/Sqrt[(r1g-r3g)r2g]+((r2g*ellE-r1g*ellF)\[Delta]r1)/(Sqrt[(r1g-r3g)r2g]r1g(r1g-r2g) )+1/Sqrt[(r1g-r3g)r2g](-(((r1g-r3g)ellE)/((r1g-r2g)(r2g-r3g)))+ellF/(r1g-r2g))\[Delta]r2+1/Sqrt[(r1g-r3g)r2g] 1/r3g (((r2g*ellE)/(r2g-r3g)-ellF)+(r3g*r2g(-r1g+r2g)Cos[\[Phi]]*Sin[\[Phi]])/((r2g(r1g-r3g))(r2g-r3g)Sqrt[1-krg*Sin[\[Phi]]^2]))\[Delta]r3+2((-(r1g-r3g)ellE+r1g*ellF)/(r1g*r3g*Sqrt[r2g(r1g-r3g)]))\[Delta]r41-a/2(-((4ellE Sqrt[r2g(r1g-r3g)](r2g*r3g+r1g(r2g+r3g)))/(3r1g^2r2g^2r3g^2))+(2ellF((r2g-r3g)r3g+r1g(2r2g+r3g)))/(3r1g*r2g*r3g^2 Sqrt[r2g(r1g-r3g)])-(2(-r1g+r2g)(r1g-r3g)Cos[\[Phi]]*Sin[\[Phi]]Sqrt[1-krg*Sin[\[Phi]]^2])/(3r1g^2r2g*r3g Sqrt[r2g(r1g-r3g)]))+Sign[\[Pi]-Mod[wr,2\[Pi]]](Sqrt[(-r2g+rg)(-r3g+rg)]/((r1g-r2g)(r1g-r3g)Sqrt[(r1g-rg)rg])\[Delta]r1+Sqrt[(r1g-rg)(-r3g+rg)]/((r1g-r2g)(r2g-r3g)Sqrt[rg(-r2g+rg)])\[Delta]r2)
 ]
 
 
-\[Delta]rfunOfrFEPerParRes[r_,a_,p_,e_,x_]:=Module[{r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Delta]r41,EEg,\[Delta]EE,\[CapitalUpsilon]rg,\[Delta]\[CapitalUpsilon]r,\[Phi],krghold,krg,\[Gamma]rg,ellF,ellE},
+\[Delta]rfunOfrFEPerParRes[r_,a_,p_,e_,x_]:=Module[{r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Delta]r41,EEg,\[Delta]EE,\[CapitalUpsilon]rg,\[Delta]\[CapitalUpsilon]r,\[Phi],krg,\[Gamma]rg,ellF,ellE},
 	EEg=EEgfun[a,p,e,x];
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
 	\[CapitalUpsilon]rg=\[CapitalUpsilon]rgfun[a,p,e,x];
@@ -2744,7 +2755,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Coordinate time trajectory - purely oscillatory part*)
 
 
@@ -2769,7 +2780,6 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 
 	(*The following "trick" ensures that, for wr=\[Pi], \[Phi] is exaclty \[Pi]/2 and not an approximate result.*)
 	\[Phi]=JacobiAmplitude[1/\[Pi] EllipticK[krghold] wr,krghold]/.krghold->krg;
-
 	rg=rgICr1gfun[wr,a,p,e,x];
 
 	dtgd\[Lambda]fun=(rg(-2a*Lzg+EEg(2a^2+a^2*rg+rg^3)))/(a^2-2rg+rg^2);
@@ -2788,6 +2798,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 	\[ScriptCapitalI]rover=(2r1g)/(Sqrt[(r1g-r3g)r2g])ellPi;
 	\[ScriptCapitalI]r2over=(r2g((r1g-r3g)ellE-r1g*ellF))/(Sqrt[r2g(r1g-r3g)])+(r1g(r1g+r2g+r3g)ellPi)/(Sqrt[r2g(r1g-r3g)])+((r1g-r2g)Sqrt[r2g(r1g-r3g)]Cos[\[Phi]]*Sin[\[Phi]]Sqrt[1-krg*Sin[\[Phi]]^2])/((r2g+(r1g-r2g)Sin[\[Phi]]^2));
 
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	1/Sqrt[1-EEg^2]((4\[Delta]EE)/(1-EEg^2)\[ScriptCapitalI]+((2\[Delta]EE)/(1-EEg^2)+1/2 EEg(\[Delta]r1+\[Delta]r2+\[Delta]r3+2\[Delta]\[Rho]r4))\[ScriptCapitalI]rover+\[Delta]EE/(1-EEg^2)\[ScriptCapitalI]r2over+1/2 EEg((2+r1g)\[Delta]r1+(2+r2g)\[Delta]r2+(2+r3g)\[Delta]r3-\[Delta]\[Rho]i4^2+4\[Delta]\[Rho]r4)\[ScriptCapitalI]+1/2dtgd\[Lambda]funr1g*\[ScriptCapitalI]r1g*\[Delta]r1+1/2dtgd\[Lambda]funr2g*\[ScriptCapitalI]r2g*\[Delta]r2+1/2dtgd\[Lambda]funr3g*\[ScriptCapitalI]r3g*\[Delta]r3+Sign[\[Pi]-Mod[wr,2\[Pi]]]dtgd\[Lambda]funr1g*(Sqrt[(-r2g+rg)(-r3g+rg)]/((r1g-r2g)(r1g-r3g)Sqrt[(r1g-rg)rg]))\[Delta]r1+Sign[\[Pi]-Mod[wr,2\[Pi]]]dtgd\[Lambda]funr2g*(Sqrt[(r1g-rg)(-r3g+rg)]/((r1g-r2g)(r2g-r3g)Sqrt[rg(-r2g+rg)]))\[Delta]r2-dtgd\[Lambda]fun*\[Delta]rfunFEPerParRes[wr,a,p,e,x])-1/\[CapitalUpsilon]rg(\[Delta]\[CapitalUpsilon]tfunFE[a,p,e,x]-\[CapitalUpsilon]tg/\[CapitalUpsilon]rg*\[Delta]\[CapitalUpsilon]rfunFE[a,p,e,x])wr
 ]	
 
@@ -2864,7 +2875,7 @@ d\[Delta]td\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Azimuthal correction to the trajectory - purely oscillatory part*)
 
 
@@ -2887,7 +2898,6 @@ d\[Delta]td\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 	
 	(*The following "trick" ensures that, for wr=\[Pi], \[Phi] is exaclty \[Pi]/2 and not an approximate result.*)
 	\[Phi]=JacobiAmplitude[1/\[Pi] EllipticK[krghold] wr,krghold]/.krghold->krg;
-
 	rg=rgICr1gfun[wr,a,p,e,x];
 
 	d\[Phi]gd\[Lambda]fun=((2a*EEg+Lzg(rg-2))rg)/(a^2-2rg+rg^2);
@@ -2903,6 +2913,7 @@ d\[Delta]td\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 	\[ScriptCapitalI]r2g=2/(Sqrt[r2g(r1g-r3g)])(-(((r1g-r3g)ellE)/((r1g-r2g)(r2g-r3g)))+ellF/(r1g-r2g));
 	\[ScriptCapitalI]r3g=2/(Sqrt[r2g(r1g-r3g)]r3g)(((r2g*ellE)/(r2g-r3g)-ellF)+(r3g*r2g(-r1g+r2g)Cos[\[Phi]]*Sin[\[Phi]])/((r2g(r1g-r3g))(r2g-r3g)Sqrt[1-krg*Sin[\[Phi]]^2]));
 	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	1/Sqrt[1-EEg^2](-EEg(1-(Lzg*\[Delta]EE)/(1-EEg^2))\[ScriptCapitalI]+\[Delta]Lz*\[ScriptCapitalI]+1/2d\[Phi]gd\[Lambda]funr1g*\[ScriptCapitalI]r1g*\[Delta]r1+1/2d\[Phi]gd\[Lambda]funr2g*\[ScriptCapitalI]r2g*\[Delta]r2+1/2d\[Phi]gd\[Lambda]funr3g*\[ScriptCapitalI]r3g*\[Delta]r3+Sign[\[Pi]-Mod[wr,2\[Pi]]]d\[Phi]gd\[Lambda]funr1g*\[Delta]r1*(Sqrt[(-r2g+rg)(-r3g+rg)]/((r1g-r2g)(r1g-r3g)Sqrt[(r1g-rg)rg]))+Sign[\[Pi]-Mod[wr,2\[Pi]]]d\[Phi]gd\[Lambda]funr2g*\[Delta]r2*(Sqrt[(r1g-rg)(-r3g+rg)]/((r1g-r2g)(r2g-r3g)Sqrt[rg(-r2g+rg)]))-d\[Phi]gd\[Lambda]fun*\[Delta]rfunFEPerParRes[wr,a,p,e,x])-1/\[CapitalUpsilon]rg(\[Delta]\[CapitalUpsilon]\[Phi]funFE[a,p,e,x]-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]rg \[Delta]\[CapitalUpsilon]rfunFE[a,p,e,x])wr
 ]
 
@@ -2911,7 +2922,7 @@ d\[Delta]td\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 (*Azimuthal correction to the trajectory as function of r*)
 
 
-\[Delta]\[Phi]funOfrFEPerPar[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[CapitalUpsilon]rg,\[CapitalUpsilon]\[Phi]g,r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Phi],d\[Phi]gd\[Lambda]fun,d\[Phi]gd\[Lambda]funr1g,d\[Phi]gd\[Lambda]funr2g,d\[Phi]gd\[Lambda]funr3g,krghold,krg,\[Gamma]r,ellF,ellE,\[ScriptCapitalI],\[ScriptCapitalI]r1g,\[ScriptCapitalI]r2g,\[ScriptCapitalI]r3g,\[ScriptCapitalI]rover,\[ScriptCapitalI]r2over},
+\[Delta]\[Phi]funOfrFEPerPar[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[CapitalUpsilon]rg,\[CapitalUpsilon]\[Phi]g,r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Phi],d\[Phi]gd\[Lambda]fun,d\[Phi]gd\[Lambda]funr1g,d\[Phi]gd\[Lambda]funr2g,d\[Phi]gd\[Lambda]funr3g,krg,\[Gamma]r,ellF,ellE,\[ScriptCapitalI],\[ScriptCapitalI]r1g,\[ScriptCapitalI]r2g,\[ScriptCapitalI]r3g,\[ScriptCapitalI]rover,\[ScriptCapitalI]r2over},
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
@@ -3793,7 +3804,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 (*Radial trajectory*)
 
 
-\[Delta]rfunPlungeBoundOrbitPar[r_,a_,p_,e_,x_]:=Module[{r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Delta]r41,EEg,\[Delta]EE,\[CapitalUpsilon]rg,\[Delta]\[CapitalUpsilon]r,\[Phi],krghold,krg,ellF,ellE},
+\[Delta]rfunPlungeBoundOrbitPar[r_,a_,p_,e_,x_]:=Module[{r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Delta]r41,EEg,\[Delta]EE,\[CapitalUpsilon]rg,\[Delta]\[CapitalUpsilon]r,\[Phi],krg,ellF,ellE},
 	EEg=EEgfun[a,p,e,x];
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
 	\[CapitalUpsilon]rg=\[CapitalUpsilon]rgfun[a,p,e,x];
@@ -3835,7 +3846,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 (*Radial trajectory - rescaled version*)
 
 
-\[Delta]rfunPlungeBoundOrbitParRes[r_,a_,p_,e_,x_]:=Module[{r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Delta]r41,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]KK,\[CapitalUpsilon]rg,\[Delta]\[CapitalUpsilon]r,\[Phi],krghold,krg,\[Gamma]rg,ellF,ellE},
+\[Delta]rfunPlungeBoundOrbitParRes[r_,a_,p_,e_,x_]:=Module[{r1g,r2g,r3g,\[Delta]r1,\[Delta]r2,\[Delta]r3,\[Delta]r41,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]KK,\[CapitalUpsilon]rg,\[Delta]\[CapitalUpsilon]r,\[Phi],krg,\[Gamma]rg,ellF,ellE},
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
@@ -4109,19 +4120,19 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Spin corrections to the orbit - orthogonal component of the spin *)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Spin precession phase*)
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Bound orbits*)
 
 
-\[Psi]pref[a_,p_,e_,x_]:=Module[{EEg,Lzg,r1g,r2g,r3g,\[Phi],d\[Delta]\[Phi]d\[Lambda]fun,dd\[Phi]gd\[Lambda]drfun,krghold,krg,Lzred,\[Gamma]r,\[Psi]freq},
+\[Psi]pref[a_,p_,e_,x_]:=Module[{EEg,Lzg,r1g,r2g,r3g,\[Phi],d\[Delta]\[Phi]d\[Lambda]fun,dd\[Phi]gd\[Lambda]drfun,krg,Lzred,\[Gamma]r,\[Psi]freq},
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
 	r1g=p/(1-e);
@@ -4152,10 +4163,12 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 
 	(*The following "trick" ensures that, for wr=\[Pi], \[Phi] is exaclty \[Pi]/2 and not an approximate result.*)
 	\[Phi]=JacobiAmplitude[1/\[Pi] EllipticK[krghold] wr,krghold]/.krghold->krg;
-
+	
 	Lzred=Lzg-a*EEg;
 	ellF=EllipticF[\[Phi],krg];
 	\[Psi]freq=RealSign[Lzred](2(a+EEg*Lzred)ellF)/(Sqrt[1-EEg^2]*Sqrt[r2g(r1g-r3g)])-(I(-a*Lzred-EEg*Lzred^2))/(Sqrt[1-EEg^2] Sqrt[r2g(r1g-r3g)])(ellF/(r3g-I*Abs[Lzred])-ellF/(r3g+I*Abs[Lzred])+((-r2g+r3g)EllipticPi[((r1g-r2g)(r3g-I*Abs[Lzred]))/((r1g-r3g)(r2g-I*Abs[Lzred])),\[Phi],krg])/((r3g-I*Abs[Lzred])(r2g-I*Abs[Lzred]))-((-r2g+r3g)EllipticPi[((r1g-r2g)(r3g+I*Abs[Lzred]))/((r1g-r3g)(r2g+I*Abs[Lzred])),\[Phi],krg])/((r3g+I*Abs[Lzred])(r2g+I*Abs[Lzred])));
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	Re[\[Psi]freq]-\[Psi]pref[a,p,e,x]wr
 ]
 
@@ -4176,6 +4189,8 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 	Lzred=Lzg-a*EEg;
 	sgn=RealSign[Lzg-a*EEg];
 	\[Psi]freq=r1g/Sqrt[(1-EEg^2)r2g(r1g-r3g)](a*Lzred+EEg*Lzred^2)/Abs[Lzred](EllipticPi[-\[Gamma]r*I*Abs[Lzred]/((r1g-I*Abs[Lzred])),\[Phi],krg]/(r1g-I*Abs[Lzred])+EllipticPi[\[Gamma]r*I*Abs[Lzred]/((r1g+I*Abs[Lzred])),\[Phi],krg]/(r1g+I*Abs[Lzred]));
+	
+	Remove[Evaluate[ToExpression[Pick[Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],StringMatchQ[#,"AnalyticSpinOrbitsHamiltonJacobi`Private`krghold$"~~__]&/@Names["AnalyticSpinOrbitsHamiltonJacobi`Private`*"],True]]]];
 	Re[\[Psi]freq]-\[Psi]pref[a,p,e,x]wr
 ]
 
@@ -4195,6 +4210,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 	Lzred=Lzg-a*EEg;
 	sgn=RealSign[Lzg-a*EEg];
 	\[Psi]freq=r1g/Sqrt[(1-EEg^2)r2g(r1g-r3g)](a*Lzred+EEg*Lzred^2)/Abs[Lzred](EllipticPi[-\[Gamma]r*I*Abs[Lzred]/((r1g-I*Abs[Lzred])),\[Phi],krg]/(r1g-I*Abs[Lzred])+EllipticPi[\[Gamma]r*I*Abs[Lzred]/((r1g+I*Abs[Lzred])),\[Phi],krg]/(r1g+I*Abs[Lzred]));
+	
 	Re[\[Psi]freq]
 ]
 
@@ -4343,7 +4359,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-\[Delta]zfunICr1gPer[wr_,a_,p_,e_,x_]:=Module[{EEg,Lzg,Lzred,\[CapitalUpsilon]rg,r1g,r2g,r3g,\[Phi],rg,krghold,krg,\[Psi]p,\[CapitalUpsilon]p},
+\[Delta]zfunICr1gPer[wr_,a_,p_,e_,x_]:=Module[{EEg,Lzg,Lzred,\[CapitalUpsilon]rg,r1g,r2g,r3g,\[Phi],rg,krg,\[Psi]p,\[CapitalUpsilon]p},
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
 	Lzred=Lzg-a EEg;
