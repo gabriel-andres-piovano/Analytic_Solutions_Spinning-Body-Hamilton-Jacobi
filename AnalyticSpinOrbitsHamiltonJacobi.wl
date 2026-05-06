@@ -104,7 +104,7 @@ FourierVel[wr_,coeff_]:=Module[{dim},
 ]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Geodesic quantities*)
 
 
@@ -423,7 +423,7 @@ dLzdpfunCC[a_,p_,e_,x_]:=Module[{Lzg,r1g,\[Rho]rg,\[CapitalDelta]r1g},
 ]
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Geodesics periodic trajectory*)
 
 
@@ -457,7 +457,7 @@ rgICr1gfun[wr_,a_,p_,e_,x_]:=Module[{EEg,r1g,r2g,r3g,krg,ellK,jSN},
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Coordinate time trajectory*)
 
 
@@ -547,7 +547,7 @@ tgICr1gfun[wr_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1g,r2g,r3g,krg,krghold,\[Gam
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Azimuthal trajectory*)
 
 
@@ -2042,7 +2042,7 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 ]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Spin corrections to the orbit - parallel component of the spin, fixed turning points*)
 
 
@@ -2050,7 +2050,7 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 (*Bound trajectory*)
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Radial trajectory*)
 
 
@@ -2083,7 +2083,7 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Radial trajectory - rescaled version*)
 
 
@@ -2115,7 +2115,7 @@ V\[Phi]rgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{EEg,Lzg},
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Coordinate time trajectory - purely oscillatory part*)
 
 
@@ -2186,7 +2186,7 @@ d\[Delta]td\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Azimuthal correction to the trajectory - purely oscillatory part*)
 
 
@@ -2332,15 +2332,15 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Spin corrections to the orbit - parallel component of the spin, fixed constants of motion*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Bound trajectory*)
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Radial trajectory*)
 
 
@@ -2376,7 +2376,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Radial trajectory - rescaled version*)
 
 
@@ -2411,7 +2411,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFTPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Coordinate time trajectory - purely oscillatory part*)
 
 
@@ -2483,7 +2483,7 @@ d\[Delta]td\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Azimuthal correction to the trajectory - purely oscillatory part*)
 
 
@@ -2628,15 +2628,15 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Spin corrections to the orbit - parallel component of the spin, fixed eccentricity*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Bound trajectory*)
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Radial trajectory*)
 
 
@@ -2696,7 +2696,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Radial trajectory - rescaled version*)
 
 
@@ -2755,7 +2755,7 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFCPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Coordinate time trajectory - purely oscillatory part*)
 
 
@@ -2875,7 +2875,7 @@ d\[Delta]td\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrlist,E
 ]
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Azimuthal correction to the trajectory - purely oscillatory part*)
 
 
@@ -4120,15 +4120,15 @@ d\[Delta]\[Phi]d\[Lambda]coefffunFEPerPar[nmax_,a_,p_,e_,x_]:=Module[{stepsr,wrl
 ]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Spin corrections to the orbit - orthogonal component of the spin *)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Spin precession phase*)
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Bound orbits*)
 
 
@@ -4546,8 +4546,8 @@ KerrNearEqSpinOrbitCorrFTPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 (*Fourier series expansion*)
 
 
-KerrNearEqSpinOrbitCorrFTPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g,\[CapitalUpsilon]p,\[Delta]EE,\[Delta]Lz,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]zs,\[CapitalUpsilon]\[Phi]s,stepsr,\[CapitalDelta]tspar,\[CapitalDelta]\[Phi]spar,\[Delta]rpar,\[Psi]phase,\[Delta]zort,
-	ExpniTable,wrlist,dtrgd\[Lambda]coeff,d\[Phi]rgd\[Lambda]coeff,dtspard\[Lambda]coeff,d\[Phi]spard\[Lambda]coeff,dtrgd\[Lambda],d\[Phi]rgd\[Lambda],drgd\[Lambda],rg,\[CapitalDelta]trg,\[CapitalDelta]\[Phi]rg,dtspard\[Lambda],drspard\[Lambda],dzspard\[Lambda],d\[Phi]spard\[Lambda]},
+KerrNearEqSpinOrbitCorrFTPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g,\[CapitalUpsilon]p,\[Delta]EE,\[Delta]Lz,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]zs,\[CapitalUpsilon]\[Phi]s,\[CapitalDelta]tspar,\[CapitalDelta]\[Phi]spar,\[Delta]rpar,\[Psi]phase,\[Delta]zort,
+	dtrgd\[Lambda]coeff,d\[Phi]rgd\[Lambda]coeff,dtspard\[Lambda]coeff,d\[Phi]spard\[Lambda]coeff,dtrgd\[Lambda],d\[Phi]rgd\[Lambda],drgd\[Lambda],rg,\[CapitalDelta]trg,\[CapitalDelta]\[Phi]rg,dtspard\[Lambda],drspard\[Lambda],dzspard\[Lambda],d\[Phi]spard\[Lambda]},
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
@@ -4562,20 +4562,13 @@ KerrNearEqSpinOrbitCorrFTPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x];
 	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x];
-	
-	(* steps for numerical integration *)
-	stepsr=4*nmax;
-	(* matrices of discrete Fourier transform *)
-	ExpniTable=Table[N[Exp[2Pi*I*n*(i-1/2)/stepsr],Precision[{a,p,e,x}]],{n,-nmax,nmax},{i,1,stepsr}];
-	
-	wrlist=Table[wr,{wr,2Pi/(stepsr)/2,2Pi,2Pi/(stepsr)}];
   
 	(* Fourier coeffients geodesic functions *)
 	dtrgd\[Lambda]coeff=VtrgcoeffICr2g[nmax,a,p,e,x];
 	d\[Phi]rgd\[Lambda]coeff=V\[Phi]rgcoeffICr2g[nmax,a,p,e,x];
 	
-	dtrgd\[Lambda][wr_]:=FourierVel[wr,dtspard\[Lambda]coeff];
-	d\[Phi]rgd\[Lambda][wr_]:=FourierVel[wr,d\[Phi]spard\[Lambda]coeff];
+	dtrgd\[Lambda][wr_]:=FourierVel[wr,dtrgd\[Lambda]coeff];
+	d\[Phi]rgd\[Lambda][wr_]:=FourierVel[wr,d\[Phi]rgd\[Lambda]coeff];
 	drgd\[Lambda][wr_]:=drgd\[Lambda]fun[wr,a,p,e,x];
 
 	\[CapitalDelta]trg[wr_]:=\[CapitalDelta]trgIntVel[wr,\[CapitalUpsilon]rg,dtrgd\[Lambda]coeff];
@@ -4703,8 +4696,8 @@ KerrNearEqSpinOrbitCorrFCPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 (*Fourier series expansion*)
 
 
-KerrNearEqSpinOrbitCorrFCPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g,\[CapitalUpsilon]p,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]zs,\[CapitalUpsilon]\[Phi]s,stepsr,\[CapitalDelta]tspar,\[CapitalDelta]\[Phi]spar,\[Delta]rpar,\[Psi]phase,\[Delta]zort,
-	ExpniTable,wrlist,dtrgd\[Lambda]coeff,d\[Phi]rgd\[Lambda]coeff,dtspard\[Lambda]coeff,d\[Phi]spard\[Lambda]coeff,dtrgd\[Lambda],d\[Phi]rgd\[Lambda],drgd\[Lambda],rg,\[CapitalDelta]trg,\[CapitalDelta]\[Phi]rg,dtspard\[Lambda],drspard\[Lambda],dzspard\[Lambda],d\[Phi]spard\[Lambda]},
+KerrNearEqSpinOrbitCorrFCPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g,\[CapitalUpsilon]p,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]zs,\[CapitalUpsilon]\[Phi]s,\[CapitalDelta]tspar,\[CapitalDelta]\[Phi]spar,\[Delta]rpar,\[Psi]phase,\[Delta]zort,
+	dtrgd\[Lambda]coeff,d\[Phi]rgd\[Lambda]coeff,dtspard\[Lambda]coeff,d\[Phi]spard\[Lambda]coeff,dtrgd\[Lambda],d\[Phi]rgd\[Lambda],drgd\[Lambda],rg,\[CapitalDelta]trg,\[CapitalDelta]\[Phi]rg,dtspard\[Lambda],drspard\[Lambda],dzspard\[Lambda],d\[Phi]spard\[Lambda]},
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
@@ -4715,20 +4708,13 @@ KerrNearEqSpinOrbitCorrFCPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	\[CapitalUpsilon]zg=\[CapitalUpsilon]zgfun[a,p,e,x];
 	\[CapitalUpsilon]\[Phi]g=\[CapitalUpsilon]\[Phi]grfun[a,p,e,x]+\[CapitalUpsilon]\[Phi]gzfun[a,p,e,x];
 	\[CapitalUpsilon]p=\[CapitalUpsilon]pfun[a,p,e,x];
-	
-	(* steps for numerical integration *)
-	stepsr=4*nmax;
-	(* matrices of discrete Fourier transform *)
-	ExpniTable=Table[N[Exp[2Pi*I*n*(i-1/2)/stepsr],Precision[{a,p,e,x}]],{n,-nmax,nmax},{i,1,stepsr}];
-	
-	wrlist=Table[wr,{wr,2Pi/(stepsr)/2,2Pi,2Pi/(stepsr)}];
   
 	(* Fourier coeffients geodesic functions *)
 	dtrgd\[Lambda]coeff=VtrgcoeffICr2g[nmax,a,p,e,x];
 	d\[Phi]rgd\[Lambda]coeff=V\[Phi]rgcoeffICr2g[nmax,a,p,e,x];
 	
-	dtrgd\[Lambda][wr_]:=FourierVel[wr,dtspard\[Lambda]coeff];
-	d\[Phi]rgd\[Lambda][wr_]:=FourierVel[wr,d\[Phi]spard\[Lambda]coeff];
+	dtrgd\[Lambda][wr_]:=FourierVel[wr,dtrgd\[Lambda]coeff];
+	d\[Phi]rgd\[Lambda][wr_]:=FourierVel[wr,d\[Phi]rgd\[Lambda]coeff];
 	drgd\[Lambda][wr_]:=drgd\[Lambda]fun[wr,a,p,e,x];
 
 	\[CapitalDelta]trg[wr_]:=\[CapitalDelta]trgIntVel[wr,\[CapitalUpsilon]rg,dtrgd\[Lambda]coeff];
@@ -5194,8 +5180,8 @@ KerrNearEqSpinOrbitCorrFE\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delt
 (*Fourier series expansion*)
 
 
-KerrNearEqSpinOrbitCorrFEPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g,\[CapitalUpsilon]p,\[Delta]EE,\[Delta]Lz,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]zs,\[CapitalUpsilon]\[Phi]s,stepsr,\[CapitalDelta]tspar,\[CapitalDelta]\[Phi]spar,\[Delta]rpar,\[Psi]phase,\[Delta]zort,
-	ExpniTable,wrlist,dtrgd\[Lambda]coeff,d\[Phi]rgd\[Lambda]coeff,dtspard\[Lambda]coeff,d\[Phi]spard\[Lambda]coeff,dtrgd\[Lambda],d\[Phi]rgd\[Lambda],drgd\[Lambda],rg,\[CapitalDelta]trg,\[CapitalDelta]\[Phi]rg,dtspard\[Lambda],drspard\[Lambda],dzspard\[Lambda],d\[Phi]spard\[Lambda]},
+KerrNearEqSpinOrbitCorrFEPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&)]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g,\[CapitalUpsilon]p,\[Delta]EE,\[Delta]Lz,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]zs,\[CapitalUpsilon]\[Phi]s,\[CapitalDelta]tspar,\[CapitalDelta]\[Phi]spar,\[Delta]rpar,\[Psi]phase,\[Delta]zort,
+	dtrgd\[Lambda]coeff,d\[Phi]rgd\[Lambda]coeff,dtspard\[Lambda]coeff,d\[Phi]spard\[Lambda]coeff,dtrgd\[Lambda],d\[Phi]rgd\[Lambda],drgd\[Lambda],rg,\[CapitalDelta]trg,\[CapitalDelta]\[Phi]rg,dtspard\[Lambda],drspard\[Lambda],dzspard\[Lambda],d\[Phi]spard\[Lambda]},
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
@@ -5210,20 +5196,13 @@ KerrNearEqSpinOrbitCorrFEPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
 	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
-	
-	(* steps for numerical integration *)
-	stepsr=4*nmax;
-	(* matrices of discrete Fourier transform *)
-	ExpniTable=Table[N[Exp[2Pi*I*n*(i-1/2)/stepsr],Precision[{a,p,e,x}]],{n,-nmax,nmax},{i,1,stepsr}];
-	
-	wrlist=Table[wr,{wr,2Pi/(stepsr)/2,2Pi,2Pi/(stepsr)}];
   
 	(* Fourier coeffients geodesic functions *)
 	dtrgd\[Lambda]coeff=VtrgcoeffICr1g[nmax,a,p,e,x];
 	d\[Phi]rgd\[Lambda]coeff=V\[Phi]rgcoeffICr1g[nmax,a,p,e,x];
 	
-	dtrgd\[Lambda][wr_]:=FourierVel[wr,dtspard\[Lambda]coeff];
-	d\[Phi]rgd\[Lambda][wr_]:=FourierVel[wr,d\[Phi]spard\[Lambda]coeff];
+	dtrgd\[Lambda][wr_]:=FourierVel[wr,dtrgd\[Lambda]coeff];
+	d\[Phi]rgd\[Lambda][wr_]:=FourierVel[wr,d\[Phi]rgd\[Lambda]coeff];
 	drgd\[Lambda][wr_]:=drgd\[Lambda]fun[wr,a,p,e,x];
 
 	\[CapitalDelta]trg[wr_]:=\[CapitalDelta]trgIntVel[wr,\[CapitalUpsilon]rg,dtrgd\[Lambda]coeff];
