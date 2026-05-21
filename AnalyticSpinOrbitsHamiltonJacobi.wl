@@ -4507,37 +4507,38 @@ KerrNearEqSpinOrbitCorrFTPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 	\[CapitalUpsilon]ts=\[Delta]\[CapitalUpsilon]tfunFT[a,p,e,x];
 	\[CapitalUpsilon]\[Phi]s=\[Delta]\[CapitalUpsilon]\[Phi]funFT[a,p,e,x];
 	
-<|
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)
+	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]zg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},
-	 "MinoFrequenciesCorrection"->{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
-	 "BLFrequenciesCorrection"->{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
+	 "MinoFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
+	 "BLFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
 	  (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
 	 "\[CapitalDelta]trg"->Function[{wr},tgICr2gfun[wr,a,p,e,x]],
 	 "\[CapitalDelta]\[Phi]rg"->Function[{wr},\[Phi]gICr2gfun[wr,a,p,e,x]],
 	 (*Keys geodesic radial trajectory*)
-	 "rg"->Function[{wr},rgICr2gfun[wr,a,p,e,x]],
+	 "rg"->Function[{wr},RealSign[x]*rgICr2gfun[wr,a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{wr},VtrgICr2gfun[wr,a,p,e,x]],
 	 "vrg"->Function[{wr},drgd\[Lambda]fun[wr,a,p,e,x]],
 	 "v\[Phi]g"->Function[{wr},V\[Phi]rgICr2gfun[wr,a,p,e,x]],
 	 (*Keys corrections trajectory*)
-	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},\[Delta]tfunFTPerPar[wr,a,p,e,x]],
-	 "\[Delta]rpar"->Function[{wr},\[Delta]rfunFTPerPar[wr,a,p,e,x]],
+	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},RealSign[x]*\[Delta]tfunFTPerPar[wr,a,p,e,x]],
+	 "\[Delta]rpar"->Function[{wr},RealSign[x]*\[Delta]rfunFTPerPar[wr,a,p,e,x]],
 	 "\[Psi]p"->Function[{wr},\[Psi]pICr2g[wr,a,p,e,x]],
 	 "\[Delta]zort"->Function[{wr},\[Delta]zfunICr2gPer[wr,a,p,e,x]],
-	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},\[Delta]\[Phi]funFTPerPar[wr,a,p,e,x]],
+	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},RealSign[x]*\[Delta]\[Phi]funFTPerPar[wr,a,p,e,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{wr},\[Delta]vtfunFTPerPar[wr,a,p,e,x]],
-	 "\[Delta]vrpar"->Function[{wr},\[Delta]vrfunFTPerPar[wr,a,p,e,x]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},\[Delta]v\[Phi]funFTPerPar[wr,a,p,e,x]]
+	 "\[Delta]vtpar"->Function[{wr},RealSign[x]*\[Delta]vtfunFTPerPar[wr,a,p,e,x]],
+	 "\[Delta]vrpar"->Function[{wr},RealSign[x]*\[Delta]vrfunFTPerPar[wr,a,p,e,x]],
+	 "\[Delta]v\[Phi]par"->Function[{wr},RealSign[x]*\[Delta]v\[Phi]funFTPerPar[wr,a,p,e,x]]
 	|>
 ]
 
@@ -4594,17 +4595,18 @@ KerrNearEqSpinOrbitCorrFTPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	dtspard\[Lambda][wr_]:=FourierVel[wr,dtspard\[Lambda]coeff];
 	d\[Phi]spard\[Lambda][wr_]:=FourierVel[wr,d\[Phi]spard\[Lambda]coeff];
 	drspard\[Lambda][wr_]:=\[Delta]vrfunFTPerPar[wr,a,p,e,x];
-			
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)				
 	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]zg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},
-	 "MinoFrequenciesCorrection"->{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
-	 "BLFrequenciesCorrection"->{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
+	 "MinoFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
+	 "BLFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
@@ -4617,15 +4619,15 @@ KerrNearEqSpinOrbitCorrFTPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	 "vrg"->Function[{wr},drgd\[Lambda][wr]],
 	 "v\[Phi]g"->Function[{wr},d\[Phi]rgd\[Lambda][wr]],
 	 (*Keys corrections trajectory*)
-	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},\[CapitalDelta]tspar[wr]],
-	 "\[Delta]rpar"->Function[{wr},\[Delta]rpar[wr]],
+	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},RealSign[x]*\[CapitalDelta]tspar[wr]],
+	 "\[Delta]rpar"->Function[{wr},RealSign[x]*\[Delta]rpar[wr]],
 	 "\[Psi]p"->Function[wr,\[Psi]phase[wr]],
 	 "\[Delta]zort"->Function[{wr},\[Delta]zort[wr]],
-	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},\[CapitalDelta]\[Phi]spar[wr]],
+	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},RealSign[x]*\[CapitalDelta]\[Phi]spar[wr]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{wr},dtspard\[Lambda][wr]],
-	 "\[Delta]vrpar"->Function[{wr},drspard\[Lambda][wr]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},d\[Phi]spard\[Lambda][wr]]
+	 "\[Delta]vtpar"->Function[{wr},RealSign[x]*dtspard\[Lambda][wr]],
+	 "\[Delta]vrpar"->Function[{wr},RealSign[x]*drspard\[Lambda][wr]],
+	 "\[Delta]v\[Phi]par"->Function[{wr},RealSign[x]*d\[Phi]spard\[Lambda][wr]]
 	|>
 ]
 
@@ -4658,8 +4660,9 @@ KerrNearEqSpinOrbitCorrFCPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 	\[CapitalUpsilon]rs=\[Delta]\[CapitalUpsilon]rfunFC[a,p,e,x];
 	\[CapitalUpsilon]ts=\[Delta]\[CapitalUpsilon]tfunFC[a,p,e,x];
 	\[CapitalUpsilon]\[Phi]s=\[Delta]\[CapitalUpsilon]\[Phi]funFC[a,p,e,x];
-			
-<|
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)		
+	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
@@ -4667,8 +4670,8 @@ KerrNearEqSpinOrbitCorrFCPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 	 "Jzs"->0,
 	 "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]zg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},
-	 "MinoFrequenciesCorrection"->{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
-	 "BLFrequenciesCorrection"->{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
+	 "MinoFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
+	 "BLFrequenciesCorrection"->{RealSign[x]*\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
 	  (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
@@ -4681,15 +4684,15 @@ KerrNearEqSpinOrbitCorrFCPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 	 "vrg"->Function[{wr},drgd\[Lambda]fun[wr,a,p,e,x]],
 	 "v\[Phi]g"->Function[{wr},V\[Phi]rgICr2gfun[wr,a,p,e,x]],
 	 (*Keys corrections trajectory*)
-	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},\[Delta]tfunFCPerPar[wr,a,p,e,x]],
-	 "\[Delta]rpar"->Function[{wr},\[Delta]rfunFCPerPar[wr,a,p,e,x]],
+	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},RealSign[x]*\[Delta]tfunFCPerPar[wr,a,p,e,x]],
+	 "\[Delta]rpar"->Function[{wr},RealSign[x]*\[Delta]rfunFCPerPar[wr,a,p,e,x]],
 	 "\[Psi]p"->Function[{wr},\[Psi]pICr2g[wr,a,p,e,x]],
 	 "\[Delta]zort"->Function[{wr},\[Delta]zfunICr2gPer[wr,a,p,e,x]],
 	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},\[Delta]\[Phi]funFCPerPar[wr,a,p,e,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{wr},\[Delta]vtfunFCPerPar[wr,a,p,e,x]],
-	 "\[Delta]vrpar"->Function[{wr},\[Delta]vrfunFCPerPar[wr,a,p,e,x]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},\[Delta]v\[Phi]funFCPerPar[wr,a,p,e,x]]
+	 "\[Delta]vtpar"->Function[{wr},RealSign[x]*\[Delta]vtfunFCPerPar[wr,a,p,e,x]],
+	 "\[Delta]vrpar"->Function[{wr},RealSign[x]*\[Delta]vrfunFCPerPar[wr,a,p,e,x]],
+	 "\[Delta]v\[Phi]par"->Function[{wr},RealSign[x]*\[Delta]v\[Phi]funFCPerPar[wr,a,p,e,x]]
 	|>
 ]
 
@@ -4742,7 +4745,8 @@ KerrNearEqSpinOrbitCorrFCPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	dtspard\[Lambda][wr_]:=FourierVel[wr,dtspard\[Lambda]coeff];
 	d\[Phi]spard\[Lambda][wr_]:=FourierVel[wr,d\[Phi]spard\[Lambda]coeff];
 	drspard\[Lambda][wr_]:=\[Delta]vrfunFCPerPar[wr,a,p,e,x];
-			
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)		
 	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
@@ -4751,8 +4755,8 @@ KerrNearEqSpinOrbitCorrFCPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	 "Jzs"->0,
 	 "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]zg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},
-	 "MinoFrequenciesCorrection"->{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
-	 "BLFrequenciesCorrection"->{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
+	 "MinoFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
+	 "BLFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
@@ -4765,15 +4769,15 @@ KerrNearEqSpinOrbitCorrFCPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	 "vrg"->Function[{wr},drgd\[Lambda][wr]],
 	 "v\[Phi]g"->Function[{wr},d\[Phi]rgd\[Lambda][wr]],
 	 (*Keys corrections trajectory*)
-	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},\[CapitalDelta]tspar[wr]],
-	 "\[Delta]rpar"->Function[{wr},\[Delta]rpar[wr]],
+	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},RealSign[x]*\[CapitalDelta]tspar[wr]],
+	 "\[Delta]rpar"->Function[{wr},RealSign[x]*\[Delta]rpar[wr]],
 	 "\[Psi]p"->Function[wr,\[Psi]phase[wr]],
 	 "\[Delta]zort"->Function[{wr},\[Delta]zort[wr]],
-	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},\[CapitalDelta]\[Phi]spar[wr]],
+	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},RealSign[x]*\[CapitalDelta]\[Phi]spar[wr]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{wr},dtspard\[Lambda][wr]],
-	 "\[Delta]vrpar"->Function[{wr},drspard\[Lambda][wr]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},d\[Phi]spard\[Lambda][wr]]
+	 "\[Delta]vtpar"->Function[{wr},RealSign[x]*dtspard\[Lambda][wr]],
+	 "\[Delta]vrpar"->Function[{wr},RealSign[x]*drspard\[Lambda][wr]],
+	 "\[Delta]v\[Phi]par"->Function[{wr},RealSign[x]*d\[Phi]spard\[Lambda][wr]]
 	|>
 ]
 
@@ -4793,34 +4797,32 @@ KerrNearEqSpinOrbitCorrFCPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 KerrNearEqSpinOrbitCorrFEPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g,\[CapitalUpsilon]p,\[Delta]EE,\[Delta]Lz,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]zs,\[CapitalUpsilon]\[Phi]s},
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,p,e,x];
-	Lzg=Lzgfun[a,p,e,x];
-	
+	Lzg=Lzgfun[a,p,e,x];	
 	(* geodesic frequencies *)
 	\[CapitalUpsilon]tg=\[CapitalUpsilon]tgrfun[a,p,e,x]+\[CapitalUpsilon]tgzfun[a,p,e,x];
 	\[CapitalUpsilon]rg=\[CapitalUpsilon]rgfun[a,p,e,x];
 	\[CapitalUpsilon]zg=\[CapitalUpsilon]zgfun[a,p,e,x];
 	\[CapitalUpsilon]\[Phi]g=\[CapitalUpsilon]\[Phi]grfun[a,p,e,x]+\[CapitalUpsilon]\[Phi]gzfun[a,p,e,x];
-	\[CapitalUpsilon]p=\[CapitalUpsilon]pfun[a,p,e,x];
-	
+	\[CapitalUpsilon]p=\[CapitalUpsilon]pfun[a,p,e,x];	
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
-	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
-	  
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];	  
 	(* spin correction radial and polar frequencies *)
 	\[CapitalUpsilon]rs=\[Delta]\[CapitalUpsilon]rfunFE[a,p,e,x];
 	\[CapitalUpsilon]ts=\[Delta]\[CapitalUpsilon]tfunFE[a,p,e,x];
 	\[CapitalUpsilon]\[Phi]s=\[Delta]\[CapitalUpsilon]\[Phi]funFE[a,p,e,x];
-				
-<|
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)				
+	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]zg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},
-	 "MinoFrequenciesCorrection"->{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
-	 "BLFrequenciesCorrection"->{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
+	 "MinoFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
+	 "BLFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
@@ -4834,23 +4836,23 @@ KerrNearEqSpinOrbitCorrFEPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 	 "vrgOfr"->Function[{r},drgd\[Lambda]funOfr[r,a,p,e,x]],
 	 "v\[Phi]g"->Function[{wr},V\[Phi]rgICr1gfun[wr,a,p,e,x]],
 	 (*Keys corrections trajectory*)
-	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},\[Delta]tfunFEPerPar[wr,a,p,e,x]],
-	 "\[Delta]tOfrpar"->Function[{r},\[Delta]tfunOfrFEPerPar[r,a,p,e,x]],
-	 "\[Delta]rpar"->Function[{wr},\[Delta]rfunFEPerPar[wr,a,p,e,x]],
-	 "\[Delta]rOfrpar"->Function[{r},\[Delta]rfunOfrFEPerPar[r,a,p,e,x]],
-	 "\[Psi]p"->Function[{wr},\[Psi]pICr1g[wr,a,p,e,x]],
-	 "\[Psi]pOfr"->Function[{r},\[Psi]pOfrICr1g[r,a,p,e,x]],
+	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},RealSign[x]*\[Delta]tfunFEPerPar[wr,a,p,e,x]],
+	 "\[Delta]tOfrpar"->Function[{r},RealSign[x]*\[Delta]tfunOfrFEPerPar[r,a,p,e,x]],
+	 "\[Delta]rpar"->Function[{wr},RealSign[x]*\[Delta]rfunFEPerPar[wr,a,p,e,x]],
+	 "\[Delta]rOfrpar"->Function[{r},RealSign[x]*\[Delta]rfunOfrFEPerPar[r,a,p,e,x]],
+	 "\[Psi]p"->Function[{wr},RealSign[x]*\[Psi]pICr1g[wr,a,p,e,x]],
+	 "\[Psi]pOfr"->Function[{r},RealSign[x]*\[Psi]pOfrICr1g[r,a,p,e,x]],
 	 "\[Delta]zort"->Function[{wr},\[Delta]zfunICr1gPer[wr,a,p,e,x]],
 	 "\[Delta]zOfrort"->Function[{r},\[Delta]zfunOfrICr1gPer[r,a,p,e,x]],
-	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},\[Delta]\[Phi]funFEPerPar[wr,a,p,e,x]],
-	 "\[Delta]\[Phi]Ofrpar"->Function[{r},\[Delta]\[Phi]funOfrFEPerPar[r,a,p,e,x]],
+	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},RealSign[x]*\[Delta]\[Phi]funFEPerPar[wr,a,p,e,x]],
+	 "\[Delta]\[Phi]Ofrpar"->Function[{r},RealSign[x]*\[Delta]\[Phi]funOfrFEPerPar[r,a,p,e,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{wr},\[Delta]vtfunFEPerPar[wr,a,p,e,x]],
-	 "\[Delta]vtOfrpar"->Function[{r},\[Delta]vtfunOfrFEPerPar[r,a,p,e,x]],
-	 "\[Delta]vrpar"->Function[{wr},\[Delta]vrfunFEPerPar[wr,a,p,e,x]],
-	 "\[Delta]vrOfrpar"->Function[{r},\[Delta]vrfunOfrFEPerPar[r,a,p,e,x]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},\[Delta]v\[Phi]funFEPerPar[wr,a,p,e,x]],
-	 "\[Delta]v\[Phi]Ofrpar"->Function[{r},\[Delta]v\[Phi]funOfrFEPerPar[r,a,p,e,x]]
+	 "\[Delta]vtpar"->Function[{wr},RealSign[x]*\[Delta]vtfunFEPerPar[wr,a,p,e,x]],
+	 "\[Delta]vtOfrpar"->Function[{r},RealSign[x]*\[Delta]vtfunOfrFEPerPar[r,a,p,e,x]],
+	 "\[Delta]vrpar"->Function[{wr},RealSign[x]*\[Delta]vrfunFEPerPar[wr,a,p,e,x]],
+	 "\[Delta]vrOfrpar"->Function[{r},RealSign[x]*\[Delta]vrfunOfrFEPerPar[r,a,p,e,x]],
+	 "\[Delta]v\[Phi]par"->Function[{wr},RealSign[x]*\[Delta]v\[Phi]funFEPerPar[wr,a,p,e,x]],
+	 "\[Delta]v\[Phi]Ofrpar"->Function[{r},RealSign[x]*\[Delta]v\[Phi]funOfrFEPerPar[r,a,p,e,x]]
 	|>
 ]
 
@@ -4862,33 +4864,31 @@ KerrNearEqSpinOrbitCorrFEPer[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 KerrNearEqSpinOrbitCorrFEHom[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g,\[CapitalUpsilon]p,\[Delta]EE,\[Delta]Lz,\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]zs,\[CapitalUpsilon]\[Phi]s},
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,p,e,x];
-	Lzg=Lzgfun[a,p,e,x];
-	
+	Lzg=Lzgfun[a,p,e,x];	
 	(* geodesic frequencies *)
 	\[CapitalUpsilon]tg=\[CapitalUpsilon]tgfunLim[a,p,e,x];
 	\[CapitalUpsilon]rg=0;
 	\[CapitalUpsilon]zg=\[CapitalUpsilon]zgfun[a,p,e,x];
 	\[CapitalUpsilon]\[Phi]g=\[CapitalUpsilon]\[Phi]gfunLim[a,p,e,x];
-	\[CapitalUpsilon]p=\[CapitalUpsilon]pfunLim[a,p,e,x];
-	
+	\[CapitalUpsilon]p=\[CapitalUpsilon]pfunLim[a,p,e,x];	
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
-	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
-	  
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];	  
 	(* spin correction radial and polar frequencies *)
 	\[CapitalUpsilon]ts=\[Delta]\[CapitalUpsilon]tfunLimFE[a,p,e,x];
 	\[CapitalUpsilon]\[Phi]s=\[Delta]\[CapitalUpsilon]\[Phi]funLimFE[a,p,e,x];
-
-<|
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)
+	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]zg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},
-	 "MinoFrequenciesCorrection"->{\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s},
-	 "BLFrequenciesCorrection"->{\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
+	 "MinoFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s},
+	 "BLFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
@@ -4901,17 +4901,17 @@ KerrNearEqSpinOrbitCorrFEHom[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 	 "vrg"->Function[{r},drgd\[Lambda]funHom[r,a,p,e,x]],
 	 "v\[Phi]g"->Function[{r},V\[Phi]rgfunHom[r,a,p,e,x]],
 	 (*Keys corrections trajectory*)
-	 "\[Delta]tpar"->Function[{r},\[Delta]tfunFEHomPar[r,a,p,e,x]],
-	 "\[Delta]rpar"->Function[{r},\[Delta]rfunFEHomPar[r,a,p,e,x]],
+	 "\[Delta]tpar"->Function[{r},RealSign[x]*\[Delta]tfunFEHomPar[r,a,p,e,x]],
+	 "\[Delta]rpar"->Function[{r},RealSign[x]*\[Delta]rfunFEHomPar[r,a,p,e,x]],
 	 "\[Psi]p"->Function[{r},\[Psi]pHom[r,a,p,e,x]],
 	 "\[Delta]zort"->Function[{r},\[Delta]zfunHom[r,a,p,e,x]],
-	 "\[Delta]\[Phi]par"->Function[{r},\[Delta]\[Phi]funFEHomPar[r,a,p,e,x]],
+	 "\[Delta]\[Phi]par"->Function[{r},RealSign[x]*\[Delta]\[Phi]funFEHomPar[r,a,p,e,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{r},\[Delta]vtfunFEHomPar[r,a,p,e,x]],
-	 "\[Delta]vrpar"->Function[{r},\[Delta]vrfunFEHomPar[r,a,p,e,x]],
-	 "\[Delta]v\[Phi]par"->Function[{r},\[Delta]v\[Phi]funFEHomPar[r,a,p,e,x]],
+	 "\[Delta]vtpar"->Function[{r},RealSign[x]*\[Delta]vtfunFEHomPar[r,a,p,e,x]],
+	 "\[Delta]vrpar"->Function[{r},RealSign[x]*\[Delta]vrfunFEHomPar[r,a,p,e,x]],
+	 "\[Delta]v\[Phi]par"->Function[{r},RealSign[x]*\[Delta]v\[Phi]funFEHomPar[r,a,p,e,x]],
 	 (*Shift separatrix*)
-	 "\[Delta]p"->\[Delta]pfun[a,p,e,x]
+	 "\[Delta]p"->RealSign[x]*\[Delta]pfun[a,p,e,x]
 	|>
 ]
 
@@ -4924,18 +4924,18 @@ KerrNearEqSpinOrbitCorrFEISCOPlunge[a_, x_]:=Module[{r1g,EEg,Lzg,\[Delta]EE,\[De
 	r1g=ISCOradius[a,x];
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,r1g,0,x];
-	Lzg=Lzgfun[a,r1g,0,x];
-	
+	Lzg=Lzgfun[a,r1g,0,x];	
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEISCOfunFE[a,x];
 	\[Delta]Lz=\[Delta]LzISCOfunFE[a,x];
-	  
-<|
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)    
+	<|
 	 "OrbitalElements"->{a,r1g,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "BLFrequenciesGeo"->Function[{r},\[CapitalOmega]\[Phi]gfunISCOplunge[r,a,x]],
 	 "BLFrequenciesCorrection"->Function[{r},\[Delta]\[CapitalOmega]\[Phi]funISCOplunge[r,a,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfunISCOplunge[r,a,x]],
@@ -4948,17 +4948,17 @@ KerrNearEqSpinOrbitCorrFEISCOPlunge[a_, x_]:=Module[{r1g,EEg,Lzg,\[Delta]EE,\[De
 	 "vrg"->Function[{r},drgd\[Lambda]funISCOplunge[r,a,x]],
 	 "v\[Phi]g"->Function[{r},V\[Phi]rgfunISCOplunge[r,a,x]],
 	 (*Keys corrections trajectory*)
-	 "\[Delta]tpar"->Function[{r},\[Delta]tfunISCOplungePar[r,a,x]],
-	 "\[Delta]rpar"->Function[{r},\[Delta]rfunISCOplungePar[r,a,x]],
+	 "\[Delta]tpar"->Function[{r},RealSign[x]*\[Delta]tfunISCOplungePar[r,a,x]],
+	 "\[Delta]rpar"->Function[{r},RealSign[x]*\[Delta]rfunISCOplungePar[r,a,x]],
 	 "\[Psi]p"->Function[{r},\[Psi]pISCOplunge[r,a,x]],
 	 "\[Delta]zort"->Function[{r},\[Delta]zfunISCOplunge[r,a,x]],
-	 "\[Delta]\[Phi]par"->Function[{r},\[Delta]\[Phi]funISCOplungePar[r,a,x]],
+	 "\[Delta]\[Phi]par"->Function[{r},RealSign[x]*\[Delta]\[Phi]funISCOplungePar[r,a,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{r},\[Delta]vtfunISCOplungePar[r,a,x]],
-	 "\[Delta]vrpar"->Function[{r},\[Delta]vrfunISCOplungePar[r,a,x]],
-	 "\[Delta]v\[Phi]par"->Function[{r},\[Delta]v\[Phi]funISCOplungePar[r,a,x]],
+	 "\[Delta]vtpar"->Function[{r},RealSign[x]*\[Delta]vtfunISCOplungePar[r,a,x]],
+	 "\[Delta]vrpar"->Function[{r},RealSign[x]*\[Delta]vrfunISCOplungePar[r,a,x]],
+	 "\[Delta]v\[Phi]par"->Function[{r},RealSign[x]*\[Delta]v\[Phi]funISCOplungePar[r,a,x]],
 	 (*Shift ISCO*)
-	 "\[Delta]ISCO"->\[Delta]rISCOfunFE[a,x]
+	 "\[Delta]ISCO"->RealSign[x]*\[Delta]rISCOfunFE[a,x]
 	|>
 ]
 
@@ -4970,20 +4970,20 @@ KerrNearEqSpinOrbitCorrFEISCOPlunge[a_, x_]:=Module[{r1g,EEg,Lzg,\[Delta]EE,\[De
 KerrNearEqSpinOrbitCorrFECritPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz},
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,p,e,x];
-	Lzg=Lzgfun[a,p,e,x];
-	
+	Lzg=Lzgfun[a,p,e,x];	
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
 	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
-			
-<|
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)		
+	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "BLFrequenciesGeo"->Function[{r},\[CapitalOmega]\[Phi]gfun[r,a,p,e,x]],
-	 "BLFrequenciesCorrection"->Function[{r},\[Delta]\[CapitalOmega]\[Phi]funCritplunge[r,a,p,e,x]],
+	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funCritplunge[r,a,p,e,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfun[r,a,p,e,x]],
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
 	 "trg"->Function[{r},tgfunCritplunge[r,a,p,e,x]],
@@ -4995,17 +4995,17 @@ KerrNearEqSpinOrbitCorrFECritPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,
 	 "vrg"->Function[{r},drgd\[Lambda]funCritplunge[r,a,p,e,x]],
 	 "v\[Phi]g"->Function[{r},V\[Phi]rgfunCritplunge[r,a,p,e,x]],
 	 (*Keys corrections trajectory*)
-	 "\[Delta]tpar"->Function[{r},\[Delta]tfunCritplungePar[r,a,p,e,x]],
-	 "\[Delta]rpar"->Function[{r},\[Delta]rfunCritplungePar[r,a,p,e,x]],
+	 "\[Delta]tpar"->Function[{r},RealSign[x]*\[Delta]tfunCritplungePar[r,a,p,e,x]],
+	 "\[Delta]rpar"->Function[{r},RealSign[x]*\[Delta]rfunCritplungePar[r,a,p,e,x]],
 	 "\[Psi]p"->Function[{r},\[Psi]pCritplunge[r,a,p,e,x]],
 	 "\[Delta]zort"->Function[{r},\[Delta]zfunCritplunge[r,a,p,e,x]],
-	 "\[Delta]\[Phi]par"->Function[{r},\[Delta]\[Phi]funCritplungePar[r,a,p,e,x]],
+	 "\[Delta]\[Phi]par"->Function[{r},RealSign[x]*\[Delta]\[Phi]funCritplungePar[r,a,p,e,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{r},\[Delta]vtfunCritplungePar[r,a,p,e,x]],
-	 "\[Delta]vrpar"->Function[{r},\[Delta]vrfunCritplungePar[r,a,p,e,x]],
-	 "\[Delta]v\[Phi]par"->Function[{r},\[Delta]v\[Phi]funCritplungePar[r,a,p,e,x]],
+	 "\[Delta]vtpar"->Function[{r},RealSign[x]*\[Delta]vtfunCritplungePar[r,a,p,e,x]],
+	 "\[Delta]vrpar"->Function[{r},RealSign[x]*\[Delta]vrfunCritplungePar[r,a,p,e,x]],
+	 "\[Delta]v\[Phi]par"->Function[{r},RealSign[x]*\[Delta]v\[Phi]funCritplungePar[r,a,p,e,x]],
 	 (*Shift separatrix*)
-	 "\[Delta]p"->\[Delta]pfun[a,p,e,x]
+	 "\[Delta]p"->RealSign[x]*\[Delta]pfun[a,p,e,x]
 	|>
 ]
 
@@ -5017,20 +5017,20 @@ KerrNearEqSpinOrbitCorrFECritPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,
 KerrNearEqSpinOrbitCorrFEPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz},
 	(* geodesic constants of motion *)
 	EEg=EEgfunCC[p,e];
-	Lzg=LzgfunCC[a,p,e,x];
-	
+	Lzg=LzgfunCC[a,p,e,x];	
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEfunCC[a,p,e,x]+dEEdpfunCC[p,e]\[Delta]pfunCC[a,p,e,x];
 	\[Delta]Lz=\[Delta]LzfunCC[a,p,e,x]+dLzdpfunCC[a,p,e,x]\[Delta]pfunCC[a,p,e,x];
-			
-<|
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)		
+	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "BLFrequenciesGeo"->Function[{r},\[CapitalOmega]\[Phi]gfunPlunge[r,a,p,e,x]],
-	 "BLFrequenciesCorrection"->Function[{r},\[Delta]\[CapitalOmega]\[Phi]funPlunge[r,a,p,e,x]],
+	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funPlunge[r,a,p,e,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfunPlunge[r,a,p,e,x]],
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
 	 "trg"->Function[{r},tgfunPlunge[r,a,p,e,x]],
@@ -5042,17 +5042,17 @@ KerrNearEqSpinOrbitCorrFEPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[De
 	 "vrg"->Function[{r},drgd\[Lambda]funPlunge[r,a,p,e,x]],
 	 "v\[Phi]g"->Function[{r},V\[Phi]rgfunPlunge[r,a,p,e,x]],
 	 (*Keys corrections trajectory*)
-	 "\[Delta]tpar"->Function[{r},\[Delta]tfunPlungePar[r,a,p,e,x]],
-	 "\[Delta]rpar"->Function[{r},\[Delta]rfunPlungePar[r,a,p,e,x]],
+	 "\[Delta]tpar"->Function[{r},RealSign[x]*\[Delta]tfunPlungePar[r,a,p,e,x]],
+	 "\[Delta]rpar"->Function[{r},RealSign[x]*\[Delta]rfunPlungePar[r,a,p,e,x]],
 	 "\[Psi]p"->Function[r,\[Psi]pPlunge[r,a,p,e,x]],
 	 "\[Delta]zort"->Function[{r},\[Delta]zfunPlunge[r,a,p,e,x]],
-	 "\[Delta]\[Phi]par"->Function[{r},\[Delta]\[Phi]funPlungePar[r,a,p,e,x]],
+	 "\[Delta]\[Phi]par"->Function[{r},RealSign[x]*\[Delta]\[Phi]funPlungePar[r,a,p,e,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{r},\[Delta]vtfunPlungePar[r,a,p,e,x]],
-	 "\[Delta]vrpar"->Function[{r},\[Delta]vrfunPlungePar[r,a,p,e,x]],
-	 "\[Delta]v\[Phi]par"->Function[{r},\[Delta]v\[Phi]funPlungePar[r,a,p,e,x]],
+	 "\[Delta]vtpar"->Function[{r},RealSign[x]*\[Delta]vtfunPlungePar[r,a,p,e,x]],
+	 "\[Delta]vrpar"->Function[{r},RealSign[x]*\[Delta]vrfunPlungePar[r,a,p,e,x]],
+	 "\[Delta]v\[Phi]par"->Function[{r},RealSign[x]*\[Delta]v\[Phi]funPlungePar[r,a,p,e,x]],
 	 (*Shift separatrix*)
-	 "\[Delta]p"->\[Delta]pfunCC[a,p,e,x]
+	 "\[Delta]p"->RealSign[x]*\[Delta]pfunCC[a,p,e,x]
 	|>
 ]
 
@@ -5065,19 +5065,19 @@ KerrNearEqSpinOrbitCorrFEPlungeBoundOrbit[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Del
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,p,e,x];
 	Lzg=Lzgfun[a,p,e,x];
-	
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
 	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfun[a,p,e,x];
-			
-<|
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)				
+	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "BLFrequenciesGeo"->Function[{r},\[CapitalOmega]\[Phi]gfun[r,a,p,e,x]],
-	 "BLFrequenciesCorrection"->Function[{r},\[Delta]\[CapitalOmega]\[Phi]funPlungeBoundOrbit[r,a,p,e,x]],
+	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funPlungeBoundOrbit[r,a,p,e,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfun[r,a,p,e,x]],
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
 	 "trg"->Function[{r},tgfunPlungeBoundOrbit[r,a,p,e,x]],
@@ -5089,17 +5089,17 @@ KerrNearEqSpinOrbitCorrFEPlungeBoundOrbit[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Del
 	 "vrg"->Function[{r},drgd\[Lambda]funPlungeBoundOrbit[r,a,p,e,x]],
 	 "v\[Phi]g"->Function[{r},V\[Phi]rgfunPlungeBoundOrbit[r,a,p,e,x]],
 	 (*Keys corrections trajectory*)
-	 "\[Delta]tpar"->Function[{r},\[Delta]tfunPlungeBoundOrbitPar[r,a,p,e,x]],
-	 "\[Delta]rpar"->Function[{r},\[Delta]rfunPlungeBoundOrbitPar[r,a,p,e,x]],
+	 "\[Delta]tpar"->Function[{r},RealSign[x]*\[Delta]tfunPlungeBoundOrbitPar[r,a,p,e,x]],
+	 "\[Delta]rpar"->Function[{r},RealSign[x]*\[Delta]rfunPlungeBoundOrbitPar[r,a,p,e,x]],
 	 "\[Psi]p"->Function[{r},\[Psi]pPlungeBoundOrbit[r,a,p,e,x]],
 	 "\[Delta]zort"->Function[{r},\[Delta]zfunPlungeBoundOrbit[r,a,p,e,x]],
-	 "\[Delta]\[Phi]par"->Function[{r},\[Delta]\[Phi]funPlungeBoundOrbitPar[r,a,p,e,x]],
+	 "\[Delta]\[Phi]par"->Function[{r},RealSign[x]*\[Delta]\[Phi]funPlungeBoundOrbitPar[r,a,p,e,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{r},\[Delta]vtfunPlungeBoundOrbitPar[r,a,p,e,x]],
-	 "\[Delta]vrpar"->Function[{r},\[Delta]vrfunPlungeBoundOrbitPar[r,a,p,e,x]],
-	 "\[Delta]v\[Phi]par"->Function[{r},\[Delta]v\[Phi]funPlungeBoundOrbitPar[r,a,p,e,x]],
+	 "\[Delta]vtpar"->Function[{r},RealSign[x]*\[Delta]vtfunPlungeBoundOrbitPar[r,a,p,e,x]],
+	 "\[Delta]vrpar"->Function[{r},RealSign[x]*\[Delta]vrfunPlungeBoundOrbitPar[r,a,p,e,x]],
+	 "\[Delta]v\[Phi]par"->Function[{r},RealSign[x]*\[Delta]v\[Phi]funPlungeBoundOrbitPar[r,a,p,e,x]],
 	 (*Shift separatrix*)
-	 "\[Delta]p"->\[Delta]pfun[a,p,e,x]
+	 "\[Delta]p"->RealSign[x]*\[Delta]pfun[a,p,e,x]
 	|>
 ]
 
@@ -5111,20 +5111,20 @@ KerrNearEqSpinOrbitCorrFEPlungeBoundOrbit[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Del
 KerrNearEqSpinOrbitCorrFEPlungeBoundOrbitDoubleRoot[a_, p_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz},
 	(* geodesic constants of motion *)
 	EEg=EEgfun[a,p,0,x];
-	Lzg=Lzgfun[a,p,0,x];
-	
+	Lzg=Lzgfun[a,p,0,x];	
 	(* spin correction constants of motion *)
 	\[Delta]EE=\[Delta]EEfunFT[a,p,0,x]+dEEdpfun[a,p,0,x]\[Delta]pfun[a,p,0,x];
 	\[Delta]Lz=\[Delta]LzfunFT[a,p,0,x]+dLzdpfun[a,p,0,x]\[Delta]pfun[a,p,0,x];
-			
-<|
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)		
+	<|
 	 "OrbitalElements"->{a,p,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "BLFrequenciesGeo"->Function[{r},\[CapitalOmega]\[Phi]gfun[r,a,p,0,x]],
-	 "BLFrequenciesCorrection"->Function[{r},\[Delta]\[CapitalOmega]\[Phi]funPlungeBoundOrbitDoubleRoot[r,a,p,x]],
+	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funPlungeBoundOrbitDoubleRoot[r,a,p,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfun[r,a,p,0,x]],
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
 	 "trg"->Function[{r},tgfunPlungeBoundOrbitDoubleRoot[r,a,p,x]],
@@ -5136,17 +5136,17 @@ KerrNearEqSpinOrbitCorrFEPlungeBoundOrbitDoubleRoot[a_, p_, x_]:=Module[{EEg,Lzg
 	 "vrg"->Function[{r},drgd\[Lambda]funPlungeBoundOrbit[r,a,0,p,x]],
 	 "v\[Phi]g"->Function[{r},V\[Phi]rgfunPlungeBoundOrbit[r,a,0,p,x]],
 	 (*Keys corrections trajectory*)
-	 "\[Delta]tpar"->Function[{r},\[Delta]tfunPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
-	 "\[Delta]rpar"->Function[{r},\[Delta]rfunPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
+	 "\[Delta]tpar"->Function[{r},RealSign[x]*\[Delta]tfunPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
+	 "\[Delta]rpar"->Function[{r},RealSign[x]*\[Delta]rfunPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
 	 "\[Psi]p"->Function[{r},\[Psi]pPlungeBoundOrbitDoubleRoot[r,a,p,x]],
 	 "\[Delta]zort"->Function[{r},\[Delta]zfunPlungeBoundOrbitDoubleRoot[r,a,p,x]],
-	 "\[Delta]\[Phi]par"->Function[{r},\[Delta]\[Phi]funPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
+	 "\[Delta]\[Phi]par"->Function[{r},RealSign[x]*\[Delta]\[Phi]funPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{r},\[Delta]vtfunPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
-	 "\[Delta]vrpar"->Function[{r},\[Delta]vrfunPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
-	 "\[Delta]v\[Phi]par"->Function[{r},\[Delta]v\[Phi]funPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
+	 "\[Delta]vtpar"->Function[{r},RealSign[x]*\[Delta]vtfunPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
+	 "\[Delta]vrpar"->Function[{r},RealSign[x]*\[Delta]vrfunPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
+	 "\[Delta]v\[Phi]par"->Function[{r},RealSign[x]*\[Delta]v\[Phi]funPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
 	 (*Shift separatrix*)
-	 "\[Delta]p"->\[Delta]pfun[a,p,0,x]
+	 "\[Delta]p"->RealSign[x]*\[Delta]pfun[a,p,0,x]
 	|>
 ]
 
@@ -5159,7 +5159,6 @@ KerrNearEqSpinOrbitCorrFE\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delt
 	(* geodesic constants of motion *)
 	EEg=1;
 	Lzg=RealSign[x]2(1+Sqrt[1-RealSign[x]a]);
-	
 	(* spin correction constants of motion *)
 	\[Delta]EE=0;
 	\[Delta]Lz=(1-RealSign[x]a+Sqrt[1-RealSign[x]a])/(2+2Sqrt[1-a]-RealSign[x]a);
@@ -5169,13 +5168,13 @@ KerrNearEqSpinOrbitCorrFE\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delt
 	
 	\[Delta]rIBCO=-(1/2)((Lzg (r-2)^3 Sqrt[\[CapitalDelta]](2a*Lzred^4-2Lzred^3 r^2-2Lzred*a*Lzg*r^2+a*Lzg^2*r^3))/(Lzred^2(2a+Lzg(-2+r))r(-r Sqrt[\[CapitalDelta]](10a^2-4(4+\[CapitalDelta])+r(8+\[CapitalDelta]))+Sqrt[2]a Sqrt[r](2a^2(-1+r)+(4+r)\[CapitalDelta])RealSign[x])));
 			
-<|
+	<|
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "rIBCO"->r,
-	 "\[Delta]rIBCO"->\[Delta]rIBCO
+	 "\[Delta]rIBCO"->RealSign[x]*\[Delta]rIBCO
 	|>
 ]
 
@@ -5232,17 +5231,18 @@ KerrNearEqSpinOrbitCorrFEPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	dtspard\[Lambda][wr_]:=FourierVel[wr,dtspard\[Lambda]coeff];
 	d\[Phi]spard\[Lambda][wr_]:=FourierVel[wr,d\[Phi]spard\[Lambda]coeff];
 	drspard\[Lambda][wr_]:=\[Delta]vrfunFEPerPar[wr,a,p,e,x];
-			
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)		
 	<|
 	 "OrbitalElements"->{a,p,e,x},
 	 "Eg"->EEg,
 	 "Lzg"->Lzg,
-	 "Es"->\[Delta]EE,
-	 "Jzs"->\[Delta]Lz,
+	 "Es"->RealSign[x]*\[Delta]EE,
+	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]zg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},
-	 "MinoFrequenciesCorrection"->{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
-	 "BLFrequenciesCorrection"->{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
+	 "MinoFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]ts,\[CapitalUpsilon]rs,\[CapitalUpsilon]\[Phi]s},
+	 "BLFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]rs/\[CapitalUpsilon]tg-\[CapitalUpsilon]rg/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts,\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
@@ -5255,15 +5255,15 @@ KerrNearEqSpinOrbitCorrFEPerFourier[a_, p_, e_, x_, nmax_?(IntegerQ[#] && # > 0&
 	 "vrg"->Function[{wr},drgd\[Lambda][wr]],
 	 "v\[Phi]g"->Function[{wr},d\[Phi]rgd\[Lambda][wr]],
 	(*Keys corrections trajectory*)
-	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},\[CapitalDelta]tspar[wr]],
-	 "\[Delta]rpar"->Function[{wr},\[Delta]rpar[wr]],
+	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},RealSign[x]*\[CapitalDelta]tspar[wr]],
+	 "\[Delta]rpar"->Function[{wr},RealSign[x]*\[Delta]rpar[wr]],
 	 "\[Psi]p"->Function[wr,\[Psi]phase[wr]],
 	 "\[Delta]zort"->Function[{wr},\[Delta]zort[wr]],
-	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},\[CapitalDelta]\[Phi]spar[wr]],
+	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},RealSign[x]*\[CapitalDelta]\[Phi]spar[wr]],
 	 (*Keys corrections velocities*)
-	 "\[Delta]vtpar"->Function[{wr},dtspard\[Lambda][wr]],
-	 "\[Delta]vrpar"->Function[{wr},drspard\[Lambda][wr]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},d\[Phi]spard\[Lambda][wr]]
+	 "\[Delta]vtpar"->Function[{wr},RealSign[x]*dtspard\[Lambda][wr]],
+	 "\[Delta]vrpar"->Function[{wr},RealSign[x]*drspard\[Lambda][wr]],
+	 "\[Delta]v\[Phi]par"->Function[{wr},RealSign[x]*d\[Phi]spard\[Lambda][wr]]
 	|>
 ]
 
