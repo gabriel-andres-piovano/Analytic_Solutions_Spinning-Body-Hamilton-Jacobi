@@ -17,13 +17,13 @@ BeginPackage["AnalyticSpinOrbitsHamiltonJacobiSpectral`"];
 (*The spin-corrections are available in the fixed frequency (or "FF"), fixed turning points (or "FT"), and fixed eccentricity (or "FE") spin-gauges*)
 
 
-KerrNearEqSpinOrbitCorrFFSpectral::usage = "KerrNearEqSpinOrbitCorrFFPerFourier[a, p, e, x, tolerance] calculates the linear corrections to periodic orbits in the fixed frequency spin-gauge. The coordinate time and azimuthal trajectories are expanded in Fourier series. The initial radius at \[Lambda]=0 is the geodesic periastron.";
+KerrNearEqSpinOrbitCorrFFSpectral::usage = "KerrNearEqSpinOrbitCorrFFSpectral[a, p, e, x, tolerance] calculates the linear corrections to periodic orbits in the fixed frequency spin-gauge. The coordinate time and azimuthal trajectories are expanded in Fourier series. The initial radius at \[Lambda]=0 is the geodesic periastron.";
 
 
-KerrNearEqSpinOrbitCorrFESpectral::usage = "KerrNearEqSpinOrbitCorrFEPerFourier[a, p, e, x, tolerance] calculates the linear corrections to periodic orbits in the fixed eccentricity spin-gauge. The coordinate time and azimuthal trajectories are expanded in Fourier series. The initial radius at \[Lambda]=0 is the geodesic periastron.";
+KerrNearEqSpinOrbitCorrFESpectral::usage = "KerrNearEqSpinOrbitCorrFESpectral[a, p, e, x, tolerance] calculates the linear corrections to periodic orbits in the fixed eccentricity spin-gauge. The coordinate time and azimuthal trajectories are expanded in Fourier series. The initial radius at \[Lambda]=0 is the geodesic periastron.";
 
 
-KerrNearEqSpinOrbitCorrFTSpectral::usage = "KerrNearEqSpinOrbitCorrFTPerFourier[a, p, e, x, tolerance] calculates the linear corrections to periodic orbits in the fixed turning points spin-gauge. The coordinate time and azimuthal trajectories are expanded in Fourier series. The initial radius at \[Lambda]=0 is the geodesic periastron.";
+KerrNearEqSpinOrbitCorrFTSpectral::usage = "KerrNearEqSpinOrbitCorrFTSpectral[a, p, e, x, tolerance] calculates the linear corrections to periodic orbits in the fixed turning points spin-gauge. The coordinate time and azimuthal trajectories are expanded in Fourier series. The initial radius at \[Lambda]=0 is the geodesic periastron.";
 
 
 KerrNearEqFrequencyCorrFF::usage = "KerrNearEqFrequencyCorrFF[a, p, e, x] calculates the analytic geodesic frequencies and their linear spin corrections in the fixed frequency spin-gauge.";
@@ -42,7 +42,7 @@ Begin["`Private`"];
 (*NOTE: still need to find correct Fourier expansion spin-correction radial velocity fixed turning points.*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Building Fourier series*)
 
 
@@ -84,7 +84,7 @@ fourierd\[Delta]rd\[Lambda][wr_,\[CapitalUpsilon]rg_,\[Delta]\[CapitalUpsilon]r_
 ]
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Subroutine for spectral integration*)
 
 
@@ -96,7 +96,7 @@ Module[{N0,eps,nInt,steps,wrlist,sampledFunc,ExpniTable,coeffs,relerr,i,nmax,gro
 	N0=2^4;
 	nInt[n_]:=2^n*N0;
 	steps[n_]:=4nInt[n];
-	wrlist[n_]:=N[Table[wr,{wr,2Pi/(2*steps[n]),2Pi,2Pi/steps[n]}]];
+	wrlist[n_]:=N[Table[wr,{wr,2Pi/(2*steps[n]),2Pi,2Pi/steps[n]}],prec];
 	
 	sampledFunc[0]=func[wrlist[0]];
 	sampledFunc[n_]:=sampledFunc[n]=func[wrlist[n]];
@@ -132,7 +132,7 @@ Module[{N0,eps,nInt,steps,wrlist,sampledFunc,ExpniTable,coeffs,relerr,i,nmax,gro
 ];
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Geodesic quantities*)
 
 
@@ -788,7 +788,7 @@ V\[Phi]rgICr2gfun[wr_,a_,p_,e_,x_]:=Module[{EEg,Lzg,rg},
 	hp=hr ( r3g-rp)/(r2g-rp);
 	hm=hr ( r3g-rm)/(r2g-rm);
 
-	a/(rp-rm) ((2EEg*rp-a*Lzg)/(r3g-rp) (1-(r2g-r3g)/(r2g-rp) EllipticPi[hp,krg]/ellK))-a/(rp-rm) ((2EEg*rm-a*Lzg)/(r3g-rm) (1-(r2g-r3g)/(r2g-rm) EllipticPi[hm,krg]/ellK))
+	a/(rp-rm)((2EEg*rp-a*Lzg)/(r3g-rp)(1-(r2g-r3g)/(r2g-rp)EllipticPi[hp,krg]/ellK))-a/(rp-rm)((2EEg*rm-a*Lzg)/(r3g-rm)(1-(r2g-r3g)/(r2g-rm)EllipticPi[hm,krg]/ellK))
 ]
 
 
@@ -1822,11 +1822,11 @@ KerrNearEqFrequencyCorrFT[a_, p_, e_, x_]:=Module[{\[CapitalUpsilon]tg,\[Capital
 ]
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Near equatorial orbits - fixed frequency*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Fourier series expansion*)
 
 
@@ -1853,12 +1853,20 @@ Module[{precsol,EEg,Lzg,\[Delta]r1,\[Delta]r2,\[CapitalUpsilon]tg,\[CapitalUpsil
 	
 	(* Fourier coefficients geodesic functions *)
 	{\[CapitalUpsilon]tg,dtrgd\[Lambda]coeff,\[CapitalDelta]trgcoeff}=CoeffsFourier[VtrgICr1gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
-	{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}=CoeffsFourier[V\[Phi]rgICr1gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
+	If[a==0,
+		{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}={Lzg,Lzg,0};
+		,
+		{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}=CoeffsFourier[V\[Phi]rgICr1gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
+	];
 	{growthraterg,rgcoeff}=CoeffsFourier[rgICr1gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol][[1;;2]];
 	
 	(* Fourier coefficients spin-corrections coordinate-time and azimuthal velocities *)
 	{\[CapitalUpsilon]ts,dtspard\[Lambda]coeff,\[CapitalDelta]tsparcoeff}=CoeffsFourier[\[Delta]vtfunFFPerPar[#,a,p,e,x,{\[Delta]r1,\[Delta]r2},{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
-	{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}=CoeffsFourier[\[Delta]v\[Phi]funFFPerPar[#,a,p,e,x,{\[Delta]r1,\[Delta]r2},{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
+	If[a==0,
+		{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}={\[Delta]Lz-EEg,\[Delta]Lz-EEg,0};
+		,
+		{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}=CoeffsFourier[\[Delta]v\[Phi]funFFPerPar[#,a,p,e,x,{\[Delta]r1,\[Delta]r2},{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
+	];
 	{growthrate\[Delta]r,\[Delta]rsparcoeff}=CoeffsFourier[\[Delta]rfunFFPerPar[#,a,p,e,x,{\[Delta]r1,\[Delta]r2},{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol][[1;;2]];
 	
 	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)		
@@ -1870,7 +1878,7 @@ Module[{precsol,EEg,Lzg,\[Delta]r1,\[Delta]r2,\[CapitalUpsilon]tg,\[CapitalUpsil
 	 "Jzs"->RealSign[x]*\[Delta]Lz,
 	 "\[Delta]r1"->RealSign[x]*\[Delta]r1,
 	 "\[Delta]r2"->RealSign[x]*\[Delta]r2,
-	(* "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
+	 (*"MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]zg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]zg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},*)
 	 "MinoFrequenciesGeo"->{\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon]\[Phi]g},
 	 "BLFrequenciesGeo"->{\[CapitalUpsilon]rg/\[CapitalUpsilon]tg,\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg},
@@ -1880,32 +1888,32 @@ Module[{precsol,EEg,Lzg,\[Delta]r1,\[Delta]r2,\[CapitalUpsilon]tg,\[CapitalUpsil
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,*)
 	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
 	 "\[CapitalDelta]trg"->Function[{wr},Evaluate[\[CapitalDelta]integratedFunc[wr,\[CapitalDelta]trgcoeff]]],
-	 "\[CapitalDelta]\[Phi]rg"->Function[{wr},Evaluate[\[CapitalDelta]integratedFunc[wr,\[CapitalDelta]\[Phi]rgcoeff]]],
+	 "\[CapitalDelta]\[Phi]rg"->If[a==0,Function[{wr},0],Function[{wr},Evaluate[\[CapitalDelta]integratedFunc[wr,\[CapitalDelta]\[Phi]rgcoeff]]]],
 	 (*Keys geodesic radial trajectory*)
 	 "rg"->Function[{wr},rgICr1gfun[wr,a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]tg,dtrgd\[Lambda]coeff]]],
 	 "vrg"->Function[{wr},drgd\[Lambda]fun[wr,a,p,e,x]],
-	 "v\[Phi]g"->Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff]]],
-	(*Keys corrections trajectory*)
+	 "v\[Phi]g"->If[a==0,Function[{wr},Lzg],Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff]]]],
+	 (*Keys corrections trajectory*)
 	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]trgcoeff,\[CapitalDelta]tsparcoeff]]],
 	 "\[Delta]rpar"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,growthrate\[Delta]r,\[Delta]rsparcoeff]]],
 	 (*"\[Psi]p"->Function[wr,\[Psi]phase[wr]],*)
-	(* "\[Delta]zort"->Function[{wr},\[Delta]zort[wr]],*)
-	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]\[Phi]rgcoeff,\[CapitalDelta]\[Phi]sparcoeff]]],
+	 (* "\[Delta]zort"->Function[{wr},\[Delta]zort[wr]],*)
+	 "\[CapitalDelta]\[Delta]\[Phi]par"->If[a==0,Function[{wr},0],Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]\[Phi]rgcoeff,\[CapitalDelta]\[Phi]sparcoeff]]]],
 	 (*Keys corrections velocities*)
 	 "\[Delta]vtpar"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]ts,dtspard\[Lambda]coeff]]],
 	 "\[Delta]vrpar"->Function[{wr},Evaluate[RealSign[x]*fourierd\[Delta]rd\[Lambda][wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,rgcoeff,\[Delta]rsparcoeff]]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff]]]
+	 "\[Delta]v\[Phi]par"->If[a==0,Function[{wr},\[Delta]Lz-EEg],Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff]]]]
 	|>
 ]
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Near equatorial orbits - fixed eccentricity*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Fourier series expansion*)
 
 
@@ -1931,12 +1939,20 @@ Module[{precsol,EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon
 	
 	(* Fourier coefficients geodesic functions *)
 	{\[CapitalUpsilon]tg,dtrgd\[Lambda]coeff,\[CapitalDelta]trgcoeff}=CoeffsFourier[VtrgICr1gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
-	{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}=CoeffsFourier[V\[Phi]rgICr1gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
+	If[a==0,
+		{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}={Lzg,Lzg,0};
+		,
+		{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}=CoeffsFourier[V\[Phi]rgICr1gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
+	];
 	{growthraterg,rgcoeff}=CoeffsFourier[rgICr1gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol][[1;;2]];
 	
 	(* Fourier coefficients spin-corrections coordinate-time and azimuthal velocities *)
 	{\[CapitalUpsilon]ts,dtspard\[Lambda]coeff,\[CapitalDelta]tsparcoeff}=CoeffsFourier[\[Delta]vtfunFEPerPar[#,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
-	{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}=CoeffsFourier[\[Delta]v\[Phi]funFEPerPar[#,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
+	If[a==0,
+		{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}={\[Delta]Lz-EEg,\[Delta]Lz-EEg,0};
+		,
+		{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}=CoeffsFourier[\[Delta]v\[Phi]funFEPerPar[#,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
+	];
 	{growthrate\[Delta]r,\[Delta]rsparcoeff}=CoeffsFourier[\[Delta]rfunFEPerPar[#,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol][[1;;2]];
 	
 	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)				
@@ -1963,26 +1979,26 @@ Module[{precsol,EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]tg,dtrgd\[Lambda]coeff]]],
 	 "vrg"->Function[{wr},drgd\[Lambda]fun[wr,a,p,e,x]],
-	 "v\[Phi]g"->Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff]]],
-	(*Keys corrections trajectory*)
+	 "v\[Phi]g"->If[a==0,Function[{wr},Lzg],Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff]]]],
+	 (*Keys corrections trajectory*)
 	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]trgcoeff,\[CapitalDelta]tsparcoeff]]],
 	 "\[Delta]rpar"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,growthrate\[Delta]r,\[Delta]rsparcoeff]]],
 	 (*"\[Psi]p"->Function[wr,\[Psi]phase[wr]],*)
-	(* "\[Delta]zort"->Function[{wr},\[Delta]zort[wr]],*)
-	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]\[Phi]rgcoeff,\[CapitalDelta]\[Phi]sparcoeff]]],
+	 (*"\[Delta]zort"->Function[{wr},\[Delta]zort[wr]],*)
+	  "\[CapitalDelta]\[Delta]\[Phi]par"->If[a==0,Function[{wr},0],Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]\[Phi]rgcoeff,\[CapitalDelta]\[Phi]sparcoeff]]]],
 	 (*Keys corrections velocities*)
 	 "\[Delta]vtpar"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]ts,dtspard\[Lambda]coeff]]],
 	 "\[Delta]vrpar"->Function[{wr},Evaluate[RealSign[x]*fourierd\[Delta]rd\[Lambda][wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,rgcoeff,\[Delta]rsparcoeff]]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff]]]
+	 "\[Delta]v\[Phi]par"->If[a==0,Function[{wr},\[Delta]Lz-EEg],Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff]]]]
 	|>
 ]
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Near equatorial orbits - fixed turning points*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Fourier series expansion*)
 
 
@@ -2008,12 +2024,20 @@ Module[{precsol,EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon
 	
 	(* Fourier coefficients geodesic functions *)
 	{\[CapitalUpsilon]tg,dtrgd\[Lambda]coeff,\[CapitalDelta]trgcoeff}=CoeffsFourier[VtrgICr2gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
-	{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}=CoeffsFourier[V\[Phi]rgICr2gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
+	If[a==0,
+		{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}={Lzg,Lzg,0};
+		,
+		{\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff,\[CapitalDelta]\[Phi]rgcoeff}=CoeffsFourier[V\[Phi]rgICr2gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol];
+	];
 	{growthraterg,rgcoeff}=CoeffsFourier[rgICr2gfun[#,a,p,e,x]&,\[CapitalUpsilon]rg,precsol][[1;;2]];
 	
 	(* Fourier coefficients spin-corrections coordinate-time and azimuthal velocities *)
 	{\[CapitalUpsilon]ts,dtspard\[Lambda]coeff,\[CapitalDelta]tsparcoeff}=CoeffsFourier[\[Delta]vtfunFTPerPar[#,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
-	{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}=CoeffsFourier[\[Delta]v\[Phi]funFTPerPar[#,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
+	If[a==0,
+		{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}={\[Delta]Lz-EEg,\[Delta]Lz-EEg,0};
+		,
+		{\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff,\[CapitalDelta]\[Phi]sparcoeff}=CoeffsFourier[\[Delta]v\[Phi]funFTPerPar[#,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol];
+	];
 	{growthrate\[Delta]r,\[Delta]rsparcoeff}=CoeffsFourier[\[Delta]rfunFTPerPar[#,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]&,\[CapitalUpsilon]rg,precsol][[1;;2]];
 	
 	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)				
@@ -2039,17 +2063,17 @@ Module[{precsol,EEg,Lzg,\[CapitalUpsilon]tg,\[CapitalUpsilon]rg,\[CapitalUpsilon
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]tg,dtrgd\[Lambda]coeff]]],
 	 "vrg"->Function[{wr},drgd\[Lambda]fun[wr,a,p,e,x]],
-	 "v\[Phi]g"->Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff]]],
+	 "v\[Phi]g"->If[a==0,Function[{wr},Lzg],Function[{wr},Evaluate[fourierCos[wr,\[CapitalUpsilon]\[Phi]g,d\[Phi]rgd\[Lambda]coeff]]]],
 	(*Keys corrections trajectory*)
 	 "\[CapitalDelta]\[Delta]tpar"->Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]trgcoeff,\[CapitalDelta]tsparcoeff]]],
 	 "\[Delta]rpar"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,growthrate\[Delta]r,\[Delta]rsparcoeff]]],
 	 (*"\[Psi]p"->Function[wr,\[Psi]phase[wr]],*)
 	(* "\[Delta]zort"->Function[{wr},\[Delta]zort[wr]],*)
-	 "\[CapitalDelta]\[Delta]\[Phi]par"->Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]\[Phi]rgcoeff,\[CapitalDelta]\[Phi]sparcoeff]]],
+	  "\[CapitalDelta]\[Delta]\[Phi]par"->If[a==0,Function[{wr},0],Function[{wr},Evaluate[RealSign[x]*\[CapitalDelta]\[Delta]integratedFunc[wr,\[CapitalUpsilon]rg,\[CapitalUpsilon]rs,\[CapitalDelta]\[Phi]rgcoeff,\[CapitalDelta]\[Phi]sparcoeff]]]],
 	 (*Keys corrections velocities*)
 	 "\[Delta]vtpar"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]ts,dtspard\[Lambda]coeff]]],
 	 "\[Delta]vrpar"->Function[{wr},Evaluate[RealSign[x]*\[Delta]vrfunFTPerPar[wr,a,p,e,x,{\[CapitalUpsilon]rg,\[CapitalUpsilon]rs}]]],
-	 "\[Delta]v\[Phi]par"->Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff]]]
+	 "\[Delta]v\[Phi]par"->If[a==0,Function[{wr},\[Delta]Lz-EEg],Function[{wr},Evaluate[RealSign[x]*fourierCos[wr,\[CapitalUpsilon]\[Phi]s,d\[Phi]spard\[Lambda]coeff]]]]
 	|>
 ]
 
