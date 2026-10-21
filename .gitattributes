@@ -1,0 +1,7 @@
+# Mathematica notebooks
+# ============
+*.nb             text diff=mathematica
+
+# Binary files
+# ============
+*.mx             binary
