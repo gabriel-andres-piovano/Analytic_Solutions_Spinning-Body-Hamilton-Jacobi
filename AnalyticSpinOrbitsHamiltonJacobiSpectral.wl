@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Begin package*)
 
 
@@ -14,7 +14,7 @@ BeginPackage["AnalyticSpinOrbitsHamiltonJacobiSpectral`"];
 (* ::Text:: *)
 (*IMPORTANT NOTE: the following package include all the functions to compute the spin-corrections to the orbits (trajectories and velocities), constants of motion and frequencies for nearly equatorial orbits using spectral methods.*)
 (*The package provides the contributions due to the parallel component of the secondary spin (the orthogonal component is not implemented with a spectral solver yet). *)
-(*The spin-corrections are available in the fixed turning points (or "FT"),  fixed constants of motion (or "FC"), fixed frequency (or "FF"), fixed eccentricity (or "FE") spin-gauges, along with the Regular spin-gauge.*)
+(*The spin-corrections are available in the fixed turning points (or "FT"),  fixed constants of motion (or "FC"), fixed frequency (or "FF"), fixed eccentricity (or "FE") spin-gauges.*)
 
 
 KerrNearEqSpinOrbitCorrFTSpectral::usage = "KerrNearEqSpinOrbitCorrFTSpectral[a, p, e, x, tolerance] calculates the linear corrections to periodic orbits in the fixed turning points spin-gauge. The coordinate time and azimuthal trajectories are expanded in Fourier series. The initial radius at \[Lambda]=0 is the geodesic periastron.
@@ -33,11 +33,7 @@ KerrNearEqSpinOrbitCorrFESpectral::usage = "KerrNearEqSpinOrbitCorrFESpectral[a,
 Tolerance specifies required Precision in Fourier series expansions.";
 
 
-KerrNearEqSpinOrbitCorrRSpectral::usage = "KerrNearEqSpinOrbitCorrFESpectral[a, p, e, x, tolerance] calculates the linear corrections to periodic orbits in the regular spin-gauge. The coordinate time and azimuthal trajectories are expanded in Fourier series. The initial radius at \[Lambda]=0 is the geodesic apoastron.
-Tolerance specifies required Precision in Fourier series expansions.";
-
-
-\[Delta]orbelements::usage = "\[Delta]orbelements[a,p,e,x,spingauge] calculates the linear corrections to the orbital elements (p,e) for  fixed constants of motion (spingauge=FC), fixed frequency (spingauge=FF), fixed eccentricity (spingauge=FE) and regular (spingauge=R) gauges.";
+\[Delta]orbelements::usage = "\[Delta]orbelements[a,p,e,x,spingauge] calculates the linear corrections to the orbital elements (p,e) for  fixed constants of motion (spingauge=FC), fixed frequency (spingauge=FF), fixed eccentricity (spingauge=FE).";
 
 
 Begin["`Private`"];
@@ -1104,9 +1100,6 @@ V\[Phi]rgICr2gfun[wr_,a_,p_,e_,x_]:=Module[{EEg,Lzg,rg},
 		,
 		spingauge=="FE",
 		{\[Delta]pfunFE[a,p,e,x],0}
-		,
-		spingauge=="R",
-		{\[Delta]pfunR[a,p,e,x],\[Delta]efunR[a,p,e,x]}
 	]
 ]
 
