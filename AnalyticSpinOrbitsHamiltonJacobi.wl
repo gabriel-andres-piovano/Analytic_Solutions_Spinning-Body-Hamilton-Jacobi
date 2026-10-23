@@ -7428,7 +7428,7 @@ KerrNearEqSpinOrbitCorrFECritPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,
 	 "\[Delta]tpar"->Function[{r},RealSign[x]*\[Delta]tfunFECritplungePar[r,a,p,e,x]],
 	 "\[Delta]rpar"->Function[{r},RealSign[x]*\[Delta]rfunFECritplungePar[r,a,p,e,x]],
 	 "\[Psi]p"->Function[{r},\[Psi]pCritplunge[r,a,p,e,x]],
-	 "\[Delta]zort"->Function[{r},\[Delta]zfunCritPlunge[r,a,p,e,x]],
+	 "\[Delta]zort"->Function[{r},\[Delta]zfunCritplunge[r,a,p,e,x]],
 	 "\[Delta]\[Phi]par"->Function[{r},RealSign[x]*\[Delta]\[Phi]funFECritplungePar[r,a,p,e,x]],
 	 (*Keys corrections velocities*)
 	 "\[Delta]vtpar"->Function[{r},RealSign[x]*\[Delta]vtfunFECritplungePar[r,a,p,e,x]],
