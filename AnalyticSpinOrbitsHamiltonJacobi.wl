@@ -75,6 +75,9 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO::usage = "KerrNearEqSpinOrbitCorr\[Delta]IBC
 KerrNearEqSpinOrbitCorrISCOPlunge::usage = "KerrNearEqSpinOrbitCorrISCOPlunge[a, x] calculates the linear corrections to ISCO plunges.";
 
 
+KerrEqISCOPlungePartialExp::usage = "KerrEqISCOPlungePartialExp[a, S, x] calculates the partially expanded solutions for ISCO plunges.";
+
+
 (* ::Subsubsection::Closed:: *)
 (*Fixed eccentricity*)
 
@@ -91,7 +94,20 @@ KerrNearEqSpinOrbitCorrFEPlungeBoundOrbit::usage = "KerrNearEqSpinOrbitCorrFEBou
 KerrNearEqSpinOrbitCorrFEPlungeBoundOrbitDoubleRoot::usage = "KerrNearEqSpinOrbitCorrFEDoubleRoot[a, p, x] calculates the linear corrections to plunges related to bound orbits (PBOs) with a double root in the fixed eccentricity gauge.";
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection::Closed:: *)
+(*Fixed eccentricity - partial expansion*)
+
+
+KerrEqFECritplungePartialExp::usage = "KerrEqFECriticalplungePartialExp[a, S, p, e, x] calculates the partially expanded solutions for critical plunges in the fixed eccentricity gauge.";
+
+
+KerrEqFEPlungeBoundOrbitPartialExp::usage = "KerrEqFEPlungeBoundOrbitPartialExp[a, S, p, e, x] calculates the partially expanded solutions fo plunges related to bound orbits (PBOs) in the fixed eccentricity gauge.";
+
+
+KerrEqFEPlungePartialExp::usage = "KerrEqFEPlungePartialExp[a, S, p, e, x] calculates the partially expanded solutions fo plunges related to bound orbits (PBOs) in the fixed eccentricity gauge.";
+
+
+(* ::Subsection::Closed:: *)
 (*Begin package*)
 
 
@@ -1627,7 +1643,7 @@ drgd\[Lambda]funPlunge[r_,a_,p_,e_,x_]:=Module[{EEg,r1g,\[Rho]rg,\[Rho]ig},
 	\[Rho]rg=p/(1+e);
 	\[Rho]ig=\[Rho]igfun[a,p,e,x];
 
-	Sqrt[1-EEg^2]Sqrt[(r-\[Rho]rg-I*\[Rho]ig)(r-\[Rho]rg+I*\[Rho]ig)]Sqrt[(r1g-r)r]
+	-Sqrt[1-EEg^2]Sqrt[(r-\[Rho]rg-I*\[Rho]ig)(r-\[Rho]rg+I*\[Rho]ig)]Sqrt[(r1g-r)r]
 ]
 
 
@@ -1708,7 +1724,6 @@ tgfunPlungeBoundOrbit[r_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1g,r2g,r3g,krg,\[G
 	\[ScriptCapitalI]=(2ellF)/Sqrt[r2g(r1g-r3g)];
 	\[ScriptCapitalI]rover=2 /Sqrt[r2g(r1g-r3g)] (r2g*ellF+(-r2g+r3g)ellPi);
 	\[ScriptCapitalI]r2over=-r3g Sqrt[((r1g-r)(r2g-r))/(r2g(r2g-r3g))]Sin[\[Phi]]Cos[\[Phi]]+Sqrt[r2g(r1g-r3g)]ellE-((r2g-r3g)(r1g+r2g+r3g))/Sqrt[r2g(r1g-r3g)] ellPi+(r2g(r2g+r3g))/Sqrt[r2g(r1g-r3g)] ellF;
-
 	\[ScriptCapitalI]p=2/(Sqrt[r2g (r1g-r3g)](r2g-rp)) (ellF+(r2g-r3g)/(r3g-rp) EllipticPi[(r3g (-r2g+rp))/(r2g (-r3g+rp)),\[Phi],krg]);
 	\[ScriptCapitalI]mreg=(2rm)/(Sqrt[r2g (r1g-r3g)](r2g-rm)) (ellF+(r2g-r3g) /(r3g-rm) EllipticPi[(r3g (-r2g+rm))/(r2g (-r3g+rm)),\[Phi],krg]);
 
@@ -1979,6 +1994,10 @@ tgfunPlungeScatteringOrbitDoubleRoot[r_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1gp
 (*Unbound plunges*)
 
 
+(* ::Chapter::Closed:: *)
+(*Back-end: spin corrections to constants of motion, radial potential roots, shift frequencies*)
+
+
 (* ::Section::Closed:: *)
 (*Shifts to the constants of motion*)
 
@@ -2079,6 +2098,15 @@ tgfunPlungeScatteringOrbitDoubleRoot[r_,a_,p_,e_,x_]:=Module[{rp,rm,EEg,Lzg,r1gp
 	Lzred=Lzg-a*EEg;
 
 	-a(a^2(1-EEg^2)+Lzg^2)/(4Lzred^2)
+]
+
+
+\[Delta]r41funreg[a_,p_,e_,x_]:=Module[{EEg,Lzg,Lzred},
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	Lzred=Lzg-a*EEg;
+
+	-(a^2(1-EEg^2)+Lzg^2)/(4Lzred^2)
 ]
 
 
@@ -3203,6 +3231,10 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 
 	(\[CapitalDelta]r(Lzred^2-Lzg*r^3\[Delta]EE+EEg*r^3(-EEg+\[Delta]Lz))-2r(a*Lzred^2-3EEg*Lzred*r^2+EEg*Lzg*r^3)\[Delta]r)/(r (r*EEg(a^2+r^2)-2a*Lzred)^2)
 ]
+
+
+(* ::Chapter::Closed:: *)
+(*Back-end: spin corrections to the orbit *)
 
 
 (* ::Section::Closed:: *)
@@ -4624,7 +4656,6 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 	\[CapitalDelta]=a^2-2r+r^2;
 
 	d\[Delta]td\[Lambda]fun=(-Lzg(a^2+r^2)+a*EEg(a^2+3r^2))/(r*\[CapitalDelta])+(r(2a^2+a^2*r+r^3)\[Delta]EE)/\[CapitalDelta]-(2a*r*\[Delta]Lz)/\[CapitalDelta];
-
 	ddtgd\[Lambda]drfun=(EEg*r(a^2+3r^2))/\[CapitalDelta]-((r^2-a^2)(-2a*Lzg+EEg*r^3+a^2*EEg(2+r)))/\[CapitalDelta]^2;
 
 	ddtgd\[Lambda]drfun*\[Delta]rfunFEHomPar[r,a,p,e,x]+d\[Delta]td\[Lambda]fun
@@ -4643,7 +4674,6 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 	\[CapitalDelta]=a^2-2r+r^2;
 
 	d\[Delta]\[Phi]d\[Lambda]fun=-EEg+(a(-Lzg+a*EEg(1+r)))/(r*\[CapitalDelta])+(2a*r*\[Delta]EE)/\[CapitalDelta]+((r-2)r*\[Delta]Lz)/\[CapitalDelta];
-
 	dd\[Phi]gd\[Lambda]drfun=(2a(a^2*EEg+a*Lzg(r-1)-EEg*r^2))/\[CapitalDelta]^2;
 
 	dd\[Phi]gd\[Lambda]drfun*\[Delta]rfunFEHomPar[r,a,p,e,x]+d\[Delta]\[Phi]d\[Lambda]fun
@@ -4764,7 +4794,6 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 	\[CapitalDelta]=a^2-2r+r^2;
 
 	d\[Delta]td\[Lambda]fun=(-Lzg(a^2+r^2)+a*EEg(a^2+3r^2))/(r*\[CapitalDelta])+(r(2a^2+a^2*r+r^3)\[Delta]EE)/\[CapitalDelta]-(2a*r*\[Delta]Lz)/\[CapitalDelta];
-
 	ddtgd\[Lambda]drfun=(EEg*r(a^2+3r^2))/\[CapitalDelta]-((r^2-a^2)(-2a*Lzg+EEg*r^3+a^2*EEg(2+r)))/\[CapitalDelta]^2;
 
 	ddtgd\[Lambda]drfun*\[Delta]rfunISCOplungePar[r,a,x]+d\[Delta]td\[Lambda]fun
@@ -4785,7 +4814,6 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 	\[CapitalDelta]=a^2-2r+r^2;
 
 	d\[Delta]\[Phi]d\[Lambda]fun=-EEg+(a(-Lzg+a*EEg(1+r)))/(r*\[CapitalDelta])+(2a*r*\[Delta]EE)/\[CapitalDelta]+((r-2)r*\[Delta]Lz)/\[CapitalDelta];
-
 	dd\[Phi]gd\[Lambda]drfun=(2a(a^2*EEg+a*Lzg(r-1)-EEg*r^2))/\[CapitalDelta]^2;
 
 	dd\[Phi]gd\[Lambda]drfun*\[Delta]rfunISCOplungePar[r,a,x]+d\[Delta]\[Phi]d\[Lambda]fun
@@ -4916,9 +4944,7 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
 
 	\[CapitalDelta]=a^2-2r+r^2;
-
 	d\[Delta]td\[Lambda]fun=(-Lzg(a^2+r^2)+a*EEg(a^2+3r^2))/(r*\[CapitalDelta])+(r(2a^2+a^2*r+r^3)\[Delta]EE)/\[CapitalDelta]-(2a*r*\[Delta]Lz)/\[CapitalDelta];
-
 	ddtgd\[Lambda]drfun=(EEg*r(a^2+3r^2))/\[CapitalDelta]-((r^2-a^2)(-2a*Lzg+EEg*r^3+a^2*EEg(2+r)))/\[CapitalDelta]^2;
 
 	ddtgd\[Lambda]drfun*\[Delta]rfunFECritplungePar[r,a,p,e,x]+d\[Delta]td\[Lambda]fun
@@ -4936,9 +4962,7 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
 
 	\[CapitalDelta]=a^2-2r+r^2;
-
 	d\[Delta]\[Phi]d\[Lambda]fun=-EEg+(a(-Lzg+a*EEg(1+r)))/(r*\[CapitalDelta])+(2a*r*\[Delta]EE)/\[CapitalDelta]+((r-2)r*\[Delta]Lz)/\[CapitalDelta];
-
 	dd\[Phi]gd\[Lambda]drfun=(2a(a^2*EEg+a*Lzg(r-1)-EEg*r^2))/\[CapitalDelta]^2;
 
 	dd\[Phi]gd\[Lambda]drfun*\[Delta]rfunFECritplungePar[r,a,p,e,x]+d\[Delta]\[Phi]d\[Lambda]fun
@@ -5464,6 +5488,617 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 
 	dd\[Phi]gd\[Lambda]drfun*\[Delta]rfunFEPlungeBoundOrbitDoubleRootPar[r,a,p,x]+d\[Delta]\[Phi]d\[Lambda]fun
 ]
+
+
+(* ::Section::Closed:: *)
+(*Spin corrections to the orbit - parallel component of the spin, fixed eccentricity, non-linearized*)
+
+
+(* ::Text:: *)
+(*The ISCO plunge is universal to any spin gauge. I implemented here for convenience*)
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate-time velocity - general expression, no expansion*)
+
+
+VtrgfunPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,\[Delta]EE,Lzg,\[Delta]Lz,EE,Lz,\[CapitalDelta]},
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	EE (r^2+a^2)^2/\[CapitalDelta]-Lz (2a*r)/\[CapitalDelta]-EE*a^2
+]
+
+
+\[Delta]vtfunParPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz,EE,Lz,\[CapitalDelta],d\[Delta]td\[Lambda]fun},
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	(-Lz(a^2+r^2)+a*EE(a^2+3r^2))/(r*\[CapitalDelta])
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal velocity - general expression, no expansion*)
+
+
+V\[Phi]rgfunPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,\[Delta]EE,Lzg,\[Delta]Lz,EE,Lz,\[CapitalDelta]},
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	a/\[CapitalDelta](EE(r^2+a^2)-a*Lz)-a*EE+Lz
+]
+
+
+\[Delta]v\[Phi]funParPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]p,\[Delta]EE,\[Delta]Lz,EE,Lz,\[CapitalDelta],d\[Delta]\[Phi]d\[Lambda]fun},
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	-EE+(a(-Lz+a*EE(1+r)))/(r*\[CapitalDelta])
+]
+
+
+(* ::Subsection::Closed:: *)
+(*ISCO plunge*)
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate time trajectory *)
+
+
+tfunISCOplungePartialExp[r_,a_,S_,x_]:=Module[{r1g,rp,rm,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]rISCO,\[Delta]r4,EE,Lz,r1,\[CapitalDelta],tgPartialExp,\[Delta]tPartialExp,\[ScriptCapitalI],\[ScriptCapitalI]r1g,\[ScriptCapitalI]p,\[ScriptCapitalI]mreg,\[ScriptCapitalI]mreg2,\[ScriptCapitalI]rover,\[ScriptCapitalI]r2over},
+	r1g=ISCOradius[a,x];
+	rp=1+Sqrt[1-a^2];
+	rm=1-Sqrt[1-a^2];
+	EEg=EEgfun[a,r1g,0,x];
+	Lzg=Lzgfun[a,r1g,0,x];
+	\[Delta]EE=\[Delta]EEISCOfun[a,x];
+	\[Delta]Lz=\[Delta]LzISCOfun[a,x];
+	\[Delta]rISCO=\[Delta]rISCOfun[a,x];
+	\[Delta]r4=\[Delta]r41fun[a,r1g,0,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	r1=r1g+S*RealSign[x]*\[Delta]rISCO;
+	\[CapitalDelta]=a^2-2r+r^2;
+
+	\[ScriptCapitalI]=2Sqrt[r]/(r1*Sqrt[r1-r]);
+	\[ScriptCapitalI]rover=2ArcSin[Sqrt[1-r/r1]]+r1*\[ScriptCapitalI];
+	\[ScriptCapitalI]r2over=Sqrt[r(-r+r1)]+r1*ArcSin[Sqrt[1-r/r1]]+r1*\[ScriptCapitalI]rover;
+	\[ScriptCapitalI]p=1/(r1-rp)\[ScriptCapitalI]+1/(2(r1-rp)^(3/2)Sqrt[rp])Log[(Sqrt[r(r1-rp)]-Sqrt[(r1-r)rp])^2/(Sqrt[r(r1-rp)]+Sqrt[(r1-r)rp])^2];
+	\[ScriptCapitalI]mreg=rm/(r1-rm)\[ScriptCapitalI]+Sqrt[rm]/(2(r1-rm)^(3/2))Log[(Sqrt[r(r1-rm)]-Sqrt[(r1-r)rm])^2/(Sqrt[r(r1-rm)]+Sqrt[(r1-r)rm])^2];
+	(*\[ScriptCapitalI]mreg2=Sqrt[rm]/(r1-rm)\[ScriptCapitalI]+1/(2(r1-rm)^(3/2))Log[(Sqrt[r(r1-rm)]-Sqrt[(r1-r)rm])^2/(Sqrt[r(r1-rm)]+Sqrt[(r1-r)rm])^2];*)
+	
+	tgPartialExp=-1/Sqrt[1-EE^2](4EE*\[ScriptCapitalI]+2EE*\[ScriptCapitalI]rover+EE*\[ScriptCapitalI]r2over-4EE*rp/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)-2(-4EE+a*Lz)1/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg));
+	\[Delta]tPartialExp=-1/Sqrt[(1-EE^2)](1/2EE(4\[Delta]r4-a)\[ScriptCapitalI]+EE*\[Delta]r4*\[ScriptCapitalI]rover-\[ScriptCapitalI]p/( 2(rp-rm)) ((a^3*EE+2Lz*rp+a*EE(-6+rp)rp)-2(-2a*Lz+EE*rp^3+a^2*EE(2+rp))\[Delta]r4)+(\[ScriptCapitalI]mreg/rm)/( 2(rp-rm)) ((a^3*EE+2Lz*rm+a*EE(-6+rm)rm)-2(-2a*Lz+EE*rm^3+a^2*EE(2+rm))\[Delta]r4));
+	
+	tgPartialExp+S*\[Delta]tPartialExp
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal trajectory*)
+
+
+\[Phi]funISCOplungePartialExp[r_,a_,S_,x_]:=Module[{r1g,rp,rm,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]rISCO,\[Delta]r4,EE,Lz,r1,\[CapitalDelta],\[Phi]gPartialExp,\[Delta]\[Phi]PartialExp,\[ScriptCapitalI],\[ScriptCapitalI]r1g,\[ScriptCapitalI]p,\[ScriptCapitalI]mreg,\[ScriptCapitalI]mreg2},
+	r1g=ISCOradius[a,x];
+	rp=1+Sqrt[1-a^2];
+	rm=1-Sqrt[1-a^2];
+	EEg=EEgfun[a,r1g,0,x];
+	Lzg=Lzgfun[a,r1g,0,x];
+	\[Delta]EE=\[Delta]EEISCOfun[a,x];
+	\[Delta]Lz=\[Delta]LzISCOfun[a,x];
+	\[Delta]rISCO=\[Delta]rISCOfun[a,x];
+	\[Delta]r4=\[Delta]r41fun[a,r1g,0,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	r1=r1g+S*RealSign[x]*\[Delta]rISCO;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	\[ScriptCapitalI]=2Sqrt[r]/(r1*Sqrt[r1-r]);
+	\[ScriptCapitalI]p=1/(r1-rp)\[ScriptCapitalI]+1/(2(r1-rp)^(3/2)Sqrt[rp])Log[(Sqrt[r(r1-rp)]-Sqrt[(r1-r)rp])^2/(Sqrt[r(r1-rp)]+Sqrt[(r1-r)rp])^2];
+	\[ScriptCapitalI]mreg=rm/(r1-rm)\[ScriptCapitalI]+Sqrt[rm]/(2(r1-rm)^(3/2))Log[(Sqrt[r(r1-rm)]-Sqrt[(r1-r)rm])^2/(Sqrt[r(r1-rm)]+Sqrt[(r1-r)rm])^2];
+	(*\[ScriptCapitalI]mreg2=Sqrt[rm]/(r1-rm)\[ScriptCapitalI]+1/(2(r1-rm)^(3/2))Log[(Sqrt[r(r1-rm)]-Sqrt[(r1-r)rm])^2/(Sqrt[r(r1-rm)]+Sqrt[(r1-r)rm])^2];*)
+
+	\[Phi]gPartialExp=-1/Sqrt[1-EE^2](Lz*\[ScriptCapitalI]-Lz*rp/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)+2a*EE/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg));
+	
+	\[Delta]\[Phi]PartialExp=-1/Sqrt[(1-EE^2)](-EE*\[ScriptCapitalI]-\[ScriptCapitalI]p/( 2(rp-rm)) (a(Lz-2a*EE)-2(2a*EE+Lz(rp-2))\[Delta]r4)+(\[ScriptCapitalI]mreg/rm)/( 2(rp-rm)) (-a(2a*EE-Lz)-2(2a*EE+Lz(rm-2))\[Delta]r4));
+	
+	\[Phi]gPartialExp+S*\[Delta]\[Phi]PartialExp
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Radial velocity*)
+
+
+drd\[Lambda]funISCOplungePartialExp[r_,a_,S_,x_]:=Module[{EEg,\[Delta]EE,r1g,\[Delta]rISCO,r1,EE},
+	r1g=ISCOradius[a,x];
+	EEg=EEgfun[a,r1g,0,x];
+	\[Delta]EE=\[Delta]EEISCOfun[a,x];
+	\[Delta]rISCO=\[Delta]rISCOfun[a,x];
+
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	r1=r1g+S*RealSign[x]*\[Delta]rISCO;
+
+	(r-r1)Sqrt[1-EE^2]Sqrt[r(r1-r)]
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate time velocity - dt/dr*)
+
+
+dtdrfunISCOplungeOPartialExp[r_,a_,S_,p_,e_,x_]:=1/drd\[Lambda]funISCOplungePartialExp[r,a,S,x](VtrgfunPartialExp[r,a,S,p,e,x]+S*\[Delta]vtfunParPartialExp[r,a,S,p,e,x]+S*(\[Delta]r41fun[a,p,e,x]/r-a/(2r^2))VtrgfunPartialExp[r,a,S,p,e,x])
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal velocity - d\[Phi]/dr*)
+
+
+d\[Phi]drfunISCOplungePartialExp[r_,a_,S_,p_,e_,x_]:=1/drd\[Lambda]funISCOplungePartialExp[r,a,S,x](V\[Phi]rgfunPartialExp[r,a,S,p,e,x]+S*\[Delta]v\[Phi]funParPartialExp[r,a,S,p,e,x]+S*(\[Delta]r41fun[a,p,e,x]/r-a/(2r^2))V\[Phi]rgfunPartialExp[r,a,S,p,e,x])
+
+
+(* ::Subsection::Closed:: *)
+(*Critical plunge *)
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate time trajectory *)
+
+
+tfunCritplungePartialExp[r_,a_,S_,p_,e_,x_]:=Module[{r1g,r2g,rp,rm,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]r1,\[Delta]r2,\[Delta]r4,EE,Lz,r1,r2,\[CapitalDelta],tgPartialExp,\[Delta]tPartialExp,\[ScriptCapitalI],\[ScriptCapitalI]rover,\[ScriptCapitalI]r2over,\[ScriptCapitalI]r1g,\[ScriptCapitalI]p,\[ScriptCapitalI]mreg},
+	r1g=p/(1-e);
+	r2g=p/(1+e);
+	rp=1+Sqrt[1-a^2];
+	rm=1-Sqrt[1-a^2];
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]r1=\[Delta]r1funFE[a,p,e,x];
+	\[Delta]r2=\[Delta]r2funFE[a,p,e,x];
+	\[Delta]r4=\[Delta]r41fun[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	r2=r2g+S*RealSign[x]*\[Delta]r2;
+	\[CapitalDelta]=a^2-2r+r^2;
+
+	\[ScriptCapitalI]=-1/(2Sqrt[(r1-r2)r2])Log[(Sqrt[r(r1-r2)]-Sqrt[(r1-r)r2])^2/(Sqrt[r(r1-r2)]+Sqrt[(r1-r)r2])^2];
+	\[ScriptCapitalI]rover=2ArcCos[Sqrt[r/r1]]+r2*\[ScriptCapitalI];
+	\[ScriptCapitalI]r2over=Sqrt[r(r1-r)]+r1*ArcCos[Sqrt[r/r1]]+r2*\[ScriptCapitalI]rover;
+	\[ScriptCapitalI]p=\[ScriptCapitalI]/(r2-rp)+1/(2Sqrt[r1-rp](r2-rp)Sqrt[rp]) Log[(Sqrt[r(r1-rp)]-Sqrt[(r1-r)rp])^2/(Sqrt[r(r1-rp)]+Sqrt[(r1-r)rp])^2];
+	\[ScriptCapitalI]mreg=(rm*\[ScriptCapitalI])/(r2-rm)+Sqrt[rm]/(2Sqrt[r1-rm](r2-rm))Log[(Sqrt[r(r1-rm)]-Sqrt[(r1-r)rm])^2/(Sqrt[r(r1-rm)]+Sqrt[(r1-r)rm])^2];
+	
+	tgPartialExp=-1/Sqrt[1-EE^2](4EE*\[ScriptCapitalI]+2EE*\[ScriptCapitalI]rover+EE*\[ScriptCapitalI]r2over-4EE*rp/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)-2(-4EE+a*Lz)1/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg));
+	\[Delta]tPartialExp=-1/Sqrt[(1-EE^2)](1/2EE(4\[Delta]r4-a)\[ScriptCapitalI]+EE*\[Delta]r4*\[ScriptCapitalI]rover-\[ScriptCapitalI]p/( 2(rp-rm)) ((a^3*EE+2Lz*rp+a*EE(-6+rp)rp)-2(-2a*Lz+EE*rp^3+a^2*EE(2+rp))\[Delta]r4)+(\[ScriptCapitalI]mreg/rm)/( 2(rp-rm)) ((a^3*EE+2Lz*rm+a*EE(-6+rm)rm)-2(-2a*Lz+EE*rm^3+a^2*EE(2+rm))\[Delta]r4));
+	
+	tgPartialExp+S*\[Delta]tPartialExp
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal  trajectory*)
+
+
+\[Phi]funCritplungePartialExp[r_,a_,S_,p_,e_,x_]:=Module[{r1g,r2g,rp,rm,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]r1,\[Delta]r2,\[Delta]r4,EE,Lz,r1,r2,\[CapitalDelta],\[Phi]gPartialExp,\[Delta]\[Phi]PartialExp,\[ScriptCapitalI],\[ScriptCapitalI]r1g,\[ScriptCapitalI]p,\[ScriptCapitalI]mreg},
+	r1g=p/(1-e);
+	r2g=p/(1+e);
+	rp=1+Sqrt[1-a^2];
+	rm=1-Sqrt[1-a^2];
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]r1=\[Delta]r1funFE[a,p,e,x];
+	\[Delta]r2=\[Delta]r2funFE[a,p,e,x];
+	\[Delta]r4=\[Delta]r41fun[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	r2=r2g+S*RealSign[x]*\[Delta]r2;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	\[ScriptCapitalI]=-1/(2Sqrt[(r1-r2)r2])Log[(Sqrt[r(r1-r2)]-Sqrt[(r1-r)r2])^2/(Sqrt[r(r1-r2)]+Sqrt[(r1-r)r2])^2];
+	\[ScriptCapitalI]p=\[ScriptCapitalI]/(r2-rp)+1/(2Sqrt[r1-rp](r2-rp)Sqrt[rp]) Log[(Sqrt[r(r1-rp)]-Sqrt[(r1-r)rp])^2/(Sqrt[r(r1-rp)]+Sqrt[(r1-r)rp])^2];
+	\[ScriptCapitalI]mreg=(rm*\[ScriptCapitalI])/(r2-rm)+Sqrt[rm]/(2Sqrt[r1-rm](r2-rm))Log[(Sqrt[r(r1-rm)]-Sqrt[(r1-r)rm])^2/(Sqrt[r(r1-rm)]+Sqrt[(r1-r)rm])^2];
+
+	\[Phi]gPartialExp=-1/Sqrt[1-EE^2](Lz*\[ScriptCapitalI]-Lz*rp/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)+2a*EE/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg));
+	
+	\[Delta]\[Phi]PartialExp=-1/Sqrt[(1-EE^2)](-EE*\[ScriptCapitalI]-\[ScriptCapitalI]p/( 2(rp-rm)) (a(Lz-2a*EE)-2(2a*EE+Lz(rp-2))\[Delta]r4)+(\[ScriptCapitalI]mreg/rm)/( 2(rp-rm)) (-a(2a*EE-Lz)-2(2a*EE+Lz(rm-2))\[Delta]r4));
+	
+	\[Phi]gPartialExp+S*\[Delta]\[Phi]PartialExp
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Radial velocity*)
+
+
+drd\[Lambda]funHomPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,\[Delta]EE,r1g,r2g,\[Delta]r1,\[Delta]r2,EE,r1,r2},
+	EEg=EEgfun[a,p,e,x];
+	r1g=p/(1-e);
+	r2g=p/(1+e);
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]r1=\[Delta]r1funFE[a,p,e,x];
+	\[Delta]r2=\[Delta]r2funFE[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	r2=r2g+S*RealSign[x]*\[Delta]r2;
+	
+	Sqrt[1-EE^2](r-r2)Sqrt[r(r1-r)]
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate time velocity - dt/dr*)
+
+
+dtdrfunCritplungePartialExp[r_,a_,S_,p_,e_,x_]:=1/drd\[Lambda]funHomPartialExp[r,a,S,p,e,x](VtrgfunPartialExp[r,a,S,p,e,x]+S*\[Delta]vtfunParPartialExp[r,a,S,p,e,x]+S*(\[Delta]r41fun[a,p,e,x]/r-a/(2r^2))VtrgfunPartialExp[r,a,S,p,e,x])
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal velocity - d\[Phi]/dr*)
+
+
+d\[Phi]drfunCritplungePartialExp[r_,a_,S_,p_,e_,x_]:=1/drd\[Lambda]funHomPartialExp[r,a,S,p,e,x](V\[Phi]rgfunPartialExp[r,a,S,p,e,x]+S*\[Delta]v\[Phi]funParPartialExp[r,a,S,p,e,x]+S*(\[Delta]r41fun[a,p,e,x]/r-a/(2r^2))V\[Phi]rgfunPartialExp[r,a,S,p,e,x])
+
+
+(* ::Subsection::Closed:: *)
+(*Generic plunge*)
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate time trajectory*)
+
+
+tfunPlungePartialExp[r_,a_,S_,p_,e_,x_]:=Module[{r1g,\[Rho]rg,\[Rho]ig,rp,rm,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]r1,\[Delta]\[Rho]r,\[Delta]p,\[Delta]r4,EE,Lz,r1,\[Rho]r,\[Rho]i,\[CapitalDelta],Ar1,B0,kr,\[Alpha]p,\[Alpha]m,\[Gamma]r,\[Phi],ellF,ellE,ellPi,tgPartialExp,\[Delta]tPartialExp,\[ScriptCapitalI],\[ScriptCapitalI]rover,\[ScriptCapitalI]r2over,\[ScriptCapitalI]r1g,\[ScriptCapitalI]p,\[ScriptCapitalI]mreg},
+	r1g=p/(1-e);
+	\[Rho]rg=p/(1+e);
+	\[Rho]ig=\[Rho]igfun[a,p,e,x];
+	rp=1+Sqrt[1-a^2];
+	rm=1-Sqrt[1-a^2];
+	\[Delta]p=\[Delta]pfunFEcc[a,p,e,x];
+	EEg=EEgfuncc[p,e];
+	Lzg=Lzgfuncc[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfuncc[a,p,e,x]+dEEdpfuncc[p,e]\[Delta]p;
+	\[Delta]Lz=\[Delta]Lzfuncc[a,p,e,x]+dLzdpfuncc[a,p,e,x]\[Delta]p;
+	\[Delta]r1=\[Delta]p/(1-e);
+	\[Delta]\[Rho]r=\[Delta]p/(1+e);
+	\[Delta]r4=\[Delta]r41funcc[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	\[Rho]r=\[Rho]rg+S*RealSign[x]*\[Delta]\[Rho]r;
+	\[Rho]i=\[Rho]ig;
+	\[CapitalDelta]=a^2-2r+r^2;
+
+	Ar1=Sqrt[\[Rho]i^2+(r1-\[Rho]r)^2];
+	B0=Sqrt[\[Rho]i^2+\[Rho]r^2];
+	kr=(-(Ar1-B0)^2+r1^2)/(4Ar1*B0);
+	\[Alpha]p=(-B0*r1-Ar1*rp+B0*rp)/(B0*r1-Ar1*rp-B0*rp);
+	\[Alpha]m=(-B0*r1-Ar1*rm+B0*rm)/(B0*r1-Ar1*rm-B0*rm);
+	\[Gamma]r=-((Ar1-B0)^2/(4Ar1*B0));
+	\[Phi]=ArcCos[(-Ar1*r+B0(r1-r))/(Ar1*r+B0(r1-r))];
+	
+	ellF=EllipticF[\[Pi]-\[Phi],kr];
+	ellE=EllipticE[\[Pi]-\[Phi],kr];
+	ellPi=EllipticPi[\[Gamma]r,\[Pi]-\[Phi],kr];
+
+	\[ScriptCapitalI]=ellF/Sqrt[Ar1*B0];
+	\[ScriptCapitalI]rover=ArcTan[(r1*Sin[\[Phi]])/(2Sqrt[Ar1*B0] Sqrt[1-kr*Sin[\[Phi]]^2])]-(B0*r1)/(Ar1-B0)*\[ScriptCapitalI]+((Ar1+B0)r1*ellPi)/(2(Ar1-B0)Sqrt[Ar1*B0]);
+	\[ScriptCapitalI]r2over=((Ar1-B0)Sqrt[r(r1-r)(\[Rho]i^2+(r-\[Rho]r)^2)])/(Ar1*r+B0(r1-r))+Sqrt[Ar1*B0]*ellE+1/2(r1+2\[Rho]r)\[ScriptCapitalI]rover-(B0*r1(r1-2\[Rho]r))/(2(Ar1-B0))*\[ScriptCapitalI];
+	\[ScriptCapitalI]p=(4r1)/(B0^2(r1-rp)^2-Ar1^2*rp^2)(Ar1*B0)/Sqrt[2(Ar1*B0+B0^2-r1*\[Rho]r)](EllipticPi[\[Alpha]p^2,kr/(-1+kr)]+EllipticPi[\[Alpha]p^2,(\[Pi]/2-\[Phi]),kr/(-1+kr)])-(Ar1-B0)/(B0(r1-rp)+Ar1*rp)\[ScriptCapitalI]-1/(4Sqrt[(r1-rp)rp(\[Rho]i^2+(rp-\[Rho]r)^2)])Log[(Sqrt[-\[Alpha]p^2+kr(-1+\[Alpha]p^2)]Sin[\[Phi]]-Sqrt[1-\[Alpha]p^2] Sqrt[1-kr*Sin[\[Phi]]^2])^2/(Sqrt[-\[Alpha]p^2+kr(-1+\[Alpha]p^2)]Sin[\[Phi]]+Sqrt[1-\[Alpha]p^2]Sqrt[1-kr*Sin[\[Phi]]^2])^2];
+	\[ScriptCapitalI]mreg=(4r1*rm)/(B0^2(r1-rm)^2-Ar1^2*rm^2)(Ar1*B0)/Sqrt[2(Ar1*B0+B0^2-r1*\[Rho]r)](EllipticPi[\[Alpha]m^2,kr/(-1+kr)]+EllipticPi[\[Alpha]m^2,(\[Pi]/2-\[Phi]),kr/(-1+kr)])-(rm(Ar1-B0))/(B0(r1-rm)+Ar1*rm)\[ScriptCapitalI]-Sqrt[rm]/(4Sqrt[(r1-rm)(\[Rho]i^2+(rm-\[Rho]r)^2)])Log[(Sqrt[-\[Alpha]m^2+kr(-1+\[Alpha]m^2)]Sin[\[Phi]]-Sqrt[1-\[Alpha]m^2] Sqrt[1-kr*Sin[\[Phi]]^2])^2/(Sqrt[-\[Alpha]m^2+kr(-1+\[Alpha]m^2)]Sin[\[Phi]]+Sqrt[1-\[Alpha]m^2] Sqrt[1-kr*Sin[\[Phi]]^2])^2];
+	
+	tgPartialExp=1/Sqrt[1-EE^2](4EE*\[ScriptCapitalI]+2EE*\[ScriptCapitalI]rover+EE*\[ScriptCapitalI]r2over-4EE*rp/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)-2(-4EE+a*Lz)1/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg));
+	\[Delta]tPartialExp=1/Sqrt[(1-EE^2)](1/2EE(4\[Delta]r4-a)\[ScriptCapitalI]+EE*\[Delta]r4*\[ScriptCapitalI]rover-\[ScriptCapitalI]p/( 2(rp-rm)) ((a^3*EE+2Lz*rp+a*EE(-6+rp)rp)-2(-2a*Lz+EE*rp^3+a^2*EE(2+rp))\[Delta]r4)+(\[ScriptCapitalI]mreg/rm)/( 2(rp-rm)) ((a^3*EE+2Lz*rm+a*EE(-6+rm)rm)-2(-2a*Lz+EE*rm^3+a^2*EE(2+rm))\[Delta]r4));
+	
+	tgPartialExp+S*\[Delta]tPartialExp
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal trajectory*)
+
+
+\[Phi]funPlungePartialExp[r_,a_,S_,p_,e_,x_]:=Module[{r1g,\[Rho]rg,\[Rho]ig,rp,rm,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]r1,\[Delta]\[Rho]r,\[Delta]p,\[Delta]r4,EE,Lz,r1,\[Rho]r,\[Rho]i,\[CapitalDelta],Ar1,B0,kr,\[Alpha]p,\[Alpha]m,\[Gamma]r,\[Phi],ellF,ellE,\[Phi]gPartialExp,\[Delta]\[Phi]PartialExp,\[ScriptCapitalI],\[ScriptCapitalI]r1g,\[ScriptCapitalI]p,\[ScriptCapitalI]mreg},
+	r1g=p/(1-e);
+	\[Rho]rg=p/(1+e);
+	\[Rho]ig=\[Rho]igfun[a,p,e,x];
+	rp=1+Sqrt[1-a^2];
+	rm=1-Sqrt[1-a^2];
+	\[Delta]p=\[Delta]pfunFEcc[a,p,e,x];
+	EEg=EEgfuncc[p,e];
+	Lzg=Lzgfuncc[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfuncc[a,p,e,x]+dEEdpfuncc[p,e]\[Delta]p;
+	\[Delta]Lz=\[Delta]Lzfuncc[a,p,e,x]+dLzdpfuncc[a,p,e,x]\[Delta]p;
+	\[Delta]r1=\[Delta]p/(1-e);
+	\[Delta]\[Rho]r=\[Delta]p/(1+e);
+	\[Delta]r4=\[Delta]r41funcc[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	\[Rho]r=\[Rho]rg+S*RealSign[x]*\[Delta]\[Rho]r;
+	\[Rho]i=\[Rho]ig;
+	\[CapitalDelta]=a^2-2r+r^2;
+
+	Ar1=Sqrt[\[Rho]i^2+(r1-\[Rho]r)^2];
+	B0=Sqrt[\[Rho]i^2+\[Rho]r^2];
+	kr=(-(Ar1-B0)^2+r1^2)/(4Ar1*B0);
+	\[Alpha]p=(-B0*r1-Ar1*rp+B0*rp)/(B0*r1-Ar1*rp-B0*rp);
+	\[Alpha]m=(-B0*r1-Ar1*rm+B0*rm)/(B0*r1-Ar1*rm-B0*rm);
+	\[Gamma]r=-((Ar1-B0)^2/(4Ar1*B0));
+	\[Phi]=ArcCos[(-Ar1*r+B0(r1-r))/(Ar1*r+B0(r1-r))];
+	
+	ellF=EllipticF[\[Pi]-\[Phi],kr];
+	ellE=EllipticE[\[Pi]-\[Phi],kr];
+
+	\[ScriptCapitalI]=ellF/Sqrt[Ar1*B0];
+	\[ScriptCapitalI]p=(4r1)/(B0^2(r1-rp)^2-Ar1^2*rp^2)(Ar1*B0)/Sqrt[2(Ar1*B0+B0^2-r1*\[Rho]r)](EllipticPi[\[Alpha]p^2,kr/(-1+kr)]+EllipticPi[\[Alpha]p^2,(\[Pi]/2-\[Phi]),kr/(-1+kr)])-(Ar1-B0)/(B0(r1-rp)+Ar1*rp)\[ScriptCapitalI]-1/(4Sqrt[(r1-rp)rp(\[Rho]i^2+(rp-\[Rho]r)^2)])Log[(Sqrt[-\[Alpha]p^2+kr(-1+\[Alpha]p^2)]Sin[\[Phi]]-Sqrt[1-\[Alpha]p^2] Sqrt[1-kr*Sin[\[Phi]]^2])^2/(Sqrt[-\[Alpha]p^2+kr(-1+\[Alpha]p^2)]Sin[\[Phi]]+Sqrt[1-\[Alpha]p^2]Sqrt[1-kr*Sin[\[Phi]]^2])^2];
+	\[ScriptCapitalI]mreg=(4r1*rm)/(B0^2(r1-rm)^2-Ar1^2*rm^2)(Ar1*B0)/Sqrt[2(Ar1*B0+B0^2-r1*\[Rho]r)](EllipticPi[\[Alpha]m^2,kr/(-1+kr)]+EllipticPi[\[Alpha]m^2,(\[Pi]/2-\[Phi]),kr/(-1+kr)])-(rm(Ar1-B0))/(B0(r1-rm)+Ar1*rm)\[ScriptCapitalI]-Sqrt[rm]/(4Sqrt[(r1-rm)(\[Rho]i^2+(rm-\[Rho]r)^2)])Log[(Sqrt[-\[Alpha]m^2+kr(-1+\[Alpha]m^2)]Sin[\[Phi]]-Sqrt[1-\[Alpha]m^2] Sqrt[1-kr*Sin[\[Phi]]^2])^2/(Sqrt[-\[Alpha]m^2+kr(-1+\[Alpha]m^2)]Sin[\[Phi]]+Sqrt[1-\[Alpha]m^2] Sqrt[1-kr*Sin[\[Phi]]^2])^2];
+
+	\[Phi]gPartialExp=1/Sqrt[1-EE^2](Lz*\[ScriptCapitalI]-Lz*rp/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)+2a*EE/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg));
+	
+	\[Delta]\[Phi]PartialExp=1/Sqrt[(1-EE^2)](-EE*\[ScriptCapitalI]-\[ScriptCapitalI]p/( 2(rp-rm)) (a(Lz-2a*EE)-2(2a*EE+Lz(rp-2))\[Delta]r4)+(\[ScriptCapitalI]mreg/rm)/( 2(rp-rm)) (-a(2a*EE-Lz)-2(2a*EE+Lz(rm-2))\[Delta]r4));
+	
+	\[Phi]gPartialExp+S*\[Delta]\[Phi]PartialExp
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Radial velocity*)
+
+
+drd\[Lambda]funPlungePartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,\[Delta]EE,r1g,\[Rho]rg,\[Rho]ig,\[Delta]p,\[Delta]r1,\[Delta]\[Rho]r,EE,r1,\[Rho]r,\[Rho]i},
+	EEg=EEgfuncc[p,e];
+	r1g=p/(1-e);
+	\[Rho]rg=p/(1+e);
+	\[Rho]ig=\[Rho]igfun[a,p,e,x];
+	\[Delta]p=\[Delta]pfunFEcc[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfuncc[a,p,e,x]+dEEdpfuncc[p,e]\[Delta]p;
+	\[Delta]r1=\[Delta]p/(1-e);
+	\[Delta]\[Rho]r=\[Delta]p/(1+e);
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	\[Rho]r=\[Rho]rg+S*RealSign[x]*\[Delta]\[Rho]r;
+	\[Rho]i=\[Rho]ig;
+	
+	-Sqrt[1-EE^2]Sqrt[(r-\[Rho]r-I*\[Rho]i)(r-\[Rho]r+I*\[Rho]i)]Sqrt[(r1-r)r]
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate time velocity*)
+
+
+VtrgfunPlungePartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]p,\[Delta]EE,\[Delta]Lz,EE,Lz,\[CapitalDelta]},
+	EEg=EEgfuncc[p,e];
+	Lzg=Lzgfuncc[a,p,e,x];
+	\[Delta]p=\[Delta]pfunFEcc[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfuncc[a,p,e,x]+dEEdpfuncc[p,e]\[Delta]p;
+	\[Delta]Lz=\[Delta]Lzfuncc[a,p,e,x]+dLzdpfuncc[a,p,e,x]\[Delta]p;
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	EE (r^2+a^2)^2/\[CapitalDelta]-Lz (2a*r)/\[CapitalDelta]-EE*a^2
+]
+
+
+\[Delta]vtfunPlungeParPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]p,\[Delta]EE,\[Delta]Lz,EE,Lz,\[CapitalDelta]},
+	EEg=EEgfuncc[p,e];
+	Lzg=Lzgfuncc[a,p,e,x];
+	\[Delta]p=\[Delta]pfunFEcc[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfuncc[a,p,e,x]+dEEdpfuncc[p,e]\[Delta]p;
+	\[Delta]Lz=\[Delta]Lzfuncc[a,p,e,x]+dLzdpfuncc[a,p,e,x]\[Delta]p;
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	(-Lz(a^2+r^2)+a*EE(a^2+3r^2))/(r*\[CapitalDelta])
+]
+
+
+dtdrfunPlungePartialExp[r_,a_,S_,p_,e_,x_]:=1/drd\[Lambda]funPlungePartialExp[r,a,S,p,e,x](VtrgfunPlungePartialExp[r,a,S,p,e,x]+S*\[Delta]vtfunPlungeParPartialExp[r,a,S,p,e,x]+S*(\[Delta]r41funcc[a,p,e,x]/r-a/(2r^2))VtrgfunPlungePartialExp[r,a,S,p,e,x])
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal velocity*)
+
+
+V\[Phi]rgfunPlungePartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]p,\[Delta]EE,\[Delta]Lz,EE,Lz,\[CapitalDelta]},
+	EEg=EEgfuncc[p,e];
+	Lzg=Lzgfuncc[a,p,e,x];
+	\[Delta]p=\[Delta]pfunFEcc[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfuncc[a,p,e,x]+dEEdpfuncc[p,e]\[Delta]p;
+	\[Delta]Lz=\[Delta]Lzfuncc[a,p,e,x]+dLzdpfuncc[a,p,e,x]\[Delta]p;
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	\[CapitalDelta]=a^2-2r+r^2;
+
+	a/\[CapitalDelta](EE(r^2+a^2)-a*Lz)-a*EE+Lz
+]
+
+
+\[Delta]v\[Phi]funPlungeParPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,Lzg,\[Delta]p,\[Delta]EE,\[Delta]Lz,EE,Lz,\[CapitalDelta]},
+	EEg=EEgfuncc[p,e];
+	Lzg=Lzgfuncc[a,p,e,x];
+	\[Delta]p=\[Delta]pfunFEcc[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfuncc[a,p,e,x]+dEEdpfuncc[p,e]\[Delta]p;
+	\[Delta]Lz=\[Delta]Lzfuncc[a,p,e,x]+dLzdpfuncc[a,p,e,x]\[Delta]p;
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	-EE+(a(-Lz+a*EE(1+r)))/(r*\[CapitalDelta])
+]
+
+
+d\[Phi]drfunPlungePartialExp[r_,a_,S_,p_,e_,x_]:=1/drd\[Lambda]funPlungePartialExp[r,a,S,p,e,x](V\[Phi]rgfunPlungePartialExp[r,a,S,p,e,x]+S*\[Delta]v\[Phi]funPlungeParPartialExp[r,a,S,p,e,x]+S*(\[Delta]r41funcc[a,p,e,x]/r-a/(2r^2))V\[Phi]rgfunPlungePartialExp[r,a,S,p,e,x])
+
+
+(* ::Subsection::Closed:: *)
+(*Plunge related to bound orbits*)
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate time trajectory*)
+
+
+tfunPlungeBoundOrbitPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{r1g,r2g,r3g,rp,rm,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]r1,\[Delta]r2,\[Delta]r4,EE,Lz,r1,r2,r3,\[CapitalDelta],kr,\[Gamma]r,\[Phi],ellF,ellE,ellPi,tgPartialExp,\[Delta]tPartialExp,\[ScriptCapitalI],\[ScriptCapitalI]rover,\[ScriptCapitalI]r2over,\[ScriptCapitalI]r1g,\[ScriptCapitalI]p,\[ScriptCapitalI]mreg},
+	r1g=p/(1-e);
+	r2g=p/(1+e);
+	r3g=2/(1-EEg^2)-(r1g+r2g);
+	rp=1+Sqrt[1-a^2];
+	rm=1-Sqrt[1-a^2];
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]r1=\[Delta]r1funFE[a,p,e,x];
+	\[Delta]r2=\[Delta]r2funFE[a,p,e,x];
+	\[Delta]r4=\[Delta]r41fun[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	r2=r2g+S*RealSign[x]*\[Delta]r2;
+	r3=r3g+S*RealSign[x]*\[Delta]r2;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	kr=((r1-r2)r3)/(r2(r1-r3));
+	\[Gamma]r=r3/r2;
+	\[Phi]=ArcSin[\[Sqrt]((r2(r3-r))/(r3(r2-r)))];
+	ellF=EllipticF[\[Phi],kr];
+	ellE=EllipticE[\[Phi],kr];
+	ellPi=EllipticPi[\[Gamma]r,\[Phi],kr];
+
+	\[ScriptCapitalI]=(2ellF)/Sqrt[r2(r1-r3)];
+	\[ScriptCapitalI]rover=2/Sqrt[r2(r1-r3)] (r2*ellF+(-r2+r3)ellPi);
+	\[ScriptCapitalI]r2over=-r3*Sqrt[((r1-r)(r2-r))/(r2(r2-r3))]Sin[\[Phi]]Cos[\[Phi]]+Sqrt[r2(r1-r3)]ellE-((r2-r3)(r1+r2+r3))/Sqrt[r2(r1-r3)] ellPi+(r2(r2+r3))/Sqrt[r2(r1-r3)] ellF;
+	\[ScriptCapitalI]p=2/(Sqrt[r2(r1-r3)](r2-rp))(ellF+(r2-r3)/(r3-rp) EllipticPi[(r3(-r2+rp))/(r2(-r3+rp)),\[Phi],kr]);
+	\[ScriptCapitalI]mreg=(2rm)/(Sqrt[r2(r1-r3)](r2-rm))(ellF+(r2-r3)/(r3-rm) EllipticPi[(r3(-r2+rm))/(r2(-r3+rm)),\[Phi],kr]);
+	
+	tgPartialExp=-1/Sqrt[1-EE^2](4EE*\[ScriptCapitalI]+2EE*\[ScriptCapitalI]rover+EE*\[ScriptCapitalI]r2over-4EE*rp/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)-2(-4EE+a*Lz)1/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg));
+	\[Delta]tPartialExp=-1/Sqrt[(1-EE^2)](1/2EE(4\[Delta]r4-a)\[ScriptCapitalI]+EE*\[Delta]r4*\[ScriptCapitalI]rover-\[ScriptCapitalI]p/( 2(rp-rm)) ((a^3*EE+2Lz*rp+a*EE(-6+rp)rp)-2(-2a*Lz+EE*rp^3+a^2*EE(2+rp))\[Delta]r4)+(\[ScriptCapitalI]mreg/rm)/( 2(rp-rm)) ((a^3*EE+2Lz*rm+a*EE(-6+rm)rm)-2(-2a*Lz+EE*rm^3+a^2*EE(2+rm))\[Delta]r4));
+	
+	tgPartialExp+S*\[Delta]tPartialExp
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal trajectory*)
+
+
+\[Phi]funPlungeBoundOrbitPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{r1g,r2g,r3g,rp,rm,EEg,Lzg,\[Delta]EE,\[Delta]Lz,\[Delta]r1,\[Delta]r2,\[Delta]r4,EE,Lz,r1,r2,r3,\[CapitalDelta],kr,\[Phi],ellF,ellE,\[Phi]gPartialExp,\[Delta]\[Phi]PartialExp,\[ScriptCapitalI],\[ScriptCapitalI]r1g,\[ScriptCapitalI]p,\[ScriptCapitalI]mreg},
+	r1g=p/(1-e);
+	r2g=p/(1+e);
+	r3g=2/(1-EEg^2)-(r1g+r2g);
+	rp=1+Sqrt[1-a^2];
+	rm=1-Sqrt[1-a^2];
+	EEg=EEgfun[a,p,e,x];
+	Lzg=Lzgfun[a,p,e,x];
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]Lz=\[Delta]LzfunFT[a,p,e,x]+dLzdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]r1=\[Delta]r1funFE[a,p,e,x];
+	\[Delta]r2=\[Delta]r2funFE[a,p,e,x];
+	\[Delta]r4=\[Delta]r41fun[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	Lz=Lzg+S*RealSign[x]*\[Delta]Lz;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	r2=r2g+S*RealSign[x]*\[Delta]r2;
+	r3=r3g+S*RealSign[x]*\[Delta]r2;
+	\[CapitalDelta]=a^2-2r+r^2;
+	
+	kr=((r1-r2)r3)/(r2(r1-r3));
+	\[Phi]=ArcSin[\[Sqrt]((r2(r3-r))/(r3(r2-r)))];
+	ellF=EllipticF[\[Phi],kr];
+	ellE=EllipticE[\[Phi],kr];
+	
+	\[ScriptCapitalI]=(2ellF)/Sqrt[r2(r1-r3)];
+	\[ScriptCapitalI]p=2/(Sqrt[r2(r1-r3)](r2-rp))(ellF+(r2-r3)/(r3-rp) EllipticPi[(r3(-r2+rp))/(r2(-r3+rp)),\[Phi],kr]);
+	\[ScriptCapitalI]mreg=(2rm)/(Sqrt[r2(r1-r3)](r2-rm))(ellF+(r2-r3)/(r3-rm) EllipticPi[(r3(-r2+rm))/(r2(-r3+rm)),\[Phi],kr]);
+
+	\[Phi]gPartialExp=-1/Sqrt[1-EE^2](Lz*\[ScriptCapitalI]-Lz*rp/(rp-rm)(rm*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg)+2a*EE/(rp-rm)(rp*\[ScriptCapitalI]p-\[ScriptCapitalI]mreg));
+	
+	\[Delta]\[Phi]PartialExp=-1/Sqrt[(1-EE^2)](-EE*\[ScriptCapitalI]-\[ScriptCapitalI]p/( 2(rp-rm)) (a(Lz-2a*EE)-2(2a*EE+Lz(rp-2))\[Delta]r4)+(\[ScriptCapitalI]mreg/rm)/( 2(rp-rm)) (-a(2a*EE-Lz)-2(2a*EE+Lz(rm-2))\[Delta]r4));
+	
+	\[Phi]gPartialExp+S*\[Delta]\[Phi]PartialExp
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Radial velocity*)
+
+
+drd\[Lambda]funPlungeBoundOrbitPartialExp[r_,a_,S_,p_,e_,x_]:=Module[{EEg,r1g,r2g,r3g,\[Delta]EE,\[Delta]r1,\[Delta]r2,EE,r1,r2,r3},
+	EEg=EEgfun[a,p,e,x];
+	r1g=p/(1-e);
+	r2g=p/(1+e);
+	r3g=2/(1-EEg^2)-(r1g+r2g);
+	\[Delta]EE=\[Delta]EEfunFT[a,p,e,x]+dEEdpfun[a,p,e,x]\[Delta]pfunFE[a,p,e,x];
+	\[Delta]r1=\[Delta]r1funFE[a,p,e,x];
+	\[Delta]r2=\[Delta]r2funFE[a,p,e,x];
+	
+	EE=EEg+S*RealSign[x]*\[Delta]EE;
+	r1=r1g+S*RealSign[x]*\[Delta]r1;
+	r2=r2g+S*RealSign[x]*\[Delta]r2;
+	r3=r3g+S*RealSign[x]*\[Delta]r2;
+
+	Sqrt[1-EE^2]Sqrt[(r-r2)(r-r3)]Sqrt[(r1-r)r]
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Coordinate time velocity - dt/dr*)
+
+
+dtdrfunPlungeBoundOrbitPartialExp[r_,a_,S_,p_,e_,x_]:=1/drd\[Lambda]funPlungeBoundOrbitPartialExp[r,a,S,p,e,x](VtrgfunPartialExp[r,a,S,p,e,x]+S*\[Delta]vtfunParPartialExp[r,a,S,p,e,x]+S*(\[Delta]r41fun[a,p,e,x]/r-a/(2r^2))VtrgfunPartialExp[r,a,S,p,e,x])
+
+
+(* ::Subsubsection::Closed:: *)
+(*Azimuthal velocity - d\[Phi]/dr*)
+
+
+d\[Phi]drfunPlungeBoundOrbitPartialExp[r_,a_,S_,p_,e_,x_]:=1/drd\[Lambda]funPlungeBoundOrbitPartialExp[r,a,S,p,e,x](V\[Phi]rgfunPartialExp[r,a,S,p,e,x]+S*\[Delta]v\[Phi]funParPartialExp[r,a,S,p,e,x]+S*(\[Delta]r41fun[a,p,e,x]/r-a/(2r^2))V\[Phi]rgfunPartialExp[r,a,S,p,e,x])
 
 
 (* ::Section::Closed:: *)
@@ -6973,6 +7608,10 @@ KerrNearEqSpinOrbitCorr\[Delta]IBCO[a_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]
 ]
 
 
+(* ::Chapter::Closed:: *)
+(*Front-end*)
+
+
 (* ::Section::Closed:: *)
 (*Near equatorial orbits - fixed turning points*)
 
@@ -7313,10 +7952,9 @@ KerrNearEqSpinOrbitCorrFEHom[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]t
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
 	 "\[Delta]\[CapitalUpsilon]rhat"->\[Delta]\[CapitalUpsilon]rover\[CapitalUpsilon]rgfunLimFE[a,p,e,x],
-	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunHom[r,a,p,e,x]],
 	 "\[Phi]rg"->Function[{r},\[Phi]gfunHom[r,a,p,e,x]],
-	 (*Keys geodesic radial trajectory*)
 	 "rg"->Function[{\[Lambda]},rgfunHom[\[Lambda],a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{r},Vtrgfun[r,a,p,e,x]],
@@ -7364,7 +8002,7 @@ KerrNearEqSpinOrbitCorrISCOPlunge[a_, x_]:=Module[{r1g,EEg,Lzg,\[Delta]EE,\[Delt
 	 "BLFrequenciesCorrection"->Function[{r},\[Delta]\[CapitalOmega]\[Phi]funISCOplunge[r,a,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfunISCOplunge[r,a,x]],
 	 "\[Delta]\[CapitalUpsilon]rhat"->RealSign[x]*\[Delta]\[CapitalUpsilon]rover\[CapitalUpsilon]rgfunLimFE[a,r1g,0,x],
-	 (*Keys geodesic radial trajectories*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunISCOplunge[r,a,x]],
 	 "\[Phi]rg"->Function[{r},\[Phi]gfunISCOplunge[r,a,x]],
 	 "rg"->Function[{\[Lambda]},rgfunISCOplunge[\[Lambda],a,x]],
@@ -7475,10 +8113,9 @@ KerrNearEqSpinOrbitCorrFEPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[De
 	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funFEPlunge[r,a,p,e,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfunPlunge[r,a,p,e,x]],
 	 "\[Delta]\[CapitalUpsilon]rhat"->RealSign[x]*1/2 ((1+B0/Ar1g) \[Delta]r1/r1g-(2(Ar1g+B0)\[Delta]r41funcc[a,p,e,x])/(B0*r1g)+(\[Delta]\[Rho]r(r1g-2\[Rho]rg))/(Ar1g*B0)+(a(2B0^2(Ar1g+B0)-B0*r1g^2+2(2Ar1g+B0)r1g*\[Rho]rg))/(3B0^3*r1g^2)-(2EEg*\[Delta]EE)/(1-EEg^2)),
-	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunPlunge[r,a,p,e,x]],
 	 "\[Phi]rg"->Function[{r},\[Phi]gfunPlunge[r,a,p,e,x]],
-	 (*Keys geodesic radial trajectory*)
 	 "rg"->Function[{\[Lambda]},rgfunPlunge[\[Lambda],a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{r},VtrgfunPlunge[r,a,p,e,x]],
@@ -7525,10 +8162,9 @@ KerrNearEqSpinOrbitCorrFEPlungeBoundOrbit[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Del
 	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funFEPlungeBoundOrbit[r,a,p,e,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfun[r,a,p,e,x]],
 	 "\[Delta]\[CapitalUpsilon]rhat"->RealSign[x]*\[Delta]\[CapitalUpsilon]rfunFE[a,p,e,x]/\[CapitalUpsilon]rgfun[a,p,e,x],
-	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunPlungeBoundOrbit[r,a,p,e,x]],
-	 "\[Phi]rg"->Function[{r},\[Phi]gfunPlungeBoundOrbit[r,a,p,e,x]],
-	 (*Keys geodesic radial trajectory*)
+	 "\[Phi]rg"->Function[{r},\[Phi]gfunPlungeBoundOrbit[r,a,p,e,x]], 
 	 "rg"->Function[{\[Lambda]},rgfunPlungeBoundOrbit[\[Lambda],a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{r},Vtrgfun[r,a,p,e,x]],
@@ -7574,10 +8210,9 @@ KerrNearEqSpinOrbitCorrFEPlungeBoundOrbitDoubleRoot[a_, p_, x_]:=Module[{EEg,Lzg
 	 "BLFrequenciesGeo"->Function[{r},\[CapitalOmega]\[Phi]gfun[r,a,p,0,x]],
 	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funFEPlungeBoundOrbitDoubleRoot[r,a,p,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfun[r,a,p,0,x]],
-	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunPlungeBoundOrbitDoubleRoot[r,a,p,x]],
 	 "\[Phi]rg"->Function[{r},\[Phi]gfunPlungeBoundOrbitDoubleRoot[r,a,p,x]],
-	 (*Keys geodesic radial trajectory*)
 	 "rg"->Function[{\[Lambda]},rgfunPlungeBoundOrbitDoubleRoot[\[Lambda],a,p,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{r},Vtrgfun[r,a,0,p,x]],
@@ -7593,6 +8228,116 @@ KerrNearEqSpinOrbitCorrFEPlungeBoundOrbitDoubleRoot[a_, p_, x_]:=Module[{EEg,Lzg
 	 "\[Delta]vtpar"->Function[{r},RealSign[x]*\[Delta]vtfunFEPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
 	 "\[Delta]vrpar"->Function[{r},RealSign[x]*\[Delta]vrfunFEPlungeBoundOrbitDoubleRootPar[r,a,p,x]],
 	 "\[Delta]v\[Phi]par"->Function[{r},RealSign[x]*\[Delta]v\[Phi]funFEPlungeBoundOrbitDoubleRootPar[r,a,p,x]]
+	|>
+]
+
+
+(* ::Section::Closed:: *)
+(*Near equatorial orbits - fixed eccentricity, non-linearized solutions*)
+
+
+(* ::Subsection::Closed:: *)
+(*Analytic solutions*)
+
+
+(* ::Subsubsection::Closed:: *)
+(*ISCO plunge solutions*)
+
+
+KerrEqISCOPlungePartialExp[a_, S_, x_]:=Module[{r1g,\[Delta]rISCO,r1},
+	r1g=ISCOradius[a,x];
+	\[Delta]rISCO=\[Delta]rISCOfun[a,x];
+	r1=r1g+S*RealSign[x]*\[Delta]rISCO;
+		
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)    
+	<|
+	 (*Keys trajectories*)
+	 "tr"->Function[{r},tfunISCOplungePartialExp[r,a,S,x]],
+	 "\[Phi]r"->Function[{r},\[Phi]funISCOplungePartialExp[r,a,S,x]],
+	 (*Keys velocities*)
+	 "dtdr"->Function[{r},dtdrfunISCOplungeOPartialExp[r,a,S,r1g,0,x]],
+	 "vr"->Function[{r},drd\[Lambda]funISCOplungePartialExp[r,a,S,x]],
+	 "d\[Phi]dr"->Function[{r},d\[Phi]drfunISCOplungePartialExp[r,a,S,r1g,0,x]],
+	 "rISCO"->r1
+	|>
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Critical plunge solutions*)
+
+
+KerrEqFECritplungePartialExp[a_, S_, p_, e_, x_]:=Module[{\[Delta]p,r1g,r2g,r1,r2},
+	r1g=p/(1-e);
+	r2g=p/(1+e);
+	\[Delta]p=\[Delta]pfunFE[a,p,e,x];
+	r1=r1g+S*RealSign[x]*\[Delta]p/(1-e);
+	r2=r2g+S*RealSign[x]*\[Delta]p/(1+e);
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)    
+	<|
+	 (*Keys trajectories*)
+	 "tr"->Function[{r},tfunCritplungePartialExp[r,a,S,p,e,x]],
+	 "\[Phi]r"->Function[{r},\[Phi]funCritplungePartialExp[r,a,S,p,e,x]],
+	 (*Keys velocities*)
+	 "dtdr"->Function[{r},dtdrfunCritplungePartialExp[r,a,S,p,e,x]],
+	 "vr"->Function[{r},drd\[Lambda]funHomPartialExp[r,a,S,p,e,x]],
+	 "d\[Phi]dr"->Function[{r},d\[Phi]drfunCritplungePartialExp[r,a,S,p,e,x]],
+	 "r1"->r1,
+	 "r2"->r2
+	|>
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Generic plunge solutions*)
+
+
+KerrEqFEPlungePartialExp[a_, S_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Delta]Lz,r1g,\[Delta]p,r1},
+	r1g=p/(1-e);
+	\[Delta]p=\[Delta]pfunFEcc[a,p,e,x];
+	r1=r1g+S*RealSign[x]*\[Delta]p/(1-e);
+		
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)    
+	<|
+	 (*Keys trajectories*)
+	 "tr"->Function[{r},tfunPlungePartialExp[r,a,S,p,e,x]],
+	 "\[Phi]r"->Function[{r},\[Phi]funPlungePartialExp[r,a,S,p,e,x]],
+	 (*Keys velocities*)
+	 "dtdr"->Function[{r},dtdrfunPlungePartialExp[r,a,S,p,e,x]],
+	 "vr"->Function[{r},drd\[Lambda]funPlungePartialExp[r,a,S,p,e,x]],
+	 "d\[Phi]dr"->Function[{r},d\[Phi]drfunPlungePartialExp[r,a,S,p,e,x]],
+	 "r1"->r1
+	|>
+]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Plunge related to bound orbits*)
+
+
+KerrEqFEPlungeBoundOrbitPartialExp[a_, S_, p_, e_,x_]:=Module[{EEg,r1g,r2g,\[Delta]p,r1,r2,r3},
+	r1g=p/(1-e);
+	r2g=p/(1+e);
+	
+	EEg=EEgfun[a,p,e,x];
+	\[Delta]p=\[Delta]pfunFE[a,p,e,x];
+	r1=r1g+S*RealSign[x]*\[Delta]p/(1-e);
+	r2=r2g+S*RealSign[x]*\[Delta]p/(1+e);
+	r3=2/(1-EEg^2)-(r1g+r2g)+S*RealSign[x]*\[Delta]p/(1+e);
+	
+	(*The RealSign serves to match the sign convetion of generic orbits solutions in the limit z->0*)    
+	<|
+	 (*Keys trajectories*)
+	 "tr"->Function[{r},tfunPlungeBoundOrbitPartialExp[r,a,S,p,e,x]],
+	 "\[Phi]r"->Function[{r},\[Phi]funPlungeBoundOrbitPartialExp[r,a,S,p,e,x]],
+	 (*Keys velocities*)
+	 "dtdr"->Function[{r},dtdrfunPlungeBoundOrbitPartialExp[r,a,S,p,e,x]],
+	 "vr"->Function[{r},drd\[Lambda]funPlungeBoundOrbitPartialExp[r,a,S,p,e,x]],
+	 "d\[Phi]dr"->Function[{r},d\[Phi]drfunPlungeBoundOrbitPartialExp[r,a,S,p,e,x]],
+	 "r1"->r1,
+	 "r2"->r2,
+	 "r3"->r3
 	|>
 ]
 
@@ -7714,10 +8459,9 @@ KerrNearEqSpinOrbitCorrRHom[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[CapitalUpsilon]tg
 	 "BLFrequenciesCorrection"->RealSign[x]*{\[CapitalUpsilon]\[Phi]s/\[CapitalUpsilon]tg-\[CapitalUpsilon]\[Phi]g/\[CapitalUpsilon]tg^2*\[CapitalUpsilon]ts},
 	 "MinoPrecessionFrequency"->\[CapitalUpsilon]p,
 	 "BLPrecessionFrequency"->\[CapitalUpsilon]p/\[CapitalUpsilon]tg,
-	 (*Keys geodesic coordinate time and azimuthal trajectory*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunHom[r,a,p,e,x]],
 	 "\[Phi]rg"->Function[{r},\[Phi]gfunHom[r,a,p,e,x]],
-	 (*Keys geodesic radial trajectory*)
 	 "rg"->Function[{\[Lambda]},rgfunHom[\[Lambda],a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{r},Vtrgfun[r,a,p,e,x]],
@@ -7764,10 +8508,9 @@ KerrNearEqSpinOrbitCorrRCritPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\
 	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funRCritplunge[r,a,p,e,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfun[r,a,p,e,x]],
 	 "\[Delta]\[CapitalUpsilon]rhat"->RealSign[x]*\[Delta]\[CapitalUpsilon]rover\[CapitalUpsilon]rgfunLimR[a,p,e,x],
-	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunCritplunge[r,a,p,e,x]],
 	 "\[Phi]rg"->Function[{r},\[Phi]gfunCritplunge[r,a,p,e,x]],
-	 (*Keys geodesic radial trajectory*)
 	 "rg"->Function[{\[Lambda]},rgfunCritplunge[\[Lambda],a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{r},Vtrgfun[r,a,p,e,x]],
@@ -7825,10 +8568,9 @@ KerrNearEqSpinOrbitCorrRPlunge[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delta]EE,\[Del
 	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funRPlunge[r,a,p,e,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfunPlunge[r,a,p,e,x]],
 	 "\[Delta]\[CapitalUpsilon]rhat"->RealSign[x]*1/2 ((1+B0/Ar1g) \[Delta]r1/r1g-(2(Ar1g+B0)\[Delta]r41funcc[a,p,e,x])/(B0*r1g)+(\[Delta]\[Rho]r(r1g-2\[Rho]rg))/(Ar1g*B0)+(a(2B0^2(Ar1g+B0)-B0*r1g^2+2(2Ar1g+B0)r1g*\[Rho]rg))/(3B0^3*r1g^2)-(2EEg*\[Delta]EE)/(1-EEg^2)),
-	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunPlunge[r,a,p,e,x]],
 	 "\[Phi]rg"->Function[{r},\[Phi]gfunPlunge[r,a,p,e,x]],
-	 (*Keys geodesic radial trajectory*)
 	 "rg"->Function[{\[Lambda]},rgfunPlunge[\[Lambda],a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{r},VtrgfunPlunge[r,a,p,e,x]],
@@ -7875,10 +8617,9 @@ KerrNearEqSpinOrbitCorrRPlungeBoundOrbit[a_, p_, e_, x_]:=Module[{EEg,Lzg,\[Delt
 	 "BLFrequenciesCorrection"->Function[{r},RealSign[x]*\[Delta]\[CapitalOmega]\[Phi]funRPlungeBoundOrbit[r,a,p,e,x]],
 	 "BLPrecessionFrequency"->Function[{r},\[CapitalOmega]pfun[r,a,p,e,x]],
 	 "\[Delta]\[CapitalUpsilon]rhat"->RealSign[x]*\[Delta]\[CapitalUpsilon]rfunR[a,p,e,x]/\[CapitalUpsilon]rgfun[a,p,e,x],
-	 (*Keys purely oscillatory part geodesic coordinate time and azimuthal trajectory*)
+	 (*Keys geodesic trajectories*)
 	 "trg"->Function[{r},tgfunPlungeBoundOrbit[r,a,p,e,x]],
 	 "\[Phi]rg"->Function[{r},\[Phi]gfunPlungeBoundOrbit[r,a,p,e,x]],
-	 (*Keys geodesic radial trajectory*)
 	 "rg"->Function[{\[Lambda]},rgfunPlungeBoundOrbit[\[Lambda],a,p,e,x]],
 	 (*Keys geodesic velocities*)
 	 "vtg"->Function[{r},Vtrgfun[r,a,p,e,x]],
