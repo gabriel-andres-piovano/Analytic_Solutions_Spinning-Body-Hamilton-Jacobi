@@ -13,7 +13,7 @@ Mathematica files - "Periodic_homoclinic orbits" folder
 Mathematica files - "Boud_plunges" folder
 - ```Spin_corrections_to_orbits_near_equatorial_motion_Bound_Plunge.nb```: presents the functions available in the package ```AnalyticSpinOrbitsHamiltonJacobi.wl``` for bound plunges.
 - ```Numerical_checks_solutions.nb```: includes consistency checks of the analytic trajectories, which are compared against the numerical solutions of the equations of motion in first-order form.
-- ``Numerical_checks_partially_expanded_solutions.nb```: includes consistency checks of the partially expanded analytic trajectories.
+- ```Numerical_checks_partially_expanded_solutions.nb```: includes consistency checks of the partially expanded analytic trajectories.
 
 Author:
 - Gabriel Andres Piovano
